@@ -24,7 +24,7 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""id"": ""85f90b04-d2a3-430e-a676-d1e694b703e7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""Jump"",
@@ -160,6 +160,153 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""OnControlParts"",
+            ""id"": ""20c32727-8fb6-41c7-b233-7d4b9e4e04c7"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Button"",
+                    ""id"": ""ff5d7d44-d804-48a4-b19f-0ef07f3172d5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""a20d9cc6-5bb7-43a5-9070-d2d71cb2a8ff"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""33b3967e-bdfb-4b28-8c7e-65355801169d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""4de42849-a582-4485-aa9c-0091074f6262"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Interactions"",
+                    ""type"": ""Button"",
+                    ""id"": ""8812a868-3bd5-4c61-b747-bbab054d12b6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""8d82b231-d24e-4336-b354-47c495b143dd"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0358d6b9-b609-4788-ad6e-182041d03f65"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""78a907fb-e0be-43b3-bc3b-e4bcf2a648a6"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""521bb910-b611-4000-a9b3-a3407d026a8c"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Interactions"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""34ff616b-b3b8-405d-ad15-b3b088069b30"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""04694537-6e5c-48f5-b905-731203d37bed"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""6ea7aa6b-9658-4c24-9de5-62d6c72963bf"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""e2f429df-252d-493a-890b-c0eea1ec45b0"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""4b288d47-cad4-4728-8267-0737c731ce37"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -183,6 +330,13 @@ public class @InputManager : IInputActionCollection, IDisposable
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Back = m_Player.FindAction("Back", throwIfNotFound: true);
         m_Player_Interactions = m_Player.FindAction("Interactions", throwIfNotFound: true);
+        // OnControlParts
+        m_OnControlParts = asset.FindActionMap("OnControlParts", throwIfNotFound: true);
+        m_OnControlParts_Move = m_OnControlParts.FindAction("Move", throwIfNotFound: true);
+        m_OnControlParts_Jump = m_OnControlParts.FindAction("Jump", throwIfNotFound: true);
+        m_OnControlParts_Attack = m_OnControlParts.FindAction("Attack", throwIfNotFound: true);
+        m_OnControlParts_Back = m_OnControlParts.FindAction("Back", throwIfNotFound: true);
+        m_OnControlParts_Interactions = m_OnControlParts.FindAction("Interactions", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -293,6 +447,71 @@ public class @InputManager : IInputActionCollection, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // OnControlParts
+    private readonly InputActionMap m_OnControlParts;
+    private IOnControlPartsActions m_OnControlPartsActionsCallbackInterface;
+    private readonly InputAction m_OnControlParts_Move;
+    private readonly InputAction m_OnControlParts_Jump;
+    private readonly InputAction m_OnControlParts_Attack;
+    private readonly InputAction m_OnControlParts_Back;
+    private readonly InputAction m_OnControlParts_Interactions;
+    public struct OnControlPartsActions
+    {
+        private @InputManager m_Wrapper;
+        public OnControlPartsActions(@InputManager wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_OnControlParts_Move;
+        public InputAction @Jump => m_Wrapper.m_OnControlParts_Jump;
+        public InputAction @Attack => m_Wrapper.m_OnControlParts_Attack;
+        public InputAction @Back => m_Wrapper.m_OnControlParts_Back;
+        public InputAction @Interactions => m_Wrapper.m_OnControlParts_Interactions;
+        public InputActionMap Get() { return m_Wrapper.m_OnControlParts; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(OnControlPartsActions set) { return set.Get(); }
+        public void SetCallbacks(IOnControlPartsActions instance)
+        {
+            if (m_Wrapper.m_OnControlPartsActionsCallbackInterface != null)
+            {
+                @Move.started -= m_Wrapper.m_OnControlPartsActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_OnControlPartsActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_OnControlPartsActionsCallbackInterface.OnMove;
+                @Jump.started -= m_Wrapper.m_OnControlPartsActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_OnControlPartsActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_OnControlPartsActionsCallbackInterface.OnJump;
+                @Attack.started -= m_Wrapper.m_OnControlPartsActionsCallbackInterface.OnAttack;
+                @Attack.performed -= m_Wrapper.m_OnControlPartsActionsCallbackInterface.OnAttack;
+                @Attack.canceled -= m_Wrapper.m_OnControlPartsActionsCallbackInterface.OnAttack;
+                @Back.started -= m_Wrapper.m_OnControlPartsActionsCallbackInterface.OnBack;
+                @Back.performed -= m_Wrapper.m_OnControlPartsActionsCallbackInterface.OnBack;
+                @Back.canceled -= m_Wrapper.m_OnControlPartsActionsCallbackInterface.OnBack;
+                @Interactions.started -= m_Wrapper.m_OnControlPartsActionsCallbackInterface.OnInteractions;
+                @Interactions.performed -= m_Wrapper.m_OnControlPartsActionsCallbackInterface.OnInteractions;
+                @Interactions.canceled -= m_Wrapper.m_OnControlPartsActionsCallbackInterface.OnInteractions;
+            }
+            m_Wrapper.m_OnControlPartsActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
+                @Back.started += instance.OnBack;
+                @Back.performed += instance.OnBack;
+                @Back.canceled += instance.OnBack;
+                @Interactions.started += instance.OnInteractions;
+                @Interactions.performed += instance.OnInteractions;
+                @Interactions.canceled += instance.OnInteractions;
+            }
+        }
+    }
+    public OnControlPartsActions @OnControlParts => new OnControlPartsActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -303,6 +522,14 @@ public class @InputManager : IInputActionCollection, IDisposable
         }
     }
     public interface IPlayerActions
+    {
+        void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
+        void OnBack(InputAction.CallbackContext context);
+        void OnInteractions(InputAction.CallbackContext context);
+    }
+    public interface IOnControlPartsActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
