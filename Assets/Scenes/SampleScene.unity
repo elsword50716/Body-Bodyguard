@@ -256,8 +256,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 4.82, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 350268278}
   - {fileID: 822316096}
+  - {fileID: 350268278}
   m_Father: {fileID: 612015114}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -398,7 +398,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 138625941}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &350268279
 SpriteRenderer:
@@ -1538,7 +1538,7 @@ Transform:
   m_Children:
   - {fileID: 1690552434}
   m_Father: {fileID: 138625941}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &904895173
 GameObject:
@@ -2900,6 +2900,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2103f46bb9aefc944a88e61fc17593a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootter: {fileID: 0}
+  isGunHorizontal: 0
 --- !u!212 &1912016604
 SpriteRenderer:
   m_ObjectHideFlags: 0
