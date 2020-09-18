@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 _moveAxis;
     private Rigidbody2D rbody2D;
     private Transform originalParent;
-    private ShooterController shooterController_temp;
+    private Transform shooterController_temp;
     private bool canGoUp = false;
     private bool onSeat = false;
 
@@ -96,8 +96,9 @@ public class PlayerController : MonoBehaviour
 
         if (other.transform.CompareTag("Seats"))
         {
-            shooterController_temp = other.transform.parent.GetComponent<ShooterController>();
-            shooterController_temp.enabled = true;
+            shooterController_temp = other.transform.parent;
+            shooterController_temp.GetComponent<ShooterController>().enabled = true;
+            shooterController_temp.GetComponent<PlayerInput>().enabled = true;
             onSeat = true;
             transform.parent = other.transform;
             transform.localPosition = Vector3.zero;
@@ -119,7 +120,9 @@ public class PlayerController : MonoBehaviour
         onSeat = false;
         transform.parent = originalParent;
         _moveAxis = Vector2.zero;
-        shooterController_temp.enabled = false;
+        shooterController_temp.GetComponent<ShooterController>().enabled = false;
+        shooterController_temp.GetComponent<ShooterController>().isShootting = false;
+        shooterController_temp.GetComponent<PlayerInput>().enabled = false;
     }
 
 }
