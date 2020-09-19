@@ -12,9 +12,11 @@ public class ShooterController : MonoBehaviour
     public GameObject bulletPrefab;
     public float BulletSpeed = 1f;
     public float FireRate = 0.2f;
+    public float[] shooterAngleRange = new float[2];
 
     public float gunMovingDegree = 1f;
     private float timer = 0f;
+    private float gunRotationZ = 0f;
     private int counter = 0;
     private Vector2 moveInput = Vector2.zero;
     private Transform[] firePoint;
@@ -24,7 +26,7 @@ public class ShooterController : MonoBehaviour
     {
         var childCount = gunPivotPoint.childCount;
         firePoint = new Transform[childCount];
-        
+
         for (int i = 0; i < firePoint.Length; i++)
         {
             firePoint[i] = gunPivotPoint.GetChild(i).GetChild(0);
@@ -36,37 +38,41 @@ public class ShooterController : MonoBehaviour
     void Update()
     {
 
-        if (Mathf.Abs(gunPivotPoint.rotation.z) < 90f)
-        {
-            if (isGunHorizontal)
-            {
-                gunPivotPoint.Rotate(new Vector3(0f, 0f, -moveInput.x * gunMovingDegree * Time.deltaTime));
-            }
-            else
-            {
-                gunPivotPoint.Rotate(new Vector3(0f, 0f, -moveInput.y * gunMovingDegree * Time.deltaTime));
-            }
+        gunRotationZ = ClampAngle(gunPivotPoint.localEulerAngles.z, -60, 60);
 
+        gunPivotPoint.localEulerAngles = new Vector3(0f, 0f, gunRotationZ);
+
+        if (isGunHorizontal)
+        {
+            gunPivotPoint.Rotate(new Vector3(0f, 0f, -moveInput.x * gunMovingDegree * Time.deltaTime));
         }
+        else
+        {
+            gunPivotPoint.Rotate(new Vector3(0f, 0f, -moveInput.y * gunMovingDegree * Time.deltaTime));
+        }
+
+
+
 
         if (isShootting)
         {
             timer += Time.deltaTime;
 
-            if(timer > FireRate){
+            if (timer > FireRate)
+            {
                 counter++;
                 timer = 0;
 
-                if(counter == firePoint.Length)
-                counter = 0;
+                if (counter == firePoint.Length)
+                    counter = 0;
 
                 FireBullet(counter % firePoint.Length);
             }
 
-            
 
 
-            
+
+
         }
     }
 
@@ -89,5 +95,14 @@ public class ShooterController : MonoBehaviour
         var bulletRbody2D = bullet.GetComponent<Rigidbody2D>();
         bulletRbody2D.velocity = firePoint[index].up * BulletSpeed;
         bullet.transform.up = firePoint[index].up;
+    }
+
+    static float ClampAngle(float angle, float min, float max)
+    {
+        if (angle > 180)
+        {
+            angle -= 360;
+        }
+        return Mathf.Clamp(angle, min, max);
     }
 }
