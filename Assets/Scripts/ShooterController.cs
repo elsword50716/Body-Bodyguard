@@ -12,7 +12,7 @@ public class ShooterController : MonoBehaviour
     public GameObject bulletPrefab;
     public float BulletSpeed = 1f;
     public float FireRate = 0.2f;
-    public float[] shooterAngleRange = new float[2];
+    
 
     public float gunMovingDegree = 1f;
     private float timer = 0f;
