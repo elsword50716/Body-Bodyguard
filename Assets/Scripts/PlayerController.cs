@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private Transform originalParent;
     private Transform shooterController_temp;
 
-    private bool onShooterController = false;
+    private bool freezePosition = false;
     
 
     private PlayerInput playerInput;
@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (onShooterController)
+        if (freezePosition)
             return;
 
         /*if (canGoUp)
@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
 
     private void ExitShooterController()
     {
-        onShooterController = false;
+        freezePosition = false;
         transform.parent = originalParent;
         shooterController_temp.GetComponent<PlayerInput>().enabled = false;
         shooterController_temp.GetComponent<ShooterController>().enabled = false;
@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
         shooterController_temp = controller.transform;
         shooterController_temp.GetComponent<ShooterController>().enabled = true;
         shooterController_temp.GetComponent<PlayerInput>().enabled = true;
-        onShooterController = true;
+        freezePosition = true;
         transform.parent = shooterController_temp;
         rbody2D.velocity = Vector2.zero;
         transform.localPosition = Vector3.zero;
