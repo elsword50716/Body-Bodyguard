@@ -180,7 +180,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0030050278, y: -0.20802128}
+  m_Offset: {x: -0.0030050278, y: -0.25565636}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -191,7 +191,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.61641455, y: 0.4902718}
+  m_Size: {x: 0.61641455, y: 0.39500165}
   m_EdgeRadius: 0
 --- !u!1 &58871731
 GameObject:
@@ -654,7 +654,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0030050278, y: -0.20802128}
+  m_Offset: {x: -0.0030050278, y: -0.25565636}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -665,7 +665,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.61641455, y: 0.4902718}
+  m_Size: {x: 0.61641455, y: 0.39500165}
   m_EdgeRadius: 0
 --- !u!1 &474815248
 GameObject:
@@ -794,7 +794,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0030050278, y: -0.20802128}
+  m_Offset: {x: -0.0030050278, y: -0.26994646}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -805,7 +805,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.61641455, y: 0.4902718}
+  m_Size: {x: 0.61641455, y: 0.36642146}
   m_EdgeRadius: 0
 --- !u!114 &477259608
 MonoBehaviour:
@@ -976,6 +976,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6344452, y: 0.24487984}
   m_EdgeRadius: 0
+--- !u!1 &542496573
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 542496574}
+  m_Layer: 0
+  m_Name: ShipMove
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &542496574
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542496573}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.749, y: -0.33095878, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 979085534}
+  m_Father: {fileID: 904895174}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &555221401
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,7 +1055,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1000000
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -1525,6 +1556,7 @@ Transform:
   - {fileID: 2071309770}
   - {fileID: 875802248}
   - {fileID: 1020286986}
+  - {fileID: 542496574}
   m_Father: {fileID: 735688787}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1642,6 +1674,80 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &979085533
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 979085534}
+  - component: {fileID: 979085535}
+  - component: {fileID: 979085536}
+  m_Layer: 0
+  m_Name: Controller
+  m_TagString: ShipMoveController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &979085534
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979085533}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 542496574}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &979085535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979085533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e1c813dce3a7de409c58cc2fb739e5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shipRbody: {fileID: 555221403}
+  isOnControl: 0
+  addForce: 1
+  shipSpeed: 1
+--- !u!61 &979085536
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979085533}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.3458295}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.6, y: 0.12712228}
+  m_EdgeRadius: 0
 --- !u!1 &1005637569
 GameObject:
   m_ObjectHideFlags: 0
@@ -1715,7 +1821,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1046354662}
   - component: {fileID: 1046354665}
-  - component: {fileID: 1046354664}
   - component: {fileID: 1046354663}
   m_Layer: 0
   m_Name: Controller
@@ -1764,99 +1869,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.37661767, y: 0.13673663}
   m_EdgeRadius: 0
---- !u!114 &1046354664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1046354661}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 277c0fe1f8d337a4c8d09ce7a0875535,
-    type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 85f90b04-d2a3-430e-a676-d1e694b703e7
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e8d44d8b-5637-44c1-a7b6-b2585e02412b
-    m_ActionName: Player/Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4d8e0f04-bf1f-4744-b6e3-454960d52aa7
-    m_ActionName: Player/Attack[/Keyboard/j]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ecde769d-e7ba-43d6-9faa-695781634a62
-    m_ActionName: Player/Back[/Keyboard/l]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 66ed691a-d251-4677-ade1-ae69c6460e4a
-    m_ActionName: Player/Interactions[/Keyboard/i]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1046354665}
-        m_MethodName: GunMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: ff5d7d44-d804-48a4-b19f-0ef07f3172d5
-    m_ActionName: OnControlParts/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: a20d9cc6-5bb7-43a5-9070-d2d71cb2a8ff
-    m_ActionName: OnControlParts/Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1046354665}
-        m_MethodName: Attack
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 33b3967e-bdfb-4b28-8c7e-65355801169d
-    m_ActionName: OnControlParts/Attack[/Keyboard/j]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4de42849-a582-4485-aa9c-0091074f6262
-    m_ActionName: OnControlParts/Back[/Keyboard/l]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 8812a868-3bd5-4c61-b747-bbab054d12b6
-    m_ActionName: OnControlParts/Interactions[/Keyboard/i]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: OnControlParts
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &1046354665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1872,9 +1884,10 @@ MonoBehaviour:
   gunPivotPoint: {fileID: 779973135}
   isGunHorizontal: 0
   isShootting: 0
+  isOnControl: 0
   bulletPrefab: {fileID: 2243030628829435024, guid: 62d8d26031210b04fbf7a53fd1667d94,
     type: 3}
-  BulletSpeed: 5
+  BulletSpeed: 10
   FireRate: 0.2
   gunMovingDegree: 40
 --- !u!1 &1160661411
@@ -2302,6 +2315,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1487127502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1487127503}
+  m_Layer: 9
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1487127503
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487127502}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.414, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1762736425}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1500536482
 GameObject:
   m_ObjectHideFlags: 0
@@ -2659,6 +2702,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 651517342}
+  - {fileID: 1487127503}
   m_Father: {fileID: 555221402}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2674,8 +2718,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec452d2bdd761ef41bedc57c4875bdc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groudCheck: {fileID: 1487127503}
   walkSpeed: 5
+  shipGround:
+    serializedVersion: 2
+    m_Bits: 1024
   jumpPower: 0.015
+  jumpTimeRange: 0.5
+  groundCheckRadious: 0.058
+  canJump: 1
 --- !u!114 &1762736427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2776,7 +2827,7 @@ MonoBehaviour:
     m_ActionId: 8812a868-3bd5-4c61-b747-bbab054d12b6
     m_ActionName: OnControlParts/Interactions[/Keyboard/i]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard
+  m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -2944,7 +2995,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1814074174}
   - component: {fileID: 1814074177}
-  - component: {fileID: 1814074176}
   - component: {fileID: 1814074175}
   m_Layer: 0
   m_Name: Controller
@@ -2993,99 +3043,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.37661767, y: 0.13673663}
   m_EdgeRadius: 0
---- !u!114 &1814074176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1814074173}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 277c0fe1f8d337a4c8d09ce7a0875535,
-    type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 85f90b04-d2a3-430e-a676-d1e694b703e7
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e8d44d8b-5637-44c1-a7b6-b2585e02412b
-    m_ActionName: Player/Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4d8e0f04-bf1f-4744-b6e3-454960d52aa7
-    m_ActionName: Player/Attack[/Keyboard/j]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ecde769d-e7ba-43d6-9faa-695781634a62
-    m_ActionName: Player/Back[/Keyboard/l]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 66ed691a-d251-4677-ade1-ae69c6460e4a
-    m_ActionName: Player/Interactions[/Keyboard/i]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1814074177}
-        m_MethodName: GunMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: ff5d7d44-d804-48a4-b19f-0ef07f3172d5
-    m_ActionName: OnControlParts/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: a20d9cc6-5bb7-43a5-9070-d2d71cb2a8ff
-    m_ActionName: OnControlParts/Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1814074177}
-        m_MethodName: Attack
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 33b3967e-bdfb-4b28-8c7e-65355801169d
-    m_ActionName: OnControlParts/Attack[/Keyboard/j]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4de42849-a582-4485-aa9c-0091074f6262
-    m_ActionName: OnControlParts/Back[/Keyboard/l]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 8812a868-3bd5-4c61-b747-bbab054d12b6
-    m_ActionName: OnControlParts/Interactions[/Keyboard/i]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: OnControlParts
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &1814074177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3101,9 +3058,10 @@ MonoBehaviour:
   gunPivotPoint: {fileID: 725921814}
   isGunHorizontal: 0
   isShootting: 0
+  isOnControl: 0
   bulletPrefab: {fileID: 2243030628829435024, guid: 62d8d26031210b04fbf7a53fd1667d94,
     type: 3}
-  BulletSpeed: 5
+  BulletSpeed: 10
   FireRate: 0.2
   gunMovingDegree: 40
 --- !u!1 &1862799832
@@ -3179,7 +3137,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1912016602}
   - component: {fileID: 1912016603}
-  - component: {fileID: 1912016605}
   - component: {fileID: 1912016604}
   m_Layer: 0
   m_Name: Controller
@@ -3217,9 +3174,10 @@ MonoBehaviour:
   gunPivotPoint: {fileID: 822316096}
   isGunHorizontal: 1
   isShootting: 0
+  isOnControl: 0
   bulletPrefab: {fileID: 2243030628829435024, guid: 62d8d26031210b04fbf7a53fd1667d94,
     type: 3}
-  BulletSpeed: 5
+  BulletSpeed: 10
   FireRate: 0.2
   gunMovingDegree: 40
 --- !u!61 &1912016604
@@ -3248,99 +3206,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.37661767, y: 0.13673663}
   m_EdgeRadius: 0
---- !u!114 &1912016605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1912016601}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 277c0fe1f8d337a4c8d09ce7a0875535,
-    type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 85f90b04-d2a3-430e-a676-d1e694b703e7
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e8d44d8b-5637-44c1-a7b6-b2585e02412b
-    m_ActionName: Player/Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4d8e0f04-bf1f-4744-b6e3-454960d52aa7
-    m_ActionName: Player/Attack[/Keyboard/j]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ecde769d-e7ba-43d6-9faa-695781634a62
-    m_ActionName: Player/Back[/Keyboard/l]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 66ed691a-d251-4677-ade1-ae69c6460e4a
-    m_ActionName: Player/Interactions[/Keyboard/i]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1912016603}
-        m_MethodName: GunMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: ff5d7d44-d804-48a4-b19f-0ef07f3172d5
-    m_ActionName: OnControlParts/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: a20d9cc6-5bb7-43a5-9070-d2d71cb2a8ff
-    m_ActionName: OnControlParts/Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1912016603}
-        m_MethodName: Attack
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 33b3967e-bdfb-4b28-8c7e-65355801169d
-    m_ActionName: OnControlParts/Attack[/Keyboard/j]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4de42849-a582-4485-aa9c-0091074f6262
-    m_ActionName: OnControlParts/Back[/Keyboard/l]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 8812a868-3bd5-4c61-b747-bbab054d12b6
-    m_ActionName: OnControlParts/Interactions[/Keyboard/i]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: OnControlParts
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &2019767753
 GameObject:
   m_ObjectHideFlags: 0
@@ -3353,7 +3218,6 @@ GameObject:
   - component: {fileID: 2019767756}
   - component: {fileID: 2019767755}
   - component: {fileID: 2019767762}
-  - component: {fileID: 2019767761}
   - component: {fileID: 2019767760}
   - component: {fileID: 2019767759}
   - component: {fileID: 2019767758}
@@ -3364,8 +3228,12 @@ GameObject:
   - component: {fileID: 2019767765}
   - component: {fileID: 2019767764}
   - component: {fileID: 2019767763}
-  m_Layer: 0
-  m_Name: Walls
+  - component: {fileID: 2019767769}
+  - component: {fileID: 2019767761}
+  - component: {fileID: 2019767770}
+  - component: {fileID: 2019767771}
+  m_Layer: 10
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3394,11 +3262,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 2019767753}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: e2af38639b134014c921364a7db3b223, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.80690277, y: 0.48737156}
+  m_Offset: {x: 0.80690277, y: 0.39038515}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3409,7 +3277,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.7502894, y: 2.8220189}
+  m_Size: {x: 1.7502894, y: 3.0159917}
   m_EdgeRadius: 0
 --- !u!61 &2019767756
 BoxCollider2D:
@@ -3446,7 +3314,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 2019767753}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: e2af38639b134014c921364a7db3b223, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -3498,7 +3366,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 2019767753}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: e2af38639b134014c921364a7db3b223, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -3524,7 +3392,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 2019767753}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: e2af38639b134014c921364a7db3b223, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -3550,11 +3418,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 2019767753}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: e2af38639b134014c921364a7db3b223, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2.8035226, y: 1.3900325}
+  m_Offset: {x: 3.2995691, y: -1.540781}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3565,7 +3433,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.7331696, y: 1.0159788}
+  m_Size: {x: 0.026897669, y: 0.3277645}
   m_EdgeRadius: 0
 --- !u!61 &2019767762
 BoxCollider2D:
@@ -3580,7 +3448,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2.1227207, y: -1.1818638}
+  m_Offset: {x: -2.4162326, y: -1.1818638}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3591,7 +3459,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7.619385, y: 0.88181114}
+  m_Size: {x: 7.032361, y: 0.88181114}
   m_EdgeRadius: 0
 --- !u!61 &2019767763
 BoxCollider2D:
@@ -3602,7 +3470,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 2019767753}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: e2af38639b134014c921364a7db3b223, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -3654,7 +3522,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 2019767753}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: e2af38639b134014c921364a7db3b223, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -3683,7 +3551,7 @@ PolygonCollider2D:
       - {x: 5.1879425, y: -1.6262327}
       - {x: 5.062025, y: -1.6272243}
       - {x: 5.062375, y: -1.7477686}
-      - {x: 5.2297926, y: -1.8910506}
+      - {x: 5.8085604, y: -1.7463586}
       - {x: 5.8155665, y: -0.8761808}
 --- !u!61 &2019767766
 BoxCollider2D:
@@ -3720,11 +3588,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 2019767753}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: e2af38639b134014c921364a7db3b223, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 2.9301033, y: -2.559304}
+  m_Offset: {x: 2.630384, y: -2.559304}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3735,7 +3603,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.73252773, y: 2.3739161}
+  m_Size: {x: 0.1330893, y: 2.3739161}
   m_EdgeRadius: 0
 --- !u!61 &2019767768
 BoxCollider2D:
@@ -3750,7 +3618,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 2.3039613, y: -1.3130991}
+  m_Offset: {x: 2.2927375, y: -1.3095621}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3761,7 +3629,85 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.4984875, y: 0.610991}
+  m_Size: {x: 1.4760408, y: 0.6180651}
+  m_EdgeRadius: 0
+--- !u!61 &2019767769
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019767753}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 2.9742856, y: -1.540781}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.6532352, y: 0.3277645}
+  m_EdgeRadius: 0
+--- !u!61 &2019767770
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019767753}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: e2af38639b134014c921364a7db3b223, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 3.0369577, y: -1.1962718}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.047891617, y: 0.39365363}
+  m_EdgeRadius: 0
+--- !u!61 &2019767771
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019767753}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 3.715846, y: 0.8946016}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.160784, y: 0.27835608}
   m_EdgeRadius: 0
 --- !u!1 &2021350172
 GameObject:

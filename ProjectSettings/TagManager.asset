@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Stairs
   - ShooterController
+  - ShipMoveController
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - 
   - ShipBody
   - Player
-  - 
+  - ShipGround
   - 
   - 
   - 

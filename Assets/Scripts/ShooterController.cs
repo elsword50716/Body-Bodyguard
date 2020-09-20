@@ -8,11 +8,12 @@ public class ShooterController : MonoBehaviour
     public Transform gunPivotPoint;
     public bool isGunHorizontal;
     public bool isShootting = false;
+    public bool isOnControl = false;
 
     public GameObject bulletPrefab;
     public float BulletSpeed = 1f;
     public float FireRate = 0.2f;
-    
+
 
     public float gunMovingDegree = 1f;
     private float timer = 0f;
@@ -21,9 +22,12 @@ public class ShooterController : MonoBehaviour
     private Vector2 moveInput = Vector2.zero;
     private Transform[] firePoint;
 
+    private InputManager inputActions;
+
 
     void Start()
     {
+        inputActions = new InputManager();
         var childCount = gunPivotPoint.childCount;
         firePoint = new Transform[childCount];
 
@@ -37,6 +41,23 @@ public class ShooterController : MonoBehaviour
 
     void Update()
     {
+
+        if (isOnControl)
+        {
+            inputActions.OnControlParts.Move.performed += GunMove;
+            inputActions.OnControlParts.Attack.performed += context => isShootting = true;
+            inputActions.OnControlParts.Attack.canceled += context => isShootting = false;
+            inputActions.OnControlParts.Enable();
+
+        }
+        else
+        {
+            inputActions.OnControlParts.Move.performed -= GunMove;
+            inputActions.OnControlParts.Attack.performed -= context => isShootting = true;
+            inputActions.OnControlParts.Attack.canceled -= context => isShootting = false;
+            inputActions.OnControlParts.Disable();
+
+        }
 
         gunRotationZ = ClampAngle(gunPivotPoint.localEulerAngles.z, -60, 60);
 
@@ -78,15 +99,13 @@ public class ShooterController : MonoBehaviour
 
     public void GunMove(InputAction.CallbackContext context)
     {
-        moveInput = context.ReadValue<Vector2>();
-    }
+        if (!isOnControl)
+        {
+            moveInput = Vector2.zero;
+            return;
+        }
 
-    public void Attack(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-            isShootting = true;
-        if (context.canceled)
-            isShootting = false;
+        moveInput = context.ReadValue<Vector2>();
     }
 
     private void FireBullet(int index)
