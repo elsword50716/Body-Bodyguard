@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 
 public class ShipController : MonoBehaviour
 {
-    public Rigidbody2D shipRbody;
+    //public Rigidbody2D shipRbody;
+    public Transform ship;
     public bool isOnControl = false, addForce = true;
     public float shipSpeed = 100f;
 
@@ -32,10 +33,12 @@ public class ShipController : MonoBehaviour
             inputActions.OnControlParts.Disable();
         }
 
-        if (addForce)
+        ship.Translate(new Vector3(moveInput.x * shipSpeed * Time.deltaTime, moveInput.y * shipSpeed * Time.deltaTime, 0f));
+        
+        /*if (addForce)
             shipRbody.velocity = moveInput * shipSpeed;
         else
-            shipRbody.MovePosition(new Vector2(shipRbody.transform.position.x + moveInput.x, shipRbody.transform.position.y + moveInput.y));
+            shipRbody.MovePosition(new Vector2(shipRbody.transform.position.x + moveInput.x, shipRbody.transform.position.y + moveInput.y));*/
 
     }
 

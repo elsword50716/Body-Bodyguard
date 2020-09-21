@@ -3,26 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ShooterController : MonoBehaviour
+public class LaserController : MonoBehaviour
 {
+    
     public Transform gunPivotPoint;
     public bool isGunHorizontal;
     public bool isShootting = false;
     public bool isOnControl = false;
-
     public GameObject bulletPrefab;
-    public bool isLaser = false;
-    public float BulletSpeed = 1f;
-    public float FireRate = 0.2f;
-
-
     public float gunMovingDegree = 1f;
-    private float timer = 0f;
-    private float gunRotationZ = 0f;
-    private int counter = 0;
-    private Vector2 moveInput = Vector2.zero;
-    private Transform[] firePoint;
 
+
+    private float gunRotationZ = 0f;
+    private Vector2 moveInput = Vector2.zero;
     private InputManager inputActions;
 
 
@@ -30,12 +23,7 @@ public class ShooterController : MonoBehaviour
     {
         inputActions = new InputManager();
         var childCount = gunPivotPoint.childCount;
-        firePoint = new Transform[childCount];
-
-        for (int i = 0; i < firePoint.Length; i++)
-        {
-            firePoint[i] = gunPivotPoint.GetChild(i).GetChild(0);
-        }
+        
     }
 
 
@@ -74,41 +62,13 @@ public class ShooterController : MonoBehaviour
         }
 
 
-        if (isLaser)
+
+
+        if (isShootting)
         {
-            if (isShootting)
-            {
-                bulletPrefab.SetActive(true);
-            }
-            else
-            {
-                bulletPrefab.SetActive(false);
-            }
-        }
-        else
-        {
-            if (isShootting)
-            {
-                timer += Time.deltaTime;
-
-                if (timer > FireRate)
-                {
-                    counter++;
-                    timer = 0;
-
-                    if (counter == firePoint.Length)
-                        counter = 0;
-
-                    FireBullet(counter % firePoint.Length);
-                }
-
-            }
-
-
-
-
-
-
+            bulletPrefab.SetActive(true);
+        }else{
+            bulletPrefab.SetActive(false);
         }
     }
 
@@ -121,14 +81,6 @@ public class ShooterController : MonoBehaviour
         }
 
         moveInput = context.ReadValue<Vector2>();
-    }
-
-    private void FireBullet(int index)
-    {
-        var bullet = Instantiate(bulletPrefab, firePoint[index].position, Quaternion.identity);
-        var bulletRbody2D = bullet.GetComponent<Rigidbody2D>();
-        bulletRbody2D.velocity = firePoint[index].up * BulletSpeed;
-        bullet.transform.up = firePoint[index].up;
     }
 
     static float ClampAngle(float angle, float min, float max)

@@ -7,6 +7,7 @@ TagManager:
   - Stairs
   - ShooterController
   - ShipMoveController
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - ShipBody
   - Player
   - ShipGround
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -55,4 +56,10 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 1111369685
+    locked: 0
+  - name: Enemy
+    uniqueID: 3418948859
+    locked: 0
+  - name: Bullet
+    uniqueID: 3070054787
     locked: 0
