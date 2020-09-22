@@ -14,12 +14,12 @@ public class ShipController : MonoBehaviour
     private Vector2 moveInput = Vector2.zero;
 
 
-    void Start()
+    private void Start()
     {
         inputActions = new InputManager();
     }
 
-    void Update()
+    private void Update()
     {
         if (isOnControl)
         {

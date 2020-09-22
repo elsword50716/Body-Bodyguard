@@ -14,6 +14,7 @@ public class ShooterController : MonoBehaviour
     public bool isLaser = false;
     public float BulletSpeed = 1f;
     public float FireRate = 0.2f;
+    public Animator gunAnimator;
 
 
     public float gunMovingDegree = 1f;
@@ -26,7 +27,7 @@ public class ShooterController : MonoBehaviour
     private InputManager inputActions;
 
 
-    void Start()
+    private void Start()
     {
         inputActions = new InputManager();
         var childCount = gunPivotPoint.childCount;
@@ -40,7 +41,7 @@ public class ShooterController : MonoBehaviour
 
 
 
-    void Update()
+    private void Update()
     {
 
         if (isOnControl)
@@ -78,10 +79,12 @@ public class ShooterController : MonoBehaviour
         {
             if (isShootting)
             {
-                bulletPrefab.SetActive(true);
+                gunAnimator.SetBool("isShootting", true);
+                //bulletPrefab.SetActive(true);
             }
             else
             {
+                gunAnimator.SetBool("isShootting", false);
                 bulletPrefab.SetActive(false);
             }
         }
@@ -89,17 +92,17 @@ public class ShooterController : MonoBehaviour
         {
             if (isShootting)
             {
-                timer += Time.deltaTime;
-
-                if (timer > FireRate)
+                if (Time.time > timer)
                 {
                     counter++;
-                    timer = 0;
-
+                    
                     if (counter == firePoint.Length)
                         counter = 0;
 
                     FireBullet(counter % firePoint.Length);
+
+                    timer = Time.time + FireRate;
+                    
                 }
 
             }
@@ -130,6 +133,8 @@ public class ShooterController : MonoBehaviour
         bulletRbody2D.velocity = firePoint[index].up * BulletSpeed;
         bullet.transform.up = firePoint[index].up;
     }
+
+    
 
     static float ClampAngle(float angle, float min, float max)
     {

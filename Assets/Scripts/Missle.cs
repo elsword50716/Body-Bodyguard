@@ -11,13 +11,13 @@ public class Missle : MonoBehaviour
     private float timer = 0;
 
     private Rigidbody2D missleRbody;
-    void Start()
+    private void Start()
     {
         enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
         missleRbody = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    private void Update()
     {
         if(timer < chasingDelay){
             timer+=Time.deltaTime;

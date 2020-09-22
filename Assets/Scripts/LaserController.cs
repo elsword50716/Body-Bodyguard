@@ -5,13 +5,14 @@ using UnityEngine.InputSystem;
 
 public class LaserController : MonoBehaviour
 {
-    
+
     public Transform gunPivotPoint;
     public bool isGunHorizontal;
     public bool isShootting = false;
     public bool isOnControl = false;
     public GameObject bulletPrefab;
     public float gunMovingDegree = 1f;
+    public Animator animator;
 
 
     private float gunRotationZ = 0f;
@@ -19,16 +20,18 @@ public class LaserController : MonoBehaviour
     private InputManager inputActions;
 
 
-    void Start()
+
+    private void Start()
     {
         inputActions = new InputManager();
         var childCount = gunPivotPoint.childCount;
-        
+
+
     }
 
 
 
-    void Update()
+    private void Update()
     {
 
         if (isOnControl)
@@ -66,8 +69,12 @@ public class LaserController : MonoBehaviour
 
         if (isShootting)
         {
-            bulletPrefab.SetActive(true);
-        }else{
+            animator.SetBool("isShootting", true);
+            //bulletPrefab.SetActive(true);
+        }
+        else
+        {
+            animator.SetBool("isShootting", false);
             bulletPrefab.SetActive(false);
         }
     }
