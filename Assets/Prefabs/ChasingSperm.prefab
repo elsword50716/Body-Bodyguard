@@ -113,7 +113,8 @@ GameObject:
   - component: {fileID: 1940077534621950281}
   - component: {fileID: 2500480555057168517}
   - component: {fileID: 855431087334941038}
-  - component: {fileID: -6746077017849841374}
+  - component: {fileID: 4579071815544745843}
+  - component: {fileID: 2297981451726687462}
   m_Layer: 0
   m_Name: Bullet 1
   m_TagString: Untagged
@@ -173,7 +174,26 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.4}
   serializedVersion: 2
   m_Radius: 0.11
---- !u!114 &-6746077017849841374
+--- !u!114 &4579071815544745843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2243030628829435024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ba1e63712b411f4397688cc42b532c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletData:
+    id: 0
+    name: ChasingSperm
+    startSpeed: 10
+    damagePoint: 10
+    chasingDelay: 0.5
+    chasingSpeed: 20
+--- !u!114 &2297981451726687462
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,4 +205,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71398f94c5287b8478f5cc2f0a8f3c8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chasingSpeed: 10
+  target: {fileID: 0}

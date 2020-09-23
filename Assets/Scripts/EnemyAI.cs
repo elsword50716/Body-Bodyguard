@@ -7,6 +7,8 @@ public class EnemyAI : MonoBehaviour
     public Transform Ship;
 
     public float currentHealth;
+    public float avoidShaking = 1f;
+    public Transform BulletPrefab;
 
     public EnemyData enemyData = new EnemyData();
 
@@ -18,8 +20,10 @@ public class EnemyAI : MonoBehaviour
     }
     private Vector3 startingPosotion;
     private Vector3 roamPosotion;
+    private Vector3 targetPosotion;
     private bool isReachTarget = false;
     private State state;
+    private float nextShoot = 0f;
 
 
     private void Awake()
@@ -38,14 +42,14 @@ public class EnemyAI : MonoBehaviour
     private void Update()
     {
         FindTarget();
-        
+
         switch (state)
         {
 
             default:
 
             case State.Roaming:
-                MoveTo(roamPosotion);
+                MoveTo(roamPosotion, true);
                 Debug.DrawLine(transform.position, roamPosotion, Color.green);
                 float reachedPositionDistance = 1f;
                 if (Vector3.Distance(transform.position, roamPosotion) < reachedPositionDistance)
@@ -53,13 +57,32 @@ public class EnemyAI : MonoBehaviour
                     roamPosotion = GetRoamingPostion();
                 }
 
-                
+
 
                 break;
 
             case State.ChaseTarget:
-                MoveTo(Ship.position * enemyData.ClosestRangeToShip);
-                Debug.DrawLine(transform.position, transform.position + (Ship.position * enemyData.ClosestRangeToShip), Color.red);
+                if (Vector3.Distance(transform.position, Ship.position) < enemyData.ClosestDistanceToShip - avoidShaking)
+                {
+                    //move back
+                    MoveTo(Ship.position, false);
+                }
+                else if (Vector3.Distance(transform.position, Ship.position) > enemyData.ClosestDistanceToShip + avoidShaking)
+                    MoveTo(Ship.position, true);
+                else
+                {
+                    //attcak
+                    transform.RotateAround(Ship.position, Vector3.forward, enemyData.moveSpeed * Time.deltaTime);
+                    transform.rotation = Quaternion.identity;
+
+                    if (Time.time > nextShoot)
+                    {
+                        Attack();
+                        nextShoot = Time.time + enemyData.FireRate;
+                    }
+                }
+
+                Debug.DrawLine(transform.position, Ship.position, Color.red);
 
                 break;
         }
@@ -71,9 +94,12 @@ public class EnemyAI : MonoBehaviour
         return startingPosotion + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * enemyData.roamRange;
     }
 
-    private void MoveTo(Vector3 targetPosition)
+    private void MoveTo(Vector3 targetPosition, bool isApproaching)
     {
-        transform.Translate((targetPosition - transform.position).normalized * enemyData.moveSpeed * Time.deltaTime);
+        if (isApproaching)
+            transform.Translate((targetPosition - transform.position).normalized * enemyData.moveSpeed * Time.deltaTime);
+        else
+            transform.Translate((transform.position - targetPosition).normalized * enemyData.moveSpeed * Time.deltaTime);
     }
 
     private void FindTarget()
@@ -81,7 +107,8 @@ public class EnemyAI : MonoBehaviour
         if (Vector3.Distance(transform.position, Ship.position) < enemyData.detectShipRange)
         {
             state = State.ChaseTarget;
-            Vector3.Lerp(transform.position, Ship.position, enemyData.ClosestRangeToShip);
+
+            //Vector3.Lerp(transform.position, Ship.position, enemyData.ClosestRangeToShip);
         }
         else
         {
@@ -89,10 +116,28 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private void Attack()
+    {
+
+        Transform bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
+        Rigidbody2D bulletRbody = bullet.GetComponent<Rigidbody2D>();
+        bulletRbody.velocity = (Ship.position - transform.position).normalized * enemyData.BulletSpeed;
+        bullet.transform.up = bulletRbody.velocity.normalized;
+        
+        if (bullet.GetComponent<Missle>() != null)
+        {
+            bullet.GetComponent<Missle>().target = Ship.transform;
+        }
+
+
+
+
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, enemyData.detectShipRange);
-        
+
 
     }
 }

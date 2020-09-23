@@ -1108,7 +1108,7 @@ GameObject:
   - component: {fileID: 441448443}
   - component: {fileID: 441448444}
   m_Layer: 0
-  m_Name: "\u5E03\u6797\u57FA8"
+  m_Name: BooleanAgbra
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1192,7 +1192,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 441448438}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.07, y: 5.63, z: 0}
+  m_LocalPosition: {x: 40.27, y: 13.73, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1234,7 +1234,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &441448444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1249,15 +1249,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Ship: {fileID: 0}
   currentHealth: 0
+  avoidShaking: 1
+  BulletPrefab: {fileID: 8747196761740034793, guid: 62d8d26031210b04fbf7a53fd1667d94,
+    type: 3}
   enemyData:
     id: 0
     name: BooleanAgbra
     maxHealth: 100
     FireRate: 0.5
+    BulletSpeed: 10
     moveSpeed: 5
     roamRange: 10
-    detectShipRange: 20
-    ClosestRangeToShip: 0.673
+    detectShipRange: 40
+    ClosestDistanceToShip: 20
 --- !u!1 &465172360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1410,7 +1414,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 555221402}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &477259605
 GameObject:
@@ -1565,7 +1569,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 555221402}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &534925346
 GameObject:
@@ -1762,7 +1766,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 555221402}
-  m_Layer: 0
+  - component: {fileID: 555221403}
+  m_Layer: 8
   m_Name: 'Ship '
   m_TagString: Ship
   m_Icon: {fileID: 0}
@@ -1781,7 +1786,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1762736425}
-  - {fileID: 2050974125}
   - {fileID: 474815251}
   - {fileID: 735688787}
   - {fileID: 612015114}
@@ -1789,6 +1793,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &555221403
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555221401}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 13, y: 8}
+  m_Direction: 1
 --- !u!1 &573524391
 GameObject:
   m_ObjectHideFlags: 0
@@ -1853,7 +1873,7 @@ Transform:
   - {fileID: 435243544}
   - {fileID: 1955935274}
   m_Father: {fileID: 555221402}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &622804299
 GameObject:
@@ -2062,7 +2082,7 @@ Transform:
   - {fileID: 622804300}
   - {fileID: 904895174}
   m_Father: {fileID: 555221402}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &779973134
 GameObject:
@@ -2799,7 +2819,7 @@ MonoBehaviour:
   isGunHorizontal: 0
   isShootting: 0
   isOnControl: 0
-  bulletPrefab: {fileID: 2243030628829435024, guid: 62d8d26031210b04fbf7a53fd1667d94,
+  bulletPrefab: {fileID: 2243030628829435024, guid: f81774dc954b59b4f8779cf0e272e9c7,
     type: 3}
   isLaser: 0
   BulletSpeed: 10
@@ -4260,7 +4280,7 @@ MonoBehaviour:
   isGunHorizontal: 0
   isShootting: 0
   isOnControl: 0
-  bulletPrefab: {fileID: 2243030628829435024, guid: 62d8d26031210b04fbf7a53fd1667d94,
+  bulletPrefab: {fileID: 2243030628829435024, guid: f81774dc954b59b4f8779cf0e272e9c7,
     type: 3}
   isLaser: 0
   BulletSpeed: 10
@@ -4461,7 +4481,7 @@ MonoBehaviour:
   isGunHorizontal: 1
   isShootting: 0
   isOnControl: 0
-  bulletPrefab: {fileID: 2243030628829435024, guid: 62d8d26031210b04fbf7a53fd1667d94,
+  bulletPrefab: {fileID: 2243030628829435024, guid: f81774dc954b59b4f8779cf0e272e9c7,
     type: 3}
   isLaser: 0
   BulletSpeed: 10
@@ -5300,53 +5320,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &2050974124
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2050974125}
-  - component: {fileID: 2050974126}
-  m_Layer: 8
-  m_Name: ShipBody
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2050974125
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2050974124}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 555221402}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &2050974126
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2050974124}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 13, y: 8}
-  m_Direction: 1
 --- !u!1 &2057636004
 GameObject:
   m_ObjectHideFlags: 0

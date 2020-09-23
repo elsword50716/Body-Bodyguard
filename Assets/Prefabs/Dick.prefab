@@ -67,8 +67,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1224912509
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 4985599735000903729, guid: 5c334eb23e36a8e4bbc4b7737f56b3b0,
     type: 3}
@@ -149,8 +149,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1224912509
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: -3012466812393080137, guid: 5c334eb23e36a8e4bbc4b7737f56b3b0,
     type: 3}
@@ -174,10 +174,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4305197473333773966}
   - component: {fileID: 4305197473333773965}
-  - component: {fileID: 4305197473333773964}
   - component: {fileID: 7906005255951699905}
   m_Layer: 0
-  m_Name: Missle
+  m_Name: Dick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -220,19 +219,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4305197473333773964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4305197473333773939}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71398f94c5287b8478f5cc2f0a8f3c8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chasingSpeed: 10
 --- !u!58 &7906005255951699905
 CircleCollider2D:
   m_ObjectHideFlags: 0

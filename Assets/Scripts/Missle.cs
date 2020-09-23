@@ -2,36 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BasicBullet))]
 public class Missle : MonoBehaviour
 {
+    public Transform target;
 
-    public float chasingDelay = 0.5f;
-    public float chasingSpeed = 10f;
-    private Transform enemy;
+    
     private float timer = 0;
-
+    private BulletData bulletData;
     private Rigidbody2D missleRbody;
+
     private void Start()
     {
-        enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
+        bulletData = GetComponent<BasicBullet>().bulletData;
         missleRbody = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
-        if(timer < chasingDelay){
-            timer+=Time.deltaTime;
+        if (timer < bulletData.chasingDelay)
+        {
+            timer += Time.deltaTime;
             return;
         }
-        transform.up = missleRbody.velocity = (enemy.position - transform.position).normalized * chasingSpeed;
-        
+        transform.up = missleRbody.velocity = (target.position - transform.position).normalized * bulletData.chasingSpeed;
+
     }
-    
-    private void OnTriggerEnter2D(Collider2D other) {
-        if(!other.CompareTag("Enemy"))
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("hit something/Trigger");
+
+        if (other.transform != target)
             return;
-        
+
         Destroy(gameObject);
     }
-    
+
 }

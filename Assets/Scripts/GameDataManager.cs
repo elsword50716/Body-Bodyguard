@@ -14,8 +14,19 @@ public class EnemyData
     public string name;
     public float maxHealth;
     public float FireRate;
+    public float BulletSpeed;
     public float moveSpeed;
     [Range(0f, 50f)]public float roamRange;
     [Range(0f, 50f)]public float detectShipRange;
-    [Range(0f, 1f)]public float ClosestRangeToShip;
+    [Range(0f, 100f)]public float ClosestDistanceToShip;
+}
+
+[System.Serializable]
+public class BulletData{
+    public int id;
+    public string name;
+    public float startSpeed;
+    public float damagePoint;
+    public float chasingDelay;
+    public float chasingSpeed;
 }
