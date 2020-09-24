@@ -68,8 +68,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1224912509
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: -4870735024557770735, guid: 54a4092af7eed3c43ac12a2eecce7152,
     type: 3}
@@ -116,8 +116,8 @@ GameObject:
   - component: {fileID: 4579071815544745843}
   - component: {fileID: 2297981451726687462}
   m_Layer: 0
-  m_Name: Bullet 1
-  m_TagString: Untagged
+  m_Name: ChasingSperm
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -193,6 +193,8 @@ MonoBehaviour:
     damagePoint: 10
     chasingDelay: 0.5
     chasingSpeed: 20
+    targetTag: 
+  targetTag: 
 --- !u!114 &2297981451726687462
 MonoBehaviour:
   m_ObjectHideFlags: 0

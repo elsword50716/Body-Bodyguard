@@ -129,6 +129,7 @@ public class ShooterController : MonoBehaviour
     private void FireBullet(int index)
     {
         var bullet = Instantiate(bulletPrefab, firePoint[index].position, Quaternion.identity);
+        bullet.GetComponent<BasicBullet>().bulletData.targetTag = "Enemy";
         var bulletRbody2D = bullet.GetComponent<Rigidbody2D>();
         bulletRbody2D.velocity = firePoint[index].up * BulletSpeed;
         bullet.transform.up = firePoint[index].up;

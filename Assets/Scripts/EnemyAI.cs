@@ -119,19 +119,15 @@ public class EnemyAI : MonoBehaviour
     private void Attack()
     {
 
-        Transform bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
-        Rigidbody2D bulletRbody = bullet.GetComponent<Rigidbody2D>();
+        var bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
+        var bulletRbody = bullet.GetComponent<Rigidbody2D>();
         bulletRbody.velocity = (Ship.position - transform.position).normalized * enemyData.BulletSpeed;
         bullet.transform.up = bulletRbody.velocity.normalized;
-        
-        if (bullet.GetComponent<Missle>() != null)
-        {
-            bullet.GetComponent<Missle>().target = Ship.transform;
-        }
+        bullet.GetComponent<BasicBullet>().bulletData.targetTag = "Ship";
+    }
 
-
-
-
+    public void GetDamaged(float damage){
+        currentHealth -= damage;
     }
 
     private void OnDrawGizmosSelected()

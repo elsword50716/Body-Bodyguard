@@ -8,12 +8,31 @@ public class BasicBullet : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
-    
+
     void Update()
     {
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
         
+        
+        if (!other.CompareTag(bulletData.targetTag))
+            return;
+
+        if (other.GetComponent<EnemyAI>() == null)
+        {
+
+            Destroy(gameObject);
+        }
+        else
+        {
+            other.GetComponent<EnemyAI>().GetDamaged(bulletData.damagePoint);
+            Destroy(gameObject);
+        }
     }
 }

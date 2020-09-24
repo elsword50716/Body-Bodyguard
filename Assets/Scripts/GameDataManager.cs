@@ -4,7 +4,7 @@ using UnityEngine;
 
 static class GameDataManager
 {
-
+    
 }
 
 [System.Serializable]
@@ -29,4 +29,15 @@ public class BulletData{
     public float damagePoint;
     public float chasingDelay;
     public float chasingSpeed;
+    public string targetTag;
+}
+
+[System.Serializable]
+public class ShipData{
+    public int id;
+    public string name;
+    public float maxHealth;
+    public float NormalSpeed;
+    public float BoostSpeed;
+    public float ShootterRotateAngle;
 }
