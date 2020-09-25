@@ -275,6 +275,80 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &65084446
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 65084448}
+  - component: {fileID: 65084447}
+  m_Layer: 0
+  m_Name: PlayerInputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &65084447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65084446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NotificationBehavior: 0
+  m_MaxPlayerCount: -1
+  m_AllowJoining: 1
+  m_JoinBehavior: 0
+  m_PlayerJoinedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_PlayerLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_JoinAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: 
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: 0}
+  m_PlayerPrefab: {fileID: 1762736421}
+  m_SplitScreen: 0
+  m_MaintainAspectRatioInSplitScreen: 0
+  m_FixedNumberOfSplitScreens: -1
+  m_SplitScreenRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!4 &65084448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65084446}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &108359993
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,6 +505,7 @@ GameObject:
   - component: {fileID: 190584104}
   - component: {fileID: 190584105}
   - component: {fileID: 190584106}
+  - component: {fileID: 190584107}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -528,6 +603,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 50}
   m_EdgeRadius: 0
+--- !u!50 &190584107
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190584103}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &194099223
 GameObject:
   m_ObjectHideFlags: 0
@@ -773,7 +869,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 197996783}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26.88, y: 20.74, z: 0}
+  m_LocalPosition: {x: 3.62, y: -18.56, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -982,6 +1078,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 278220119}
+  - component: {fileID: 278220120}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -1004,6 +1101,19 @@ Transform:
   m_Father: {fileID: 391202790}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 180}
+--- !u!114 &278220120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278220118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8e53804cb276b34e9c9b21eeff31ed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damagePerSec: 0
 --- !u!1 &317829841
 GameObject:
   m_ObjectHideFlags: 0
@@ -1361,7 +1471,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 441448438}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 49.3, y: 7.4, z: 0}
+  m_LocalPosition: {x: 22.98, y: -13.77, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1391,7 +1501,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 441448438}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -3828,7 +3938,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e10ba30d6380e843babecbf106136da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 278220118}
+  laserPrefab: {fileID: 278220118}
+  damagePerSec: 10
 --- !u!95 &1577862610
 Animator:
   serializedVersion: 3
@@ -4041,7 +4152,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!70 &1762736422
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -4087,7 +4198,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1762736421}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.784, y: -0.33095878, z: 0}
+  m_LocalPosition: {x: -2.26, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 651517342}
@@ -4197,24 +4308,24 @@ MonoBehaviour:
     m_ActionName: Player/Interactions[/Keyboard/i]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 1c69fbc6-badc-42cf-87fd-e0f8605c64ac
-    m_ActionName: OnControlParts/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+    m_ActionId: 49ccf253-0430-4f2f-b649-5c41fede0e09
+    m_ActionName: OnControlParts/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/DualShock4GamepadHID/leftStick,/XInputControllerWindows/leftStick]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 9eb425c8-136a-4f57-a03d-6c7337ac739a
-    m_ActionName: OnControlParts/Jump[/Keyboard/space]
+    m_ActionId: 9110ea76-6973-4231-8eb5-086958c47589
+    m_ActionName: OnControlParts/Jump[/Keyboard/space,/DualShock4GamepadHID/buttonSouth,/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 2eb74215-768a-43c7-b7dc-c4fc1fe76d4a
-    m_ActionName: OnControlParts/Attack[/Keyboard/j]
+    m_ActionId: 79218e54-6088-41a6-a969-566f2f9fa527
+    m_ActionName: OnControlParts/Attack[/Keyboard/j,/DualShock4GamepadHID/buttonWest,/XInputControllerWindows/buttonWest]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 35cb8825-745c-40aa-a979-7d8575265dcf
-    m_ActionName: OnControlParts/Back[/Keyboard/l]
+    m_ActionId: 42aff43a-f8ae-4be3-9431-27b8d5585ed2
+    m_ActionName: OnControlParts/Back[/Keyboard/l,/DualShock4GamepadHID/buttonEast,/XInputControllerWindows/buttonEast]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: bec964d7-452e-4752-b2c5-e3ba406b9853
-    m_ActionName: OnControlParts/Interactions[/Keyboard/i]
+    m_ActionId: 6aa13cad-7f34-40d0-a32f-c53a7eb5a010
+    m_ActionName: OnControlParts/Interactions[/Keyboard/i,/DualShock4GamepadHID/buttonNorth,/XInputControllerWindows/buttonNorth]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Player

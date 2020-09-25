@@ -87,6 +87,10 @@ public class EnemyAI : MonoBehaviour
                 break;
         }
 
+        if(currentHealth <= 0){
+            Death();
+        }
+
     }
 
     private Vector3 GetRoamingPostion()
@@ -128,6 +132,10 @@ public class EnemyAI : MonoBehaviour
 
     public void GetDamaged(float damage){
         currentHealth -= damage;
+    }
+
+    private void Death(){
+        Destroy(gameObject);
     }
 
     private void OnDrawGizmosSelected()
