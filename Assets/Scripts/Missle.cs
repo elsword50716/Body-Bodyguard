@@ -13,20 +13,24 @@ public class Missle : MonoBehaviour
     private BulletData bulletData;
     private Rigidbody2D missleRbody;
 
-    private void Awake()
+    private void Start()
     {
+        missleRbody = GetComponent<Rigidbody2D>();
         bulletData = GetComponent<BasicBullet>().bulletData;
+
         if (!string.IsNullOrEmpty(bulletData.targetTag))
         {
             targetPool = GameObject.FindGameObjectsWithTag(bulletData.targetTag);
-            target = targetPool[Random.Range(0, targetPool.Length - 1)].transform;
+
+            if (targetPool.Length == 0)
+                return;
+            target = targetPool[Random.Range(0, targetPool.Length)].transform;
         }
-        missleRbody = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
-        if(target == null)
+        if (target == null)
             return;
 
         if (timer < bulletData.chasingDelay)
@@ -34,7 +38,9 @@ public class Missle : MonoBehaviour
             timer += Time.deltaTime;
             return;
         }
-        transform.up = missleRbody.velocity = (target.position - transform.position).normalized * bulletData.chasingSpeed;
+
+        if (target != null)
+            transform.up = missleRbody.velocity = (target.position - transform.position).normalized * bulletData.chasingSpeed;
 
     }
 
