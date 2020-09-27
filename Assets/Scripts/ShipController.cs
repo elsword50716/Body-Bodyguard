@@ -34,7 +34,7 @@ public class ShipController : MonoBehaviour
         }
 
         ship.Translate(new Vector3(moveInput.x * shipSpeed * Time.deltaTime, moveInput.y * shipSpeed * Time.deltaTime, 0f));
-        
+
         /*if (addForce)
             shipRbody.velocity = moveInput * shipSpeed;
         else
@@ -42,7 +42,7 @@ public class ShipController : MonoBehaviour
 
     }
 
-    private void ShipMove(InputAction.CallbackContext context)
+    public void ShipMove(InputAction.CallbackContext context)
     {
         if (!isOnControl)
         {

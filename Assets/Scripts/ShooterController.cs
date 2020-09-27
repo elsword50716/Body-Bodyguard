@@ -61,6 +61,7 @@ public class ShooterController : MonoBehaviour
 
         }
 
+
         gunRotationZ = ClampAngle(gunPivotPoint.localEulerAngles.z, -60, 60);
 
         gunPivotPoint.localEulerAngles = new Vector3(0f, 0f, gunRotationZ);
@@ -95,14 +96,14 @@ public class ShooterController : MonoBehaviour
                 if (Time.time > timer)
                 {
                     counter++;
-                    
+
                     if (counter == firePoint.Length)
                         counter = 0;
 
                     FireBullet(counter % firePoint.Length);
 
                     timer = Time.time + FireRate;
-                    
+
                 }
 
             }
@@ -115,7 +116,7 @@ public class ShooterController : MonoBehaviour
         }
     }
 
-    private void GunMove(InputAction.CallbackContext context)
+    public void GunMove(InputAction.CallbackContext context)
     {
         if (!isOnControl)
         {
@@ -135,7 +136,7 @@ public class ShooterController : MonoBehaviour
         bullet.transform.up = firePoint[index].up;
     }
 
-    
+
 
     static float ClampAngle(float angle, float min, float max)
     {

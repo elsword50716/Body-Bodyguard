@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public float jumpTimeRange = 0.5f;
     [Range(0, 1)] public float groundCheckRadious = 0.02f;
 
+    public Animator animator;
+
 
     private float horizontalMove = 0f;
     private Rigidbody2D rbody2D;
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        animator = GetComponentInChildren<Animator>();
         playerInput = GetComponent<PlayerInput>();
         rbody2D = GetComponent<Rigidbody2D>();
         originalParent = transform.parent;
@@ -57,6 +60,12 @@ public class PlayerController : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         horizontalMove = context.ReadValue<Vector2>().x;
+
+        if (context.ReadValue<Vector2>().x == 0)
+            animator.SetBool("isWalking", false);
+        else
+            animator.SetBool("isWalking", true);
+
         Debug.Log("WASD: " + context.ReadValue<Vector2>());
     }
 
@@ -132,8 +141,10 @@ public class PlayerController : MonoBehaviour
 
     private void ExitShooterController()
     {
+        animator.SetBool("isOnControl", false);
         freezePosition = false;
         transform.parent = originalParent;
+        rbody2D.gravityScale = 1;
         Controller_temp.GetComponent<ShooterController>().enabled = false;
         Controller_temp.GetComponent<ShooterController>().isOnControl = false;
         Controller_temp.GetComponent<ShooterController>().isShootting = false;
@@ -141,12 +152,14 @@ public class PlayerController : MonoBehaviour
 
     private void EnterShooterController()
     {
+        animator.SetBool("isOnControl", true);
         Controller_temp.GetComponent<ShooterController>().enabled = true;
         Controller_temp.GetComponent<ShooterController>().isOnControl = true;
         freezePosition = true;
         transform.parent = Controller_temp;
         rbody2D.velocity = Vector2.zero;
-        transform.localPosition = Vector3.zero;
+        rbody2D.gravityScale = 0;
+        transform.localPosition = new Vector3(0f, 0.325f, 0f);
         transform.localEulerAngles = Vector3.zero;
     }
 

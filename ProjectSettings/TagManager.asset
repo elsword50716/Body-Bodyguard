@@ -9,6 +9,8 @@ TagManager:
   - ShipMoveController
   - Enemy
   - Ship
+  - Bullet
+  - BulletBound
   layers:
   - Default
   - TransparentFX

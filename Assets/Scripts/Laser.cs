@@ -8,9 +8,10 @@ public class Laser : MonoBehaviour
 
     private float timer = 0f;
 
-    private bool canDamageEnemy = false;
+    [SerializeField] private bool canDamageEnemy = false;
 
-    private void OnDisable() {
+    private void OnDisable()
+    {
         timer = 0f;
         canDamageEnemy = false;
     }
@@ -20,19 +21,19 @@ public class Laser : MonoBehaviour
         Attack();
     }
 
-    
+
     private void Attack()
     {
         if (Time.time > timer)
         {
             canDamageEnemy = true;
             timer = Time.time + 1f;
-            
+
             Debug.Log("Laser Fire!!");
         }
         else
         {
-            
+
 
         }
     }
@@ -40,20 +41,21 @@ public class Laser : MonoBehaviour
     private void OnTriggerStay2D(Collider2D other)
     {
         Debug.Log("hit!!");
-        /*if (!other.CompareTag("Enemy"))
+        if (!other.CompareTag("Enemy"))
             return;
 
-        if (!canDamageEnemy)
-            return;
+        /*if (!canDamageEnemy)
+            return;*/
 
-        other.GetComponent<EnemyAI>().GetDamaged(damagePerSec);
+        other.GetComponent<EnemyAI>().GetDamaged(damagePerSec * Time.deltaTime);
         canDamageEnemy = false;
-        Debug.Log("Laser hit!!");*/
+        Debug.Log("Laser hit!!");
 
     }
-    
-    private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("Enter hit!!");
-        
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        //Debug.Log("Enter hit!!");
+
     }
 }
