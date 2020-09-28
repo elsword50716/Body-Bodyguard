@@ -10,30 +10,35 @@ public class ShipController : MonoBehaviour
     public bool isOnControl = false, addForce = true;
     public float shipSpeed = 100f;
 
-    private InputManager inputActions;
+
     private Vector2 moveInput = Vector2.zero;
+    private PlayerInput playerInput;
+    private InputAction m_ShipMove;
 
 
     private void Start()
     {
-        inputActions = new InputManager();
+
     }
 
     private void Update()
     {
         if (isOnControl)
         {
-            inputActions.OnControlParts.Move.performed += ShipMove;
-            inputActions.OnControlParts.Enable();
-
+            if (playerInput == null)
+            {
+                playerInput = GetComponentInChildren<PlayerInput>();
+                m_ShipMove = playerInput.actions["Move"];
+            }
+            ShipMove(m_ShipMove);
         }
         else
         {
-            inputActions.OnControlParts.Move.performed -= ShipMove;
-            inputActions.OnControlParts.Disable();
+            playerInput = null;
         }
 
-        ship.Translate(new Vector3(moveInput.x * shipSpeed * Time.deltaTime, moveInput.y * shipSpeed * Time.deltaTime, 0f));
+
+
 
         /*if (addForce)
             shipRbody.velocity = moveInput * shipSpeed;
@@ -42,7 +47,7 @@ public class ShipController : MonoBehaviour
 
     }
 
-    public void ShipMove(InputAction.CallbackContext context)
+    public void ShipMove(InputAction context)
     {
         if (!isOnControl)
         {
@@ -51,6 +56,7 @@ public class ShipController : MonoBehaviour
         }
 
         moveInput = context.ReadValue<Vector2>();
+        ship.Translate(new Vector3(moveInput.x * shipSpeed * Time.deltaTime, moveInput.y * shipSpeed * Time.deltaTime, 0f));
     }
 
 

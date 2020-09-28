@@ -4,11 +4,11 @@ using UnityEngine;
 
 static class GameDataManager
 {
-    
+
 }
 
 [System.Serializable]
-public class EnemyData
+public struct EnemyData
 {
     public int id;
     public string name;
@@ -16,13 +16,15 @@ public class EnemyData
     public float FireRate;
     public float BulletSpeed;
     public float moveSpeed;
-    [Range(0f, 50f)]public float roamRange;
-    [Range(0f, 50f)]public float detectShipRange;
-    [Range(0f, 100f)]public float ClosestDistanceToShip;
+    public float inAttackRangeMoveSpeed;
+    [Range(0f, 50f)] public float roamRange;
+    [Range(0f, 50f)] public float detectShipRange;
+    [Range(0f, 100f)] public float ClosestDistanceToShip;
 }
 
 [System.Serializable]
-public class BulletData{
+public struct BulletData
+{
     public int id;
     public string name;
     public float startSpeed;
@@ -33,7 +35,8 @@ public class BulletData{
 }
 
 [System.Serializable]
-public class ShipData{
+public struct ShipData
+{
     public int id;
     public string name;
     public float maxHealth;

@@ -23,13 +23,14 @@ public class ShooterController : MonoBehaviour
     private int counter = 0;
     private Vector2 moveInput = Vector2.zero;
     private Transform[] firePoint;
-
-    private InputManager inputActions;
+    private PlayerInput playerInput;
+    private InputAction m_GunMove;
+    private InputAction m_Fire;
 
 
     private void Start()
     {
-        inputActions = new InputManager();
+
         var childCount = gunPivotPoint.childCount;
         firePoint = new Transform[childCount];
 
@@ -43,36 +44,22 @@ public class ShooterController : MonoBehaviour
 
     private void Update()
     {
-
         if (isOnControl)
         {
-            inputActions.OnControlParts.Move.performed += GunMove;
-            inputActions.OnControlParts.Attack.performed += context => isShootting = true;
-            inputActions.OnControlParts.Attack.canceled += context => isShootting = false;
-            inputActions.OnControlParts.Enable();
+            if (playerInput == null)
+            {
+                playerInput = GetComponentInChildren<PlayerInput>();
+                m_GunMove = playerInput.actions["Move"];
+                m_Fire = playerInput.actions["Attack"];
+            }
+            GunMove(m_GunMove);
+            m_Fire.performed += context => isShootting = true;
+            m_Fire.canceled += context => isShootting = false;
 
         }
         else
         {
-            inputActions.OnControlParts.Move.performed -= GunMove;
-            inputActions.OnControlParts.Attack.performed -= context => isShootting = true;
-            inputActions.OnControlParts.Attack.canceled -= context => isShootting = false;
-            inputActions.OnControlParts.Disable();
-
-        }
-
-
-        gunRotationZ = ClampAngle(gunPivotPoint.localEulerAngles.z, -60, 60);
-
-        gunPivotPoint.localEulerAngles = new Vector3(0f, 0f, gunRotationZ);
-
-        if (isGunHorizontal)
-        {
-            gunPivotPoint.Rotate(new Vector3(0f, 0f, -moveInput.x * gunMovingDegree * Time.deltaTime));
-        }
-        else
-        {
-            gunPivotPoint.Rotate(new Vector3(0f, 0f, -moveInput.y * gunMovingDegree * Time.deltaTime));
+            playerInput = null;
         }
 
 
@@ -116,7 +103,7 @@ public class ShooterController : MonoBehaviour
         }
     }
 
-    public void GunMove(InputAction.CallbackContext context)
+    public void GunMove(InputAction context)
     {
         if (!isOnControl)
         {
@@ -125,6 +112,18 @@ public class ShooterController : MonoBehaviour
         }
 
         moveInput = context.ReadValue<Vector2>();
+        gunRotationZ = ClampAngle(gunPivotPoint.localEulerAngles.z, -60, 60);
+
+        gunPivotPoint.localEulerAngles = new Vector3(0f, 0f, gunRotationZ);
+
+        if (isGunHorizontal)
+        {
+            gunPivotPoint.Rotate(new Vector3(0f, 0f, -moveInput.x * gunMovingDegree * Time.deltaTime));
+        }
+        else
+        {
+            gunPivotPoint.Rotate(new Vector3(0f, 0f, -moveInput.y * gunMovingDegree * Time.deltaTime));
+        }
     }
 
     private void FireBullet(int index)

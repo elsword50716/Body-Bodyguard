@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
+    public bool isVirus;
     public Transform Ship;
 
     public float currentHealth;
     public float avoidShaking = 1f;
+    public float NextRoamingPositionDelay = 1f;
     public Transform BulletPrefab;
 
     public EnemyData enemyData = new EnemyData();
@@ -23,7 +25,8 @@ public class EnemyAI : MonoBehaviour
     private Vector3 targetPosotion;
     private bool isReachTarget = false;
     private State state;
-    private float nextShoot = 0f;
+    private float nextShootTimer = 0f;
+    private float nextMoveTimer = 0f;
 
 
     private void Awake()
@@ -49,12 +52,20 @@ public class EnemyAI : MonoBehaviour
             default:
 
             case State.Roaming:
-                MoveTo(roamPosotion, true);
                 Debug.DrawLine(transform.position, roamPosotion, Color.green);
-                float reachedPositionDistance = 1f;
-                if (Vector3.Distance(transform.position, roamPosotion) < reachedPositionDistance)
+
+                if (Vector3.Distance(transform.position, roamPosotion) <= 0.5f)
                 {
-                    roamPosotion = GetRoamingPostion();
+                    if (nextMoveTimer > NextRoamingPositionDelay)
+                        roamPosotion = GetRoamingPostion();
+                    else
+                        nextMoveTimer += Time.deltaTime;
+
+                }
+                else
+                {
+                    MoveTo(roamPosotion, true);
+                    nextMoveTimer = 0;
                 }
 
 
@@ -68,17 +79,22 @@ public class EnemyAI : MonoBehaviour
                     MoveTo(Ship.position, false);
                 }
                 else if (Vector3.Distance(transform.position, Ship.position) > enemyData.ClosestDistanceToShip + avoidShaking)
+                {
+                    //move toward
                     MoveTo(Ship.position, true);
+                }
                 else
                 {
                     //attcak
-                    transform.RotateAround(Ship.position, Vector3.forward, enemyData.moveSpeed * Time.deltaTime);
-                    transform.rotation = Quaternion.identity;
+                    transform.RotateAround(Ship.position, Vector3.forward, enemyData.inAttackRangeMoveSpeed * Time.deltaTime);
 
-                    if (Time.time > nextShoot)
+                    if (!isVirus)
+                        transform.rotation = Quaternion.identity;
+
+                    if (Time.time > nextShootTimer)
                     {
                         Attack();
-                        nextShoot = Time.time + enemyData.FireRate;
+                        nextShootTimer = Time.time + enemyData.FireRate;
                     }
                 }
 
@@ -87,7 +103,8 @@ public class EnemyAI : MonoBehaviour
                 break;
         }
 
-        if(currentHealth <= 0){
+        if (currentHealth <= 0)
+        {
             Death();
         }
 
@@ -122,19 +139,28 @@ public class EnemyAI : MonoBehaviour
 
     private void Attack()
     {
+        if (isVirus)
+        {
 
-        var bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
-        var bulletRbody = bullet.GetComponent<Rigidbody2D>();
-        bulletRbody.velocity = (Ship.position - transform.position).normalized * enemyData.BulletSpeed;
-        bullet.transform.up = bulletRbody.velocity.normalized;
-        bullet.GetComponent<BasicBullet>().bulletData.targetTag = "Ship";
+        }
+        else
+        {
+            var bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
+            var bulletRbody = bullet.GetComponent<Rigidbody2D>();
+            bulletRbody.velocity = (Ship.position - transform.position).normalized * enemyData.BulletSpeed;
+            bullet.transform.up = bulletRbody.velocity.normalized;
+            bullet.GetComponent<BasicBullet>().bulletData.targetTag = "Ship";
+
+        }
     }
 
-    public void GetDamaged(float damage){
+    public void GetDamaged(float damage)
+    {
         currentHealth -= damage;
     }
 
-    private void Death(){
+    public void Death()
+    {
         Destroy(gameObject);
     }
 
