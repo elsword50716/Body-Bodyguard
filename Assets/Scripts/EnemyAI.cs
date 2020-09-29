@@ -12,6 +12,7 @@ public class EnemyAI : MonoBehaviour
     public float NextRoamingPositionDelay = 1f;
     public Transform BulletPrefab;
 
+    [Header("敵人資料")]
     public EnemyData enemyData = new EnemyData();
 
 
@@ -19,6 +20,7 @@ public class EnemyAI : MonoBehaviour
     {
         Roaming,
         ChaseTarget,
+        Attacking,
     }
     private Vector3 startingPosotion;
     private Vector3 roamPosotion;
@@ -93,13 +95,17 @@ public class EnemyAI : MonoBehaviour
 
                     if (Time.time > nextShootTimer)
                     {
-                        Attack();
+                        state = State.Attacking;
                         nextShootTimer = Time.time + enemyData.FireRate;
                     }
                 }
 
                 Debug.DrawLine(transform.position, Ship.position, Color.red);
 
+                break;
+            
+            case State.Attacking:
+                Attack();
                 break;
         }
 
@@ -141,6 +147,8 @@ public class EnemyAI : MonoBehaviour
     {
         if (isVirus)
         {
+            
+            MoveTo(Ship.position, true);
 
         }
         else
@@ -150,7 +158,7 @@ public class EnemyAI : MonoBehaviour
             bulletRbody.velocity = (Ship.position - transform.position).normalized * enemyData.BulletSpeed;
             bullet.transform.up = bulletRbody.velocity.normalized;
             bullet.GetComponent<BasicBullet>().bulletData.targetTag = "Ship";
-
+            state = State.ChaseTarget;
         }
     }
 
@@ -167,7 +175,10 @@ public class EnemyAI : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, enemyData.detectShipRange);
-
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, enemyData.roamRange);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, enemyData.ClosestDistanceToShip);
 
     }
 }

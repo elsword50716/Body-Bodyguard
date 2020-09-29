@@ -35,6 +35,7 @@ public class ShipController : MonoBehaviour
         else
         {
             playerInput = null;
+            m_ShipMove = null;
         }
 
 

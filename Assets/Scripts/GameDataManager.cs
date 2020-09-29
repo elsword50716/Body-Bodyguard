@@ -17,9 +17,9 @@ public struct EnemyData
     public float BulletSpeed;
     public float moveSpeed;
     public float inAttackRangeMoveSpeed;
-    [Range(0f, 50f)] public float roamRange;
-    [Range(0f, 50f)] public float detectShipRange;
-    [Range(0f, 100f)] public float ClosestDistanceToShip;
+    [Tooltip("Yellow Sphere")][Range(0f, 50f)] public float roamRange;
+    [Tooltip("White Sphere")][Range(0f, 50f)] public float detectShipRange;
+    [Tooltip("Blue Sphere")][Range(0f, 100f)] public float ClosestDistanceToShip;
 }
 
 [System.Serializable]

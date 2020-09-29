@@ -51,15 +51,17 @@ public class ShooterController : MonoBehaviour
                 playerInput = GetComponentInChildren<PlayerInput>();
                 m_GunMove = playerInput.actions["Move"];
                 m_Fire = playerInput.actions["Attack"];
+
+                //m_Fire.performed += context => isShootting = true;
+                //m_Fire.canceled += context => isShootting = false;
             }
             GunMove(m_GunMove);
-            m_Fire.performed += context => isShootting = true;
-            m_Fire.canceled += context => isShootting = false;
-
+            isShootting = m_Fire.ReadValue<float>() == 1 ? true : false;
         }
         else
         {
             playerInput = null;
+            m_Fire = null;
         }
 
 
@@ -102,6 +104,9 @@ public class ShooterController : MonoBehaviour
 
         }
     }
+
+
+
 
     public void GunMove(InputAction context)
     {
