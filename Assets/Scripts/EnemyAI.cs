@@ -11,6 +11,7 @@ public class EnemyAI : MonoBehaviour
     public float currentHealth;
     public float avoidShaking = 1f;
     public float NextRoamingPositionDelay = 1f;
+    public LayerMask obstaclesLayer;
     public Transform BulletPrefab;
 
     [Header("敵人資料")]
@@ -33,6 +34,7 @@ public class EnemyAI : MonoBehaviour
     private float nextMoveTimer = 0f;
     private Transform bulletPool;
     private Animator animator;
+    private CircleCollider2D circleCollider2D;
 
 
     private void Awake()
@@ -41,6 +43,7 @@ public class EnemyAI : MonoBehaviour
         if (!isVirus)
             bulletPool = GetComponentInChildren<BulletManager>().transform;
         animator = GetComponentInChildren<Animator>();
+        circleCollider2D = GetComponent<CircleCollider2D>();
         state = State.Roaming;
     }
 
@@ -129,7 +132,7 @@ public class EnemyAI : MonoBehaviour
 
     private Vector3 GetRoamingPostion()
     {
-        return startingPosotion + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * enemyData.roamRange;
+        return startingPosotion + new Vector3(Random.Range(-1f, 1f) * enemyData.roamRange, Random.Range(-1f, 1f) * enemyData.roamRange);
     }
 
     private void MoveTo(Vector3 targetPosition, bool isApproaching, bool isAttacking)
@@ -165,7 +168,17 @@ public class EnemyAI : MonoBehaviour
 
     private void Roaming()
     {
-        if (Vector3.Distance(transform.position, roamPosotion) <= 0.5f)
+        var dir = roamPosotion - transform.position;
+
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position, dir.normalized, dir.magnitude + circleCollider2D.radius * 1.5f, obstaclesLayer);
+
+        if (hit2D.collider != null)
+        {
+            //FindThePath(hit2D);
+            roamPosotion = new Vector3(hit2D.point.x, hit2D.point.y) - dir.normalized * circleCollider2D.radius * 1.5f;
+
+        }
+        if (dir.magnitude <= 0.5f)
         {
             if (nextMoveTimer > NextRoamingPositionDelay)
                 roamPosotion = GetRoamingPostion();
@@ -211,6 +224,11 @@ public class EnemyAI : MonoBehaviour
 
     }
 
+    private void FindThePath(RaycastHit2D hit2D)
+    {
+        Debug.Log("FindingPath");
+    }
+
     public void GetDamaged(float damage)
     {
         currentHealth -= damage;
@@ -222,14 +240,16 @@ public class EnemyAI : MonoBehaviour
     }
 
 
-
     private void OnDrawGizmosSelected()
     {
+
         Gizmos.DrawWireSphere(transform.position, enemyData.detectShipRange);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, enemyData.roamRange);
+        Gizmos.DrawWireSphere(startingPosotion, enemyData.roamRange);
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, enemyData.ClosestDistanceToShip);
 
     }
+
+
 }
