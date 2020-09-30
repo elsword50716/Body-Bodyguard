@@ -190,7 +190,7 @@ MonoBehaviour:
     id: 0
     name: Virus_Long
     startSpeed: 10
-    damagePoint: 10
+    damage: 0
     chasingDelay: 0.5
     chasingSpeed: 20
     targetTag: 

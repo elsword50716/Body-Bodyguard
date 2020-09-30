@@ -15,11 +15,12 @@ public struct EnemyData
     public float maxHealth;
     public float FireRate;
     public float BulletSpeed;
+    public float attackDamage;
     public float moveSpeed;
     public float inAttackRangeMoveSpeed;
-    [Tooltip("Yellow Sphere")][Range(0f, 50f)] public float roamRange;
-    [Tooltip("White Sphere")][Range(0f, 50f)] public float detectShipRange;
-    [Tooltip("Blue Sphere")][Range(0f, 100f)] public float ClosestDistanceToShip;
+    [Tooltip("Yellow Sphere")] [Range(0f, 50f)] public float roamRange;
+    [Tooltip("White Sphere")] [Range(0f, 50f)] public float detectShipRange;
+    [Tooltip("Blue Sphere")] [Range(0f, 100f)] public float ClosestDistanceToShip;
 }
 
 [System.Serializable]
@@ -28,7 +29,7 @@ public struct BulletData
     public int id;
     public string name;
     public float startSpeed;
-    public float damagePoint;
+    public float damage;
     public float chasingDelay;
     public float chasingSpeed;
     public string targetTag;

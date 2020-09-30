@@ -9,8 +9,9 @@ public class ShooterController : MonoBehaviour
     public bool isGunHorizontal;
     public bool isShootting = false;
     public bool isOnControl = false;
-
     public GameObject bulletPrefab;
+    public float bulletDamage;
+    public Transform bulletPool;
     public bool isLaser = false;
     public float BulletSpeed = 1f;
     public float FireRate = 0.2f;
@@ -133,8 +134,9 @@ public class ShooterController : MonoBehaviour
 
     private void FireBullet(int index)
     {
-        var bullet = Instantiate(bulletPrefab, firePoint[index].position, Quaternion.identity);
+        var bullet = Instantiate(bulletPrefab, firePoint[index].position, Quaternion.identity, bulletPool);
         bullet.GetComponent<BasicBullet>().bulletData.targetTag = "Enemy";
+        bullet.GetComponent<BasicBullet>().bulletData.damage = bulletDamage;
         var bulletRbody2D = bullet.GetComponent<Rigidbody2D>();
         bulletRbody2D.velocity = firePoint[index].up * BulletSpeed;
         bullet.transform.up = firePoint[index].up;

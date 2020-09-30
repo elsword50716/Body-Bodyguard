@@ -24,7 +24,7 @@ public class BasicBullet : MonoBehaviour
         }
         else
         {
-            other.GetComponent<EnemyAI>().GetDamaged(bulletData.damagePoint);
+            other.GetComponent<EnemyAI>().GetDamaged(bulletData.damage);
             Destroy(gameObject);
         }
     }
