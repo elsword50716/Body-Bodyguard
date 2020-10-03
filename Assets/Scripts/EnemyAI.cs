@@ -57,6 +57,7 @@ public class EnemyAI : MonoBehaviour
         currentHealth = enemyData.maxHealth;
         startingPosotion = transform.position;
         roamPosotion = GetRoamingPostion();
+        targetPosition = Vector3.zero;
     }
 
     private void Update()
@@ -81,11 +82,10 @@ public class EnemyAI : MonoBehaviour
                 //if (Vector3.Distance(transform.position, Ship.position) > enemyData.detectShipRange)
                 //    state = State.Roaming;
 
-                FindThePath();
-
-
-
                 Debug.DrawLine(transform.position, Ship.position, Color.red);
+
+                FindThePath();
+                AvoidStuckAtCorner();
 
                 break;
 
@@ -211,19 +211,30 @@ public class EnemyAI : MonoBehaviour
 
         RaycastHit2D hit2D = Physics2D.Raycast(transform.position, toShipDir.normalized, toShipDir.magnitude, obstaclesLayer);
 
+
+        /*if (targetPosition != Vector3.zero)
+        {
+            MoveTo(targetPosition, true, false);
+            Debug.DrawLine(transform.position, targetPosition, Color.red);
+            if (Vector3.Distance(transform.position, targetPosition) < 0.5f)
+                targetPosition = Vector3.zero;
+
+            return;
+        }*/
+
+
         if (hit2D.collider == null)
         {
-            targetPosition = Ship.position;
 
-            if (Vector3.Distance(transform.position, targetPosition) < enemyData.ClosestDistanceToShip - avoidShaking)
+            if (Vector3.Distance(transform.position, Ship.position) < enemyData.ClosestDistanceToShip - avoidShaking)
             {
                 //move back
-                MoveTo(targetPosition, false, false);
+                MoveTo(Ship.position, false, false);
             }
-            else if (Vector3.Distance(transform.position, targetPosition) > enemyData.ClosestDistanceToShip + avoidShaking)
+            else if (Vector3.Distance(transform.position, Ship.position) > enemyData.ClosestDistanceToShip + avoidShaking)
             {
                 //move toward
-                MoveTo(targetPosition, true, false);
+                MoveTo(Ship.position, true, false);
             }
             else
             {
@@ -278,10 +289,32 @@ public class EnemyAI : MonoBehaviour
             hit2D = Physics2D.Raycast(transform.position, Rotate_N.normalized, toShipDir.magnitude, obstaclesLayer);
             RaycastHit2D hit2D1 = Physics2D.Raycast(transform.position, Rotate_P.normalized, toShipDir.magnitude, obstaclesLayer);
 
+
+            /*if (hit2D.collider != null)
+                contactPoint_N = hit2D.point;
+
+            if (hit2D1.collider != null)
+                contactPoint_P = hit2D1.point;
+
+            if (hit2D.collider == null && hit2D1.collider == null)
+            {
+                var distance_N = ProjectPointConverter(transform.position, transform.position + Rotate_N, contactPoint_N) - (Vector2)transform.position;
+                var distance_P = ProjectPointConverter(transform.position, transform.position + Rotate_P, contactPoint_P) - (Vector2)transform.position;
+
+                nextNodePosition = distance_N.magnitude > distance_P.magnitude ? distance_P + (Vector2)transform.position : distance_N + (Vector2)transform.position;
+                Debug.DrawLine(transform.position, nextNodePosition, Color.grey);
+                //MoveTo(nextNodePosition, true, false);
+                targetPosition = nextNodePosition;
+                break;
+            }*/
+
+
+
             if (hit2D.collider != null && hit2D1.collider != null)
             {
                 contactPoint_N = hit2D.point;
                 contactPoint_P = hit2D1.point;
+
             }
             else if (hit2D.collider == null && hit2D1.collider == null)
             {
@@ -291,6 +324,7 @@ public class EnemyAI : MonoBehaviour
                 nextNodePosition = distance_N.magnitude > distance_P.magnitude ? distance_P + (Vector2)transform.position : distance_N + (Vector2)transform.position;
                 Debug.DrawLine(transform.position, nextNodePosition, Color.grey);
                 MoveTo(nextNodePosition, true, false);
+                targetPosition = nextNodePosition;
                 break;
             }
             else
@@ -298,16 +332,18 @@ public class EnemyAI : MonoBehaviour
                 if (hit2D.collider == null)
                 {
                     nextNodePosition = ProjectPointConverter(transform.position, transform.position + Rotate_N, contactPoint_N);
-                    Debug.DrawLine(transform.position, nextNodePosition, Color.grey);
+                    Debug.DrawLine(transform.position, nextNodePosition, Color.green);
                     MoveTo(nextNodePosition, true, false);
+                    targetPosition = nextNodePosition;
                     break;
                 }
 
                 if (hit2D1.collider == null)
                 {
                     nextNodePosition = ProjectPointConverter(transform.position, transform.position + Rotate_P, contactPoint_P);
-                    Debug.DrawLine(transform.position, nextNodePosition, Color.grey);
+                    Debug.DrawLine(transform.position, nextNodePosition, Color.white);
                     MoveTo(nextNodePosition, true, false);
+                    targetPosition = nextNodePosition;
                     break;
                 }
 
@@ -315,7 +351,11 @@ public class EnemyAI : MonoBehaviour
 
         }
 
-
+        if (nextNodePosition == Vector2.zero)
+        {
+            targetPosition = Vector3.zero;
+            state = State.Roaming;
+        }
 
     }
 
@@ -332,6 +372,35 @@ public class EnemyAI : MonoBehaviour
 
         Debug.DrawLine(anyPoint, anyPoint + (theProjectedPoint - anyPoint).normalized * circleCollider2D.radius * colliderRadiusMulti);
         return anyPoint + (theProjectedPoint - anyPoint).normalized * circleCollider2D.radius * colliderRadiusMulti;
+    }
+
+    //防止卡在牆角
+    private void AvoidStuckAtCorner()
+    {
+        var toShipDir = (Ship.position - transform.position).normalized * circleCollider2D.radius * colliderRadiusMulti;
+
+        for (float i = scanPerDegree; i < findPathScanDegreeRange; i += scanPerDegree)
+        {
+            var RotatedX_N = (toShipDir.x * Mathf.Cos(-i * Mathf.Deg2Rad) - toShipDir.y * Mathf.Sin(-i * Mathf.Deg2Rad));
+            var RotatedY_N = (toShipDir.x * Mathf.Sin(-i * Mathf.Deg2Rad) + toShipDir.y * Mathf.Cos(-i * Mathf.Deg2Rad));
+            var RotatedX_P = toShipDir.x * Mathf.Cos(i * Mathf.Deg2Rad) - toShipDir.y * Mathf.Sin(i * Mathf.Deg2Rad);
+            var RotatedY_P = toShipDir.x * Mathf.Sin(i * Mathf.Deg2Rad) + toShipDir.y * Mathf.Cos(i * Mathf.Deg2Rad);
+
+            Vector3 Rotate_N = new Vector2(RotatedX_N, RotatedY_N);
+            Vector3 Rotate_P = new Vector2(RotatedX_P, RotatedY_P);
+
+            Debug.DrawLine(transform.position, transform.position + Rotate_N, Color.blue);
+            Debug.DrawLine(transform.position, transform.position + Rotate_P, Color.yellow);
+
+            RaycastHit2D hit2D = Physics2D.Raycast(transform.position, Rotate_N.normalized, toShipDir.magnitude, obstaclesLayer);
+            RaycastHit2D hit2D1 = Physics2D.Raycast(transform.position, Rotate_P.normalized, toShipDir.magnitude, obstaclesLayer);
+
+            if (hit2D.collider != null)
+                Rbody2D.velocity += ((Vector2)transform.position - hit2D.point);
+
+            if (hit2D1.collider != null)
+                Rbody2D.velocity += ((Vector2)transform.position - hit2D1.point);
+        }
     }
 
     public void GetDamaged(float damage)
