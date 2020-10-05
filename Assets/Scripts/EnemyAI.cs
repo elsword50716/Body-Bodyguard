@@ -39,6 +39,7 @@ public class EnemyAI : MonoBehaviour
     private Animator animator;
     private CircleCollider2D circleCollider2D;
     private Rigidbody2D Rbody2D;
+    private Vector2 velocityLastFrame;
 
 
     private void Awake()
@@ -84,8 +85,10 @@ public class EnemyAI : MonoBehaviour
 
                 Debug.DrawLine(transform.position, Ship.position, Color.red);
 
+                velocityLastFrame = Rbody2D.velocity;
+
                 FindThePath();
-                AvoidStuckAtCorner();
+                //AvoidStuckAtCorner();
 
                 break;
 
@@ -211,7 +214,7 @@ public class EnemyAI : MonoBehaviour
 
         RaycastHit2D hit2D = Physics2D.Raycast(transform.position, toShipDir.normalized, toShipDir.magnitude, obstaclesLayer);
 
-
+        //Plan B
         /*if (targetPosition != Vector3.zero)
         {
             MoveTo(targetPosition, true, false);
@@ -225,6 +228,14 @@ public class EnemyAI : MonoBehaviour
 
         if (hit2D.collider == null)
         {
+
+            if (Vector3.Distance(transform.position, targetPosition) >= 0.5f && targetPosition != Ship.position)
+            {
+                MoveTo(targetPosition, true, false);
+                return;
+            }
+            else
+                targetPosition = Ship.position;
 
             if (Vector3.Distance(transform.position, Ship.position) < enemyData.ClosestDistanceToShip - avoidShaking)
             {
@@ -273,6 +284,8 @@ public class EnemyAI : MonoBehaviour
 
         var nextNodePosition = Vector2.zero;
 
+        var firstHitPoint = hit2D.point;
+
         for (float i = 0; i < findPathScanDegreeRange; i += scanPerDegree)
         {
             var RotatedX_N = (toShipDir.x * Mathf.Cos(-i * Mathf.Deg2Rad) - toShipDir.y * Mathf.Sin(-i * Mathf.Deg2Rad));
@@ -283,14 +296,21 @@ public class EnemyAI : MonoBehaviour
             Vector3 Rotate_N = new Vector2(RotatedX_N, RotatedY_N);
             Vector3 Rotate_P = new Vector2(RotatedX_P, RotatedY_P);
 
-            Debug.DrawLine(transform.position, transform.position + Rotate_N, Color.blue);
-            Debug.DrawLine(transform.position, transform.position + Rotate_P, Color.yellow);
+            //Debug.DrawLine(transform.position, transform.position + Rotate_N, Color.blue);
+            //Debug.DrawLine(transform.position, transform.position + Rotate_P, Color.yellow);
 
             hit2D = Physics2D.Raycast(transform.position, Rotate_N.normalized, toShipDir.magnitude, obstaclesLayer);
             RaycastHit2D hit2D1 = Physics2D.Raycast(transform.position, Rotate_P.normalized, toShipDir.magnitude, obstaclesLayer);
 
-
+            //Plan C
             /*if (hit2D.collider != null)
+                contactPoint_N = hit2D.point;
+
+            if (hit2D1.collider != null)
+                contactPoint_P = hit2D1.point;*/
+
+            //Plan B
+            if (hit2D.collider != null)
                 contactPoint_N = hit2D.point;
 
             if (hit2D1.collider != null)
@@ -303,20 +323,20 @@ public class EnemyAI : MonoBehaviour
 
                 nextNodePosition = distance_N.magnitude > distance_P.magnitude ? distance_P + (Vector2)transform.position : distance_N + (Vector2)transform.position;
                 Debug.DrawLine(transform.position, nextNodePosition, Color.grey);
-                //MoveTo(nextNodePosition, true, false);
+                MoveTo(nextNodePosition, true, false);
                 targetPosition = nextNodePosition;
                 break;
-            }*/
+            }
 
 
-
-            if (hit2D.collider != null && hit2D1.collider != null)
-            {
+            //Plan A
+            /*if (hit2D.collider != null)
                 contactPoint_N = hit2D.point;
+
+            if (hit2D1.collider != null)
                 contactPoint_P = hit2D1.point;
 
-            }
-            else if (hit2D.collider == null && hit2D1.collider == null)
+            if (hit2D.collider == null && hit2D1.collider == null)
             {
                 var distance_N = ProjectPointConverter(transform.position, transform.position + Rotate_N, contactPoint_N) - (Vector2)transform.position;
                 var distance_P = ProjectPointConverter(transform.position, transform.position + Rotate_P, contactPoint_P) - (Vector2)transform.position;
@@ -347,16 +367,36 @@ public class EnemyAI : MonoBehaviour
                     break;
                 }
 
-            }
+            }*/
 
         }
 
-        if (nextNodePosition == Vector2.zero)
+        /*if (nextNodePosition == Vector2.zero)
         {
             targetPosition = Vector3.zero;
             state = State.Roaming;
+        }*/
+
+        //Plan C
+        /*if (contactPoint_N == Vector2.zero || contactPoint_P == Vector2.zero)
+        {
+            Rbody2D.velocity = velocityLastFrame;
+            return;
         }
 
+        var vectorLength_N = (contactPoint_N - firstHitPoint);
+        var vectorLength_P = (contactPoint_P - firstHitPoint);
+
+        Debug.DrawLine(firstHitPoint, contactPoint_N, Color.black);
+        Debug.DrawLine(firstHitPoint, contactPoint_P, Color.black);
+
+        Rbody2D.velocity = vectorLength_N.magnitude < vectorLength_P.magnitude ? vectorLength_N.normalized * enemyData.moveSpeed
+        : vectorLength_P.normalized * enemyData.moveSpeed;
+
+        Rbody2D.velocity = vectorLength_N.magnitude == vectorLength_P.magnitude ? vectorLength_N.normalized * enemyData.moveSpeed
+        : Rbody2D.velocity;
+
+        Debug.DrawLine(transform.position, (Vector2)transform.position + Rbody2D.velocity, Color.black);*/
     }
 
     //找出投影點並轉換成新向量
