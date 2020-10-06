@@ -11,6 +11,7 @@ TagManager:
   - Ship
   - Bullet
   - BulletBound
+  - EnemyChadingPoint
   layers:
   - Default
   - TransparentFX

@@ -32,6 +32,7 @@ public class EnemyAI : MonoBehaviour
     private Vector3 startingPosotion;
     private Vector3 roamPosotion;
     private Transform targetPosition;
+    private GameObject ChasingPoint;
     private bool isReachTarget = false;
     private State state;
     private float nextShootTimer = 0f;
@@ -42,6 +43,7 @@ public class EnemyAI : MonoBehaviour
     private Rigidbody2D Rbody2D;
     private AIPath aIPath;
     private AIDestinationSetter destinationSetter;
+    private float originalEndReachedDistance;
 
 
     private void Awake()
@@ -54,27 +56,31 @@ public class EnemyAI : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         circleCollider2D = GetComponent<CircleCollider2D>();
         Rbody2D = GetComponent<Rigidbody2D>();
-        targetPosition = transform.GetChild(2);
+        ChasingPoint = new GameObject("ChasingPoint");
+        ChasingPoint.transform.parent = transform;
+        targetPosition = ChasingPoint.transform;
+        //targetPosition = Instantiate(ChasingPoint.transform, Vector2.zero, Quaternion.identity, transform);
         state = State.Roaming;
     }
 
     private void Start()
     {
-        aIPath.canSearch = false;
-        aIPath.canMove = false;
+        aIPath.canSearch = true;
+        aIPath.canMove = true;
         aIPath.radius = circleCollider2D.radius;
         currentHealth = enemyData.maxHealth;
         startingPosotion = transform.position;
         roamPosotion = GetRoamingPostion();
+        destinationSetter.target = targetPosition;
+        originalEndReachedDistance = aIPath.endReachedDistance;
     }
 
     private void Update()
     {
 
         aIPath.maxSpeed = enemyData.moveSpeed;
-        targetPosition.position = Ship.position + (transform.position - Ship.position).normalized * enemyData.ClosestDistanceToShip;
 
-        destinationSetter.target = targetPosition;
+
 
         switch (state)
         {
@@ -84,6 +90,7 @@ public class EnemyAI : MonoBehaviour
             case State.Roaming:
                 Debug.DrawLine(transform.position, roamPosotion, Color.green);
 
+                
                 Roaming();
                 FindTarget();
 
@@ -96,6 +103,7 @@ public class EnemyAI : MonoBehaviour
                 if (Vector3.Distance(transform.position, Ship.position) > enemyData.detectShipRange)
                     state = State.Roaming;
 
+                targetPosition.position = Ship.position + (transform.position - Ship.position).normalized * enemyData.ClosestDistanceToShip;
 
                 Debug.DrawLine(transform.position, Ship.position, Color.red);
 
@@ -113,13 +121,12 @@ public class EnemyAI : MonoBehaviour
 
                 }
 
-
+                if (isVirus)
+                    GetComponentInChildren<SpriteRenderer>().transform.up = aIPath.desiredVelocity;
 
                 if (IsObstaclesBetween())
                     return;
 
-                if (isVirus)
-                    GetComponentInChildren<SpriteRenderer>().transform.up = aIPath.desiredVelocity;
 
                 transform.RotateAround(Ship.position, Vector3.forward, enemyData.inAttackRangeMoveSpeed * Time.deltaTime);
                 transform.rotation = Quaternion.identity;
@@ -148,6 +155,7 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             case State.Dead:
+                Rbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
                 animator.SetBool("isDead", true);
                 break;
         }
@@ -191,16 +199,14 @@ public class EnemyAI : MonoBehaviour
         {
             if (IsObstaclesBetween())
                 return;
-            
+
             Rbody2D.velocity = Vector2.zero;
-            aIPath.canSearch = true;
-            aIPath.canMove = true;
+
             state = State.ChaseTarget;
         }
         else
         {
-            aIPath.canSearch = false;
-            aIPath.canMove = false;
+
             state = State.Roaming;
         }
     }
@@ -214,20 +220,28 @@ public class EnemyAI : MonoBehaviour
         if (hit2D.collider != null)
         {
             roamPosotion = new Vector3(hit2D.point.x, hit2D.point.y) - dir.normalized * circleCollider2D.radius * 1.5f;
-
+            targetPosition.position = roamPosotion;
         }
-        if (dir.magnitude <= 0.5f)
+        if (aIPath.reachedEndOfPath)
         {
-            Rbody2D.velocity = Vector2.zero;
             if (nextMoveTimer > NextRoamingPositionDelay)
+            {
                 roamPosotion = GetRoamingPostion();
+                aIPath.endReachedDistance = 0;
+            }
             else
                 nextMoveTimer += Time.deltaTime;
-
         }
         else
         {
-            MoveTo(roamPosotion, true, false);
+            if (dir.magnitude < 0.5f)
+                aIPath.endReachedDistance = originalEndReachedDistance;
+
+            if (isVirus)
+                    GetComponentInChildren<SpriteRenderer>().transform.up = aIPath.desiredVelocity;
+
+            targetPosition.position = roamPosotion;
+            //MoveTo(roamPosotion, true, false);
             nextMoveTimer = 0;
         }
     }
