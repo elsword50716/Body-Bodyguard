@@ -8,24 +8,23 @@ public class BasicBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("BulletBound"))
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         if (!other.CompareTag(bulletData.targetTag))
             return;
 
-        if (other.GetComponent<EnemyAI>() == null)
-        {
-
-            Destroy(gameObject);
-        }
-        else
+        if (other.GetComponent<EnemyAI>() != null)
         {
             other.GetComponent<EnemyAI>().GetDamaged(bulletData.damage);
             Destroy(gameObject);
+
         }
+        else if (other.GetComponent<Ship>() != null)
+        {
+            other.GetComponent<Ship>().GetDamaged(bulletData.damage);
+            Destroy(gameObject);
+        }
+        else
+            Destroy(gameObject);
+
+
     }
 }

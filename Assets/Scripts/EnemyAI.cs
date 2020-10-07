@@ -11,11 +11,11 @@ public class EnemyAI : MonoBehaviour
     public float virusAttackMoveSpeed;
     public Transform Ship;
     public ContactFilter2D shipLayer;
-    public float currentHealth;
     public float avoidShaking = 1f;
     public float NextRoamingPositionDelay = 1f;
     public LayerMask obstaclesLayer;
     public Transform BulletPrefab;
+    [SerializeField] private float currentHealth;
 
 
     [Header("敵人資料")]
@@ -90,7 +90,7 @@ public class EnemyAI : MonoBehaviour
             case State.Roaming:
                 Debug.DrawLine(transform.position, roamPosotion, Color.green);
 
-                
+
                 Roaming();
                 FindTarget();
 
@@ -238,7 +238,7 @@ public class EnemyAI : MonoBehaviour
                 aIPath.endReachedDistance = originalEndReachedDistance;
 
             if (isVirus)
-                    GetComponentInChildren<SpriteRenderer>().transform.up = aIPath.desiredVelocity;
+                GetComponentInChildren<SpriteRenderer>().transform.up = aIPath.desiredVelocity;
 
             targetPosition.position = roamPosotion;
             //MoveTo(roamPosotion, true, false);
@@ -254,7 +254,7 @@ public class EnemyAI : MonoBehaviour
             if (transform.GetComponent<Rigidbody2D>().GetContacts(shipLayer, collider2Ds) > 0)
             {
                 //damage the ship
-                DamageShip();
+                DamageShip(collider2Ds[0]);
                 state = State.ChaseTarget;
             }
             else
@@ -294,9 +294,9 @@ public class EnemyAI : MonoBehaviour
         currentHealth -= damage;
     }
 
-    private void DamageShip()
+    private void DamageShip(Collider2D collider)
     {
-        Debug.Log("hit Ship/Virus");
+        collider.GetComponent<Ship>().GetDamaged(enemyData.attackDamage);
     }
 
 

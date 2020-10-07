@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
             Random.Range(0f, 1f),
             Random.Range(0f, 1f)
         );
-        originalParent = GameObject.FindGameObjectWithTag("Ship").transform.GetChild(0);
+        originalParent = GameObject.FindGameObjectWithTag("Ship").transform.Find("PlayerRespawnPoint");
         respwanPoint = originalParent;
         animator = GetComponentInChildren<Animator>();
         playerInput = GetComponent<PlayerInput>();
