@@ -8,9 +8,6 @@ public class BasicBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag(bulletData.targetTag))
-            return;
-
         if (other.GetComponent<EnemyAI>() != null)
         {
             other.GetComponent<EnemyAI>().GetDamaged(bulletData.damage);

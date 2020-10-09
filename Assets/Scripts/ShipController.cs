@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class ShipController : MonoBehaviour
 {
-    //public Rigidbody2D shipRbody;
+    public Rigidbody2D shipRbody;
     public Transform ship;
     public bool isOnControl = false, addForce = true;
     public float shipSpeed = 100f;
@@ -18,7 +18,7 @@ public class ShipController : MonoBehaviour
 
     private void Start()
     {
-
+        shipRbody = ship.GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -57,7 +57,9 @@ public class ShipController : MonoBehaviour
         }
 
         moveInput = context.ReadValue<Vector2>();
-        ship.Translate(new Vector3(moveInput.x * shipSpeed * Time.deltaTime, moveInput.y * shipSpeed * Time.deltaTime, 0f));
+        //ship.Translate(new Vector3(moveInput.x * shipSpeed * Time.deltaTime, moveInput.y * shipSpeed * Time.deltaTime, 0f));
+        //shipRbody.AddForce(moveInput * shipSpeed * shipRbody.mass);
+        shipRbody.velocity += (moveInput * shipSpeed * Time.deltaTime);
     }
 
 

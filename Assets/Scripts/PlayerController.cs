@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool canJump = true;
     private PlayerInput playerInput;
 
+    const float gravityScale = 9.8f;
+
     private void Awake()
     {
         var playerColor = GetComponentInChildren<SpriteRenderer>();
@@ -31,7 +33,7 @@ public class PlayerController : MonoBehaviour
             Random.Range(0f, 1f),
             Random.Range(0f, 1f)
         );
-        originalParent = GameObject.FindGameObjectWithTag("Ship").transform.Find("PlayerRespawnPoint");
+        originalParent = GameObject.Find("PlayerRespawnPoint").transform;
         respwanPoint = originalParent;
         animator = GetComponentInChildren<Animator>();
         playerInput = GetComponent<PlayerInput>();
@@ -43,13 +45,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-
         Collider2D[] collider2Ds = Physics2D.OverlapCircleAll(groudCheck.position, groundCheckRadious, shipGround);
         if (collider2Ds.Length > 0)
             canJump = true;
         else
             canJump = false;
-
 
         if (freezePosition)
         {
@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isWalking", false);
         else
             animator.SetBool("isWalking", true);
+
 
         if (horizontalMove > 0)
         {
@@ -74,7 +75,6 @@ public class PlayerController : MonoBehaviour
         }
 
         rbody2D.velocity = new Vector2(horizontalMove * walkSpeed, rbody2D.velocity.y);
-
 
     }
 

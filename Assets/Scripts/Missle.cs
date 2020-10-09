@@ -44,14 +44,4 @@ public class Missle : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log("hit something/Trigger");
-
-        if (other.transform != target)
-            return;
-
-        Destroy(gameObject);
-    }
-
 }
