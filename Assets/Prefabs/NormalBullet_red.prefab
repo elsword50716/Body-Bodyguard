@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 607454685927704908}
   - component: {fileID: 5106689044645089755}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: BulletSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 4700560575163884325}
   - component: {fileID: 5851619629963632943}
   - component: {fileID: 81207404044784615}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: NormalBullet_red
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ MonoBehaviour:
     id: 0
     name: NormalBullet_red
     startSpeed: 15
-    damagePoint: 15
+    damage: 0
     chasingDelay: 0
     chasingSpeed: 0
     targetTag: 

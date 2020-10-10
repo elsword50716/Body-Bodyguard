@@ -64,9 +64,11 @@ public class Ship : MonoBehaviour
 
         if (other.gameObject.layer != 13)
             return;
+
         Debug.Log("ship Damage: " + other.relativeVelocity.magnitude);
 
         GetDamaged(other.relativeVelocity.magnitude);
+
     }
 
 }

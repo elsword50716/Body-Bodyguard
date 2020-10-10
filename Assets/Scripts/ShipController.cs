@@ -7,6 +7,7 @@ public class ShipController : MonoBehaviour
 {
     public Rigidbody2D shipRbody;
     public Transform ship;
+    public ShipData shipData;
     public bool isOnControl = false, addForce = true;
     public float shipSpeed = 100f;
 
@@ -15,9 +16,10 @@ public class ShipController : MonoBehaviour
     private PlayerInput playerInput;
     private InputAction m_ShipMove;
 
-
-    private void Start()
+    private void Awake()
     {
+        shipData = ship.GetComponent<Ship>().shipData;
+        shipSpeed = shipData.NormalSpeed;
         shipRbody = ship.GetComponent<Rigidbody2D>();
     }
 
@@ -38,8 +40,12 @@ public class ShipController : MonoBehaviour
             m_ShipMove = null;
         }
 
+        shipData = ship.GetComponent<Ship>().shipData;
 
-
+        if (shipSpeed != shipData.NormalSpeed)
+        {
+            shipSpeed = shipData.NormalSpeed;
+        }
 
         /*if (addForce)
             shipRbody.velocity = moveInput * shipSpeed;

@@ -10,7 +10,6 @@ public class CustomPhysics2D : MonoBehaviour
         Physics2D.IgnoreLayerCollision(9, 9);
         Physics2D.IgnoreLayerCollision(10, 8);
         Physics2D.IgnoreLayerCollision(14, 8);
-        Physics2D.IgnoreLayerCollision(11, 12);
         Physics2D.IgnoreLayerCollision(11, 11);
         Physics2D.IgnoreLayerCollision(9, 13);
     }

@@ -8,6 +8,12 @@ public class BasicBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.layer == 13)
+            Destroy(gameObject);
+
+        if (!other.CompareTag(bulletData.targetTag))
+            return;
+
         if (other.GetComponent<EnemyAI>() != null)
         {
             other.GetComponent<EnemyAI>().GetDamaged(bulletData.damage);
@@ -19,8 +25,6 @@ public class BasicBullet : MonoBehaviour
             other.GetComponent<Ship>().GetDamaged(bulletData.damage);
             Destroy(gameObject);
         }
-        else
-            Destroy(gameObject);
 
 
     }

@@ -28,9 +28,9 @@ TagManager:
   - Bullet
   - Obstacle
   - ShipWall
-  - 
-  - 
-  - 
+  - MainCamera
+  - Minimap
+  - ShipInside
   - 
   - 
   - 
