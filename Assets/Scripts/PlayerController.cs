@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public float jumpTimeRange = 0.5f;
     [Range(0, 1)] public float groundCheckRadious = 0.02f;
     public Animator animator;
-
+    public float fade = 1f;
 
     private float horizontalMove = 0f;
     private Rigidbody2D rbody2D;
@@ -78,7 +78,11 @@ public class PlayerController : MonoBehaviour
 
     }
 
-
+    public void SetPlayerFreezed(bool set){
+        freezePosition = set;
+        if(set)
+            rbody2D.velocity = Vector2.zero;
+    }
 
     public void Move(InputAction.CallbackContext context)
     {
@@ -155,9 +159,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-    }
 
     private void OnDrawGizmosSelected()
     {
