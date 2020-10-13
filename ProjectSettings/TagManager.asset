@@ -52,6 +52,9 @@ TagManager:
   - name: Background
     uniqueID: 762630005
     locked: 0
+  - name: MiniMap
+    uniqueID: 304698617
+    locked: 0
   - name: Ship
     uniqueID: 1707305225
     locked: 0
