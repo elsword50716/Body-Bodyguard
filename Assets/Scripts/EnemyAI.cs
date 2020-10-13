@@ -215,13 +215,13 @@ public class EnemyAI : MonoBehaviour
     {
         var dir = roamPosotion - transform.position;
 
-        RaycastHit2D hit2D = Physics2D.Raycast(transform.position, dir.normalized, dir.magnitude + circleCollider2D.radius * 1.5f, obstaclesLayer);
+        // RaycastHit2D hit2D = Physics2D.Raycast(transform.position, dir.normalized, dir.magnitude + circleCollider2D.radius * 1.5f, obstaclesLayer);
 
-        if (hit2D.collider != null)
-        {
-            roamPosotion = new Vector3(hit2D.point.x, hit2D.point.y) - dir.normalized * circleCollider2D.radius * 1.5f;
-            targetPosition.position = roamPosotion;
-        }
+        // if (hit2D.collider != null)
+        // {
+        //     roamPosotion = new Vector3(hit2D.point.x, hit2D.point.y) - dir.normalized * circleCollider2D.radius * 1.5f;
+        //     targetPosition.position = roamPosotion;
+        // }
         if (aIPath.reachedEndOfPath)
         {
             if (nextMoveTimer > NextRoamingPositionDelay)

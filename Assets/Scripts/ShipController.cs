@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class ShipController : MonoBehaviour
 {
-    public Transform shipLight;
     public Rigidbody2D shipRbody;
     public Transform ship;
     public ShipData shipData;
@@ -67,7 +66,10 @@ public class ShipController : MonoBehaviour
         //ship.Translate(new Vector3(moveInput.x * shipSpeed * Time.deltaTime, moveInput.y * shipSpeed * Time.deltaTime, 0f));
         //shipRbody.AddForce(moveInput * shipSpeed * shipRbody.mass);
         shipRbody.velocity += (moveInput * shipSpeed * Time.deltaTime);
-        shipLight.up = moveInput.normalized;
+    }
+
+    public Vector2 GetMoveInput(){
+        return moveInput;
     }
 
 

@@ -28,4 +28,4 @@ Material:
     - _Fade: 1
     - _Scale: 40
     m_Colors:
-    - Color_5DBEDB0E: {r: 2.828427, g: 2.828427, b: 2.828427, a: 0}
+    - Color_5DBEDB0E: {r: 4, g: 4, b: 4, a: 0}

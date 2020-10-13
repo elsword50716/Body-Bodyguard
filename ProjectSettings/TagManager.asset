@@ -70,6 +70,9 @@ TagManager:
   - name: Obstacles
     uniqueID: 2626140315
     locked: 0
+  - name: Particles
+    uniqueID: 418291785
+    locked: 0
   - name: UI
     uniqueID: 3674052583
     locked: 0
