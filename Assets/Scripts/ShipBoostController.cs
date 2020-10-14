@@ -10,7 +10,7 @@ public class ShipBoostController : MonoBehaviour
 
     private void Update()
     {
-        if (shipRbody.velocity.magnitude < 1 || shipController.GetMoveInput() == Vector2.zero)
+        if (shipController.GetMoveInput() == Vector2.zero)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -19,8 +19,8 @@ public class ShipBoostController : MonoBehaviour
             return;
         }
 
-        var x = shipRbody.velocity.normalized.x;
-        var y = shipRbody.velocity.normalized.y;
+        var x = shipController.GetMoveInput().x;
+        var y = shipController.GetMoveInput().y;
 
         if (x < 0)
         {
@@ -28,6 +28,7 @@ public class ShipBoostController : MonoBehaviour
             {
                 boosters[0].GetChild(0).gameObject.SetActive(false);
                 boosters[1].GetChild(0).gameObject.SetActive(true);
+                boosters[1].up = shipController.GetMoveInput().normalized;
                 boosters[2].GetChild(0).gameObject.SetActive(false);
                 boosters[3].GetChild(0).gameObject.SetActive(false);
             }
@@ -37,6 +38,7 @@ public class ShipBoostController : MonoBehaviour
                 boosters[1].GetChild(0).gameObject.SetActive(false);
                 boosters[2].GetChild(0).gameObject.SetActive(false);
                 boosters[3].GetChild(0).gameObject.SetActive(true);
+                boosters[3].up = shipController.GetMoveInput().normalized;
             }
         }
         else
@@ -44,6 +46,7 @@ public class ShipBoostController : MonoBehaviour
             if (y < 0)
             {
                 boosters[0].GetChild(0).gameObject.SetActive(true);
+                boosters[0].up = shipController.GetMoveInput().normalized;
                 boosters[1].GetChild(0).gameObject.SetActive(false);
                 boosters[2].GetChild(0).gameObject.SetActive(false);
                 boosters[3].GetChild(0).gameObject.SetActive(false);
@@ -53,6 +56,7 @@ public class ShipBoostController : MonoBehaviour
                 boosters[0].GetChild(0).gameObject.SetActive(false);
                 boosters[1].GetChild(0).gameObject.SetActive(false);
                 boosters[2].GetChild(0).gameObject.SetActive(true);
+                boosters[2].up = shipController.GetMoveInput().normalized;
                 boosters[3].GetChild(0).gameObject.SetActive(false);
             }
         }

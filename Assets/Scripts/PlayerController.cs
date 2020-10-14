@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private bool freezePosition = false;
     [SerializeField] private bool canJump = true;
     private PlayerInput playerInput;
+    private InputAction m_Move;
 
     const float gravityScale = 9.8f;
 
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
         respwanPoint = originalParent;
         animator = GetComponentInChildren<Animator>();
         playerInput = GetComponent<PlayerInput>();
+        m_Move = playerInput.actions["Move"];
         rbody2D = GetComponent<Rigidbody2D>();
         transform.parent = originalParent;
         transform.position = respwanPoint.position;
@@ -57,6 +59,40 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        Move(m_Move);
+
+        // if (horizontalMove == 0)
+        //     animator.SetBool("isWalking", false);
+        // else
+        //     animator.SetBool("isWalking", true);
+
+
+        // if (horizontalMove > 0)
+        // {
+        //     horizontalMove = 1;
+        //     transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        // }
+        // if (horizontalMove < 0)
+        // {
+        //     horizontalMove = -1;
+        //     transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+        // }
+
+        // rbody2D.velocity = new Vector2(horizontalMove * walkSpeed, rbody2D.velocity.y);
+
+    }
+
+    public void SetPlayerFreezed(bool set)
+    {
+        freezePosition = set;
+        if (set)
+            rbody2D.velocity = Vector2.zero;
+    }
+
+    public void Move(InputAction context)
+    {
+        horizontalMove = Mathf.Abs(context.ReadValue<Vector2>().y) > 0.25f ? 0 : context.ReadValue<Vector2>().x;
+
         if (horizontalMove == 0)
             animator.SetBool("isWalking", false);
         else
@@ -76,21 +112,7 @@ public class PlayerController : MonoBehaviour
 
         rbody2D.velocity = new Vector2(horizontalMove * walkSpeed, rbody2D.velocity.y);
 
-    }
-
-    public void SetPlayerFreezed(bool set){
-        freezePosition = set;
-        if(set)
-            rbody2D.velocity = Vector2.zero;
-    }
-
-    public void Move(InputAction.CallbackContext context)
-    {
-        horizontalMove = context.ReadValue<Vector2>().x;
-
-
-
-        Debug.Log($"playerIndex {playerInput.playerIndex}: " + context.ReadValue<Vector2>());
+        //Debug.Log($"playerIndex {playerInput.playerIndex}: " + context.ReadValue<Vector2>());
     }
 
     public void Jump(InputAction.CallbackContext context)

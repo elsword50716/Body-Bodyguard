@@ -7,6 +7,7 @@ public class TeleportPipeline : MonoBehaviour
 {
     public GameObject buttonHint;
     public Transform theOtherSide;
+    public SpriteRenderer Light;
     public float transportingSpeed = 1f;
     public bool isPortalOpen = false;
     public bool isSomeoneOnIt = false;
@@ -26,17 +27,30 @@ public class TeleportPipeline : MonoBehaviour
         isPortalOpen = false;
         isSomeoneOnIt = false;
         isTeleporting = false;
+        Light = transform.GetChild(2).GetComponent<SpriteRenderer>();
     }
 
 
     void Update()
     {
         if (player == null)
+        {
+            if (Light != null)
+                Light.color = Color.green;
+
             return;
-        
-        if(theOtherSide.GetComponent<TeleportPipeline>().player != null)
+        }
+
+        if (theOtherSide.GetComponent<TeleportPipeline>().player != null)
+        {
+            if (Light != null)
+                Light.color = Color.red;
             return;
-        
+        }
+
+        if (Light != null)
+            Light.color = Color.green;
+
         if (m_Interaction != null && m_Interaction.triggered && fade == 1f)
         {
             isTeleporting = true;
@@ -47,7 +61,7 @@ public class TeleportPipeline : MonoBehaviour
         {
             if (fade < 1f)
             {
-                player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+                player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
                 fade += Time.deltaTime * transportingSpeed;
                 playerMaterial.SetFloat("_Fade", fade);
             }
@@ -65,7 +79,7 @@ public class TeleportPipeline : MonoBehaviour
         if (isTeleporting)
         {
             player.GetComponent<PlayerController>().SetPlayerFreezed(true);
-            player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+            player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
 
             if (fade <= 1f && fade > 0f)
             {
@@ -106,10 +120,21 @@ public class TeleportPipeline : MonoBehaviour
 
     }
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (!other.CompareTag("Player"))
+            return;
+
+        Debug.Log(other.name);
+    }
+
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.transform != player || player == null)
             return;
+
+        if (Light != null)
+            Light.color = Color.green;
 
         isPortalOpen = false;
         isSomeoneOnIt = false;
