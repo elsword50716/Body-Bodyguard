@@ -8076,7 +8076,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -14070,7 +14070,8 @@ MonoBehaviour:
   isOnControl: 0
   addForce: 1
   shipSpeed: 10
-  boostersRotateSpeed: 1
+  boostersRotateSpeed: 30
+  boostersAvoidShacking: 1
   boosters:
   - {fileID: 1904548969}
   - {fileID: 123768597}
@@ -15424,7 +15425,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -20578,7 +20579,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -27509,7 +27510,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -37783,6 +37784,7 @@ MonoBehaviour:
   addForce: 1
   shipSpeed: 10
   boostersRotateSpeed: 1
+  boostersAvoidShacking: 1
   boosters: []
 --- !u!1 &2136135554
 GameObject:

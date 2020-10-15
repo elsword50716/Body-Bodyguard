@@ -144,7 +144,7 @@ public class ShooterController : MonoBehaviour
 
 
 
-    public static float ClampAngle(float angle, float min, float max)
+    static float ClampAngle(float angle, float min, float max)
     {
         if (angle > 180)
         {
