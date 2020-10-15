@@ -10,11 +10,13 @@ public class ShipController : MonoBehaviour
     public ShipData shipData;
     public bool isOnControl = false, addForce = false;
     public float shipSpeed = 100f;
+    public float boostersRotateSpeed = 1f;
     public Transform[] boosters;
 
     private Vector2 moveInput = Vector2.zero;
     private PlayerInput playerInput;
     private InputAction m_ShipMove;
+    private InputAction m_AddForce;
 
     private void Awake()
     {
@@ -38,13 +40,21 @@ public class ShipController : MonoBehaviour
             {
                 playerInput = GetComponentInChildren<PlayerInput>();
                 m_ShipMove = playerInput.actions["Move"];
+                m_AddForce = playerInput.actions["Attack"];
             }
             ShipMove(m_ShipMove);
+            addForce = m_AddForce.ReadValue<float>() == 1 ? true : false;
         }
         else
         {
             playerInput = null;
             m_ShipMove = null;
+            m_AddForce = null;
+
+            for (int i = 0; i < 4; i++)
+            {
+                boosters[i].GetChild(0).gameObject.SetActive(false);
+            }
         }
 
 
@@ -62,55 +72,73 @@ public class ShipController : MonoBehaviour
 
         moveInput = context.ReadValue<Vector2>();
 
-        float angle = Mathf.Acos(Vector2.Dot(Vector2.up, moveInput.normalized));
+        float inputAngle = Mathf.Round(Mathf.Acos(Vector2.Dot(Vector2.up, moveInput.normalized)));
 
-        Debug.Log("angle : " + angle + "//" + angle * Mathf.Rad2Deg);
+        Debug.Log("angle : " + inputAngle + "//" + inputAngle * Mathf.Rad2Deg);
 
-        // if (addForce == false)
-        // {
-        //     for (int i = 0; i < 4; i++)
-        //     {
-        //         boosters[i].GetChild(0).gameObject.SetActive(false);
-        //     }
-        //     return;
-        // }
+        if (moveInput == Vector2.zero)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                boosters[i].GetChild(0).gameObject.SetActive(false);
+            }
+            return;
+        }
 
-        // var x = moveInput.x;
-        // var y = moveInput.y;
+        var x = moveInput.x;
+        var y = moveInput.y;
 
-        // float angle;
+        if (x < 0)
+        {
+            if (y < 0)
+            {
+                boosters[0].GetChild(0).gameObject.SetActive(false);
+                boosters[2].GetChild(0).gameObject.SetActive(false);
+                boosters[3].GetChild(0).gameObject.SetActive(false);
 
-        // if (x < 0)
-        // {
-        //     if (y < 0)
-        //     {
+                var boosterAngle = boosters[1].eulerAngles.z > 180 ? boosters[1].eulerAngles.z - 360 : boosters[1].eulerAngles.z;
+                boosterAngle = Mathf.Round(boosterAngle);
+                if(boosterAngle > inputAngle + 0.5f){
+                    boosters[1].Rotate(new Vector3(0f, 0f, -boostersRotateSpeed * Time.deltaTime));
+                }else if(boosterAngle < inputAngle - 0.5f){
+                    boosters[1].Rotate(new Vector3(0f, 0f, boostersRotateSpeed * Time.deltaTime));
+                }
+                //boosters[1].up = moveInput.normalized;
+                boosters[1].GetChild(0).gameObject.SetActive(addForce);
+                if (addForce)
+                    shipRbody.velocity += (moveInput * shipSpeed * Time.deltaTime);
+            }
+            else
+            {
+                boosters[0].GetChild(0).gameObject.SetActive(false);
+                boosters[1].GetChild(0).gameObject.SetActive(false);
+                boosters[2].GetChild(0).gameObject.SetActive(false);
 
-        //         boosters[1].GetChild(0).gameObject.SetActive(true);
-        //         boosters[1].up = moveInput.normalized;
+                boosters[3].GetChild(0).gameObject.SetActive(addForce);
+                boosters[3].up = moveInput.normalized;
+            }
+        }
+        else
+        {
+            if (y < 0)
+            {
+                boosters[1].GetChild(0).gameObject.SetActive(false);
+                boosters[2].GetChild(0).gameObject.SetActive(false);
+                boosters[3].GetChild(0).gameObject.SetActive(false);
 
-        //     }
-        //     else
-        //     {
-        //         boosters[3].GetChild(0).gameObject.SetActive(true);
-        //         boosters[3].up = moveInput.normalized;
-        //     }
-        // }
-        // else
-        // {
-        //     if (y < 0)
-        //     {
-        //         boosters[0].GetChild(0).gameObject.SetActive(true);
-        //         boosters[0].up = moveInput.normalized;
+                boosters[0].GetChild(0).gameObject.SetActive(addForce);
+                boosters[0].up = moveInput.normalized;
+            }
+            else
+            {
+                boosters[0].GetChild(0).gameObject.SetActive(false);
+                boosters[1].GetChild(0).gameObject.SetActive(false);
+                boosters[3].GetChild(0).gameObject.SetActive(false);
 
-        //     }
-        //     else
-        //     {
-
-        //         boosters[2].GetChild(0).gameObject.SetActive(true);
-        //         boosters[2].up = moveInput.normalized;
-
-        //     }
-        // }
+                boosters[2].GetChild(0).gameObject.SetActive(addForce);
+                boosters[2].up = moveInput.normalized;
+            }
+        }
 
         //shipRbody.velocity += (moveInput * shipSpeed * Time.deltaTime);
     }
@@ -119,6 +147,8 @@ public class ShipController : MonoBehaviour
     {
         return moveInput;
     }
+
+
 
 
 }
