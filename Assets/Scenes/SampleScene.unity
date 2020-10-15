@@ -1843,7 +1843,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 123768596}
-  m_LocalRotation: {x: -0, y: 0, z: -0.9238796, w: -0.38268328}
+  m_LocalRotation: {x: 0, y: 0, z: 0.92387956, w: 0.38268343}
   m_LocalPosition: {x: 4.5, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1851,7 +1851,7 @@ Transform:
   - {fileID: 612740866}
   m_Father: {fileID: 2009558040}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -225}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 135}
 --- !u!1 &130806996
 GameObject:
   m_ObjectHideFlags: 0
@@ -14070,7 +14070,12 @@ MonoBehaviour:
   isOnControl: 0
   addForce: 1
   shipSpeed: 10
-  boosters: []
+  boostersRotateSpeed: 1
+  boosters:
+  - {fileID: 1904548969}
+  - {fileID: 123768597}
+  - {fileID: 700012236}
+  - {fileID: 2036804056}
 --- !u!61 &979085536
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -36152,7 +36157,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2009558040}
-  - component: {fileID: 2009558041}
   m_Layer: 8
   m_Name: ShipBoost
   m_TagString: Untagged
@@ -36178,25 +36182,6 @@ Transform:
   m_Father: {fileID: 555221402}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2009558041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2009558039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d70441b4e2c3bb48acc950710dd81de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shipRbody: {fileID: 555221405}
-  shipController: {fileID: 979085535}
-  boosters:
-  - {fileID: 1904548969}
-  - {fileID: 123768597}
-  - {fileID: 700012236}
-  - {fileID: 2036804056}
 --- !u!1 &2009935294
 GameObject:
   m_ObjectHideFlags: 0
@@ -37797,6 +37782,7 @@ MonoBehaviour:
   isOnControl: 0
   addForce: 1
   shipSpeed: 10
+  boostersRotateSpeed: 1
   boosters: []
 --- !u!1 &2136135554
 GameObject:
