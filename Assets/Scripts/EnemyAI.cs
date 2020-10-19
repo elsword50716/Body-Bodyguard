@@ -16,6 +16,7 @@ public class EnemyAI : MonoBehaviour
     public LayerMask obstaclesLayer;
     public Transform BulletPrefab;
     [SerializeField] private float currentHealth;
+    public ParticleSystem deadExplosion;
 
 
     [Header("敵人資料")]
@@ -156,7 +157,18 @@ public class EnemyAI : MonoBehaviour
 
             case State.Dead:
                 Rbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
-                animator.SetBool("isDead", true);
+                Color[] color = new Color[2]; 
+                for (int i = 0; i < 2; i++)
+                {
+                    color[i] = transform.GetChild(i).GetComponent<SpriteRenderer>().color;
+                }
+                ParticleSystem.MinMaxGradient grad = new ParticleSystem.MinMaxGradient(color[0], Color.black);
+                
+                var particle = Instantiate(deadExplosion, transform.position, Quaternion.identity);
+                var particleMain = particle.main;
+                particleMain.startColor = grad;
+                particle.Play();
+                Destroy(gameObject);
                 break;
         }
 

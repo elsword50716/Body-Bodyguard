@@ -83,22 +83,22 @@ public class ShipController : MonoBehaviour
         {
             if (y < 0)
             {
-                BoostersControl(2);
+                BoostersControl(1);
             }
             else
             {
-                BoostersControl(0);
+                BoostersControl(3);
             }
         }
         else
         {
             if (y < 0)
             {
-                BoostersControl(3);
+                BoostersControl(0);
             }
             else
             {
-                BoostersControl(1);
+                BoostersControl(2);
             }
         }
 
@@ -120,7 +120,7 @@ public class ShipController : MonoBehaviour
             boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();
         }
 
-        float inputAngle = Mathf.Acos(Vector2.Dot(Vector2.up, moveInput.normalized * -1)) * Mathf.Rad2Deg;
+        float inputAngle = Mathf.Acos(Vector2.Dot(Vector2.up, moveInput.normalized)) * Mathf.Rad2Deg;
 
         inputAngle = theUsingOne % 2 == 0 ? -inputAngle : inputAngle;
 
@@ -140,7 +140,7 @@ public class ShipController : MonoBehaviour
             Debug.Log("加角度");
         }
         else
-            boosters[theUsingOne].up = moveInput.normalized * -1;
+            boosters[theUsingOne].up = moveInput.normalized;
         
 
         if (addForce){

@@ -1118,6 +1118,8 @@ MonoBehaviour:
   BulletPrefab: {fileID: 5015754369081956346, guid: 03de25fef3bc082409a4b74c072ab657,
     type: 3}
   currentHealth: 0
+  deadExplosion: {fileID: 8587222420244648422, guid: 94d5e8b8c05b42a4cbf19ef3aa2402d9,
+    type: 3}
   enemyData:
     id: 0
     name: BooleanAgbra
@@ -1401,6 +1403,8 @@ MonoBehaviour:
   BulletPrefab: {fileID: 5015754369081956346, guid: 03de25fef3bc082409a4b74c072ab657,
     type: 3}
   currentHealth: 0
+  deadExplosion: {fileID: 8587222420244648422, guid: 94d5e8b8c05b42a4cbf19ef3aa2402d9,
+    type: 3}
   enemyData:
     id: 0
     name: BooleanAgbra
@@ -2260,6 +2264,8 @@ MonoBehaviour:
   BulletPrefab: {fileID: 5015754369081956346, guid: 03de25fef3bc082409a4b74c072ab657,
     type: 3}
   currentHealth: 0
+  deadExplosion: {fileID: 8587222420244648422, guid: 94d5e8b8c05b42a4cbf19ef3aa2402d9,
+    type: 3}
   enemyData:
     id: 0
     name: BooleanAgbra
@@ -4281,6 +4287,8 @@ MonoBehaviour:
   BulletPrefab: {fileID: 5015754369081956346, guid: 03de25fef3bc082409a4b74c072ab657,
     type: 3}
   currentHealth: 0
+  deadExplosion: {fileID: 8587222420244648422, guid: 94d5e8b8c05b42a4cbf19ef3aa2402d9,
+    type: 3}
   enemyData:
     id: 0
     name: BooleanAgbra
@@ -5356,7 +5364,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 196407
+    m_Bits: 458551
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -6089,6 +6097,8 @@ MonoBehaviour:
   BulletPrefab: {fileID: 5015754369081956346, guid: 03de25fef3bc082409a4b74c072ab657,
     type: 3}
   currentHealth: 0
+  deadExplosion: {fileID: 8587222420244648422, guid: 94d5e8b8c05b42a4cbf19ef3aa2402d9,
+    type: 3}
   enemyData:
     id: 0
     name: BooleanAgbra
@@ -6406,6 +6416,8 @@ MonoBehaviour:
   BulletPrefab: {fileID: 5015754369081956346, guid: 03de25fef3bc082409a4b74c072ab657,
     type: 3}
   currentHealth: 0
+  deadExplosion: {fileID: 8587222420244648422, guid: 94d5e8b8c05b42a4cbf19ef3aa2402d9,
+    type: 3}
   enemyData:
     id: 0
     name: BooleanAgbra
@@ -6463,7 +6475,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 616082220}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.29, y: -25.65, z: 0}
+  m_LocalPosition: {x: -8.2, y: -24.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1291324546}
@@ -8015,8 +8027,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
-  - {fileID: 2100000, guid: 372fee0fdd8cf824681d038462087123, type: 2}
+  - {fileID: 2100000, guid: 5e100cc32d0a90c4da34db92733237ae, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9340,8 +9352,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 0.9977541, g: 0, b: 1, a: 1}
+        key0: {r: 1, g: 0, b: 0, a: 1}
+        key1: {r: 1, g: 0.6335944, b: 0, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -14070,7 +14082,8 @@ MonoBehaviour:
   isOnControl: 0
   addForce: 1
   shipSpeed: 10
-  boostersRotateSpeed: 1
+  boostersRotateSpeed: 60
+  boostersAvoidShacking: 1.5
   boosters:
   - {fileID: 1904548969}
   - {fileID: 123768597}
@@ -15363,8 +15376,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
-  - {fileID: 2100000, guid: 372fee0fdd8cf824681d038462087123, type: 2}
+  - {fileID: 2100000, guid: 5e100cc32d0a90c4da34db92733237ae, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16688,8 +16701,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 0.9977541, g: 0, b: 1, a: 1}
+        key0: {r: 1, g: 0, b: 0, a: 1}
+        key1: {r: 1, g: 0.6335944, b: 0, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -20517,8 +20530,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
-  - {fileID: 2100000, guid: 372fee0fdd8cf824681d038462087123, type: 2}
+  - {fileID: 2100000, guid: 5e100cc32d0a90c4da34db92733237ae, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -21842,8 +21855,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 0.9977541, g: 0, b: 1, a: 1}
+        key0: {r: 1, g: 0, b: 0, a: 1}
+        key1: {r: 1, g: 0.6335944, b: 0, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -27448,8 +27461,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
-  - {fileID: 2100000, guid: 372fee0fdd8cf824681d038462087123, type: 2}
+  - {fileID: 2100000, guid: 5e100cc32d0a90c4da34db92733237ae, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -28773,8 +28786,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 0.9977541, g: 0, b: 1, a: 1}
+        key0: {r: 1, g: 0, b: 0, a: 1}
+        key1: {r: 1, g: 0.6335944, b: 0, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -35696,7 +35709,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1973423524
 Transform:
   m_ObjectHideFlags: 0
@@ -35923,6 +35936,8 @@ MonoBehaviour:
   BulletPrefab: {fileID: 5015754369081956346, guid: 03de25fef3bc082409a4b74c072ab657,
     type: 3}
   currentHealth: 0
+  deadExplosion: {fileID: 8587222420244648422, guid: 94d5e8b8c05b42a4cbf19ef3aa2402d9,
+    type: 3}
   enemyData:
     id: 0
     name: BooleanAgbra
@@ -37783,6 +37798,7 @@ MonoBehaviour:
   addForce: 1
   shipSpeed: 10
   boostersRotateSpeed: 1
+  boostersAvoidShacking: 1.5
   boosters: []
 --- !u!1 &2136135554
 GameObject:

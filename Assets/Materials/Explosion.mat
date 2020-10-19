@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShipBody
-  m_Shader: {fileID: -6465566751694194690, guid: 0b26d29ca40b876499441e7bb24d0996,
+  m_Name: Explosion
+  m_Shader: {fileID: -6465566751694194690, guid: 5ad59672d8436cf42993979310ff4dd4,
     type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
@@ -30,4 +30,4 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats: []
     m_Colors:
-    - Color_773F1A6: {r: 1024, g: 1024, b: 1024, a: 0}
+    - _Color: {r: 1.4980392, g: 1.4980392, b: 1.4980392, a: 0}
