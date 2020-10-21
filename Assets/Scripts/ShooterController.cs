@@ -13,6 +13,9 @@ public class ShooterController : MonoBehaviour
     public float bulletDamage;
     public Transform bulletPool;
     public bool isLaser = false;
+    public float laserMaxAmount = 100f;
+    public Transform laserBatterySprite;
+    public Animator laserBatteryThunderAnimator;
     public float BulletSpeed = 1f;
     public float FireRate = 0.2f;
     public Animator gunAnimator;
@@ -21,6 +24,7 @@ public class ShooterController : MonoBehaviour
     public float gunMovingDegree = 1f;
     private float timer = 0f;
     private float gunRotationZ = 0f;
+    private float laserCurrentAmount;
     private int counter = 0;
     private Vector2 moveInput = Vector2.zero;
     private Transform[] firePoint;
@@ -39,6 +43,8 @@ public class ShooterController : MonoBehaviour
         {
             firePoint[i] = gunPivotPoint.GetChild(i).GetChild(0);
         }
+
+        laserCurrentAmount = laserMaxAmount;
     }
 
 
@@ -68,15 +74,38 @@ public class ShooterController : MonoBehaviour
 
         if (isLaser)
         {
+            if (laserBatterySprite != null)
+                laserBatterySprite.localScale = new Vector3(laserCurrentAmount / laserMaxAmount, 1f, 1f);
             if (isShootting)
             {
-                gunAnimator.SetBool("isShootting", true);
-                //bulletPrefab.SetActive(true);
+                if (laserCurrentAmount > 0)
+                {
+                    gunAnimator.SetBool("isShootting", true);
+                    laserCurrentAmount -= Time.deltaTime;
+                    laserBatteryThunderAnimator.SetBool("isCharging", false);
+                }
+                else
+                {
+                    gunAnimator.SetBool("isShootting", false);
+                    bulletPrefab.SetActive(false);
+                    laserCurrentAmount = 0;
+                    laserBatteryThunderAnimator.SetBool("isCharging", false);
+                }
             }
             else
             {
                 gunAnimator.SetBool("isShootting", false);
                 bulletPrefab.SetActive(false);
+                if (laserCurrentAmount < laserMaxAmount)
+                {
+                    laserCurrentAmount += Time.deltaTime;
+                    laserBatteryThunderAnimator.SetBool("isCharging", true);
+                }
+                else
+                {
+                    laserCurrentAmount = laserMaxAmount;
+                    laserBatteryThunderAnimator.SetBool("isCharging", false);
+                }
             }
         }
         else

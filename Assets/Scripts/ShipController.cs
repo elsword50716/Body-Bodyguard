@@ -79,7 +79,7 @@ public class ShipController : MonoBehaviour
         var x = moveInput.x;
         var y = moveInput.y;
 
-        if (x < 0)
+        if (x <= 0)
         {
             if (y < 0)
             {
@@ -124,10 +124,12 @@ public class ShipController : MonoBehaviour
 
         inputAngle = theUsingOne % 2 == 0 ? -inputAngle : inputAngle;
 
+
         var boosterAngle = boosters[theUsingOne].eulerAngles.z > 180 ? boosters[theUsingOne].eulerAngles.z - 360 : boosters[theUsingOne].eulerAngles.z;
 
         Debug.Log("angle : " + inputAngle);
         Debug.Log("boosterAngle: " + boosterAngle);
+        Debug.Log("boosterAngle(Origin): " + boosters[theUsingOne].eulerAngles.z);
 
         if (boosterAngle > inputAngle + boostersAvoidShacking)
         {
@@ -140,10 +142,14 @@ public class ShipController : MonoBehaviour
             Debug.Log("加角度");
         }
         else
+        {
             boosters[theUsingOne].up = moveInput.normalized;
-        
+            boosters[theUsingOne].eulerAngles = new Vector3(0f, 0f, boosters[theUsingOne].eulerAngles.z);
+        }
 
-        if (addForce){
+
+        if (addForce)
+        {
             boosters[theUsingOne].GetChild(0).GetComponent<ParticleSystem>().Play();
             shipRbody.velocity += ((Vector2)boosters[theUsingOne].up * shipSpeed * Time.deltaTime);
         }

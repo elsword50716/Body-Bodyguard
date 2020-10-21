@@ -69,7 +69,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1224912509
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -2689295969116127057, guid: 72da48373da10f347a5e7d84d6148b10,
     type: 3}
@@ -186,6 +186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba1e63712b411f4397688cc42b532c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionParicle: {fileID: 1306162878203118078, guid: c198c95613692cc438da6956724be5c3,
+    type: 3}
   bulletData:
     id: 0
     name: Virus_Long
