@@ -54,7 +54,7 @@ public class ShipController : MonoBehaviour
 
             for (int i = 0; i < 4; i++)
             {
-                boosters[i].GetComponentInChildren<ParticleSystem>().Stop();
+                boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();
             }
         }
 
@@ -71,7 +71,7 @@ public class ShipController : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                boosters[i].GetComponentInChildren<ParticleSystem>().Stop();
+                boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();
             }
             return;
         }
@@ -94,11 +94,11 @@ public class ShipController : MonoBehaviour
         {
             if (y < 0)
             {
-                BoostersControl(2);
+                BoostersControl(0);
             }
             else
             {
-                BoostersControl(0);
+                BoostersControl(2);
             }
         }
 
@@ -117,43 +117,51 @@ public class ShipController : MonoBehaviour
             if (i == theUsingOne)
                 continue;
 
-            boosters[i].GetComponentInChildren<ParticleSystem>().Stop();
+            boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();
         }
 
-        float inputAngle = Mathf.Acos(Vector2.Dot(Vector2.up, moveInput.normalized)) * Mathf.Rad2Deg;
+        float inputAngleDelta = Mathf.Acos(Vector2.Dot(boosters[theUsingOne].up, moveInput.normalized)) * Mathf.Rad2Deg;
 
-        inputAngle = inputAngle > 90f ? inputAngle - 90f : inputAngle;
+        Debug.Log($"{theUsingOne} inputAngleDelta : " + inputAngleDelta);
 
+        Vector2 boosterUp_temp = boosters[theUsingOne].up;
 
-        var boosterAngle = boosters[theUsingOne].eulerAngles.z > 180f ? boosters[theUsingOne].eulerAngles.z - 180f : boosters[theUsingOne].eulerAngles.z;
-
-        Debug.Log("angle : " + inputAngle);
-        Debug.Log("boosterAngle: " + boosterAngle);
-        Debug.Log("boosterAngle(origin): " + boosters[theUsingOne].eulerAngles.z);
-
-        if (boosterAngle > inputAngle + boostersAvoidShacking)
+        if (inputAngleDelta > boostersAvoidShacking)
         {
-            boosters[theUsingOne].Rotate(new Vector3(0f, 0f, -1 * boostersRotateSpeed * Time.deltaTime));
-            Debug.Log("扣角度");
-        }
-        else if (boosterAngle < inputAngle - boostersAvoidShacking)
-        {
-            boosters[theUsingOne].Rotate(new Vector3(0f, 0f, boostersRotateSpeed * Time.deltaTime));
-            Debug.Log("加角度");
+            var degree = boostersRotateSpeed * Time.deltaTime;
+            var RotatedX_N = (boosterUp_temp.x * Mathf.Cos(-degree * Mathf.Deg2Rad) - boosterUp_temp.y * Mathf.Sin(-degree * Mathf.Deg2Rad));
+            var RotatedY_N = (boosterUp_temp.x * Mathf.Sin(-degree * Mathf.Deg2Rad) + boosterUp_temp.y * Mathf.Cos(-degree * Mathf.Deg2Rad));
+            boosterUp_temp = new Vector2(RotatedX_N, RotatedY_N);
+
+            var inputAngleDelta_temp = Mathf.Acos(Vector2.Dot(boosterUp_temp, moveInput.normalized)) * Mathf.Rad2Deg;
+
+            if (inputAngleDelta_temp > inputAngleDelta)
+            {
+                boosters[theUsingOne].Rotate(new Vector3(0f, 0f, degree));
+                Debug.Log("加角度");
+            }
+            else
+            {
+                boosters[theUsingOne].Rotate(new Vector3(0f, 0f, -degree));
+                Debug.Log("減角度");
+            }
+
         }
         else
         {
-            boosters[theUsingOne].eulerAngles = new Vector3(boosters[theUsingOne].eulerAngles.x, boosters[theUsingOne].eulerAngles.y, inputAngle);
+            boosters[theUsingOne].up = moveInput.normalized;
+            if (theUsingOne == 0)
+                boosters[theUsingOne].eulerAngles = new Vector3(0f, 0f, boosters[theUsingOne].eulerAngles.z);
+            Debug.Log("貼其");
         }
-
 
         if (addForce)
         {
-            boosters[theUsingOne].GetComponentInChildren<ParticleSystem>().Play();
-            shipRbody.velocity += ((Vector2)boosters[theUsingOne].up * -1 * shipSpeed * Time.deltaTime);
+            boosters[theUsingOne].GetChild(0).GetComponent<ParticleSystem>().Play();
+            shipRbody.velocity += ((Vector2)boosters[theUsingOne].up * shipSpeed * Time.deltaTime);
         }
         else
-            boosters[theUsingOne].GetComponentInChildren<ParticleSystem>().Stop();
+            boosters[theUsingOne].GetChild(0).GetComponent<ParticleSystem>().Stop();
     }
 
 
