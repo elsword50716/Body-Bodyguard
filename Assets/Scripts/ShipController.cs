@@ -54,7 +54,7 @@ public class ShipController : MonoBehaviour
 
             for (int i = 0; i < 4; i++)
             {
-                boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();
+                boosters[i].GetComponentInChildren<ParticleSystem>().Stop();
             }
         }
 
@@ -71,7 +71,7 @@ public class ShipController : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();
+                boosters[i].GetComponentInChildren<ParticleSystem>().Stop();
             }
             return;
         }
@@ -79,7 +79,7 @@ public class ShipController : MonoBehaviour
         var x = moveInput.x;
         var y = moveInput.y;
 
-        if (x <= 0)
+        if (x < 0)
         {
             if (y < 0)
             {
@@ -94,11 +94,11 @@ public class ShipController : MonoBehaviour
         {
             if (y < 0)
             {
-                BoostersControl(0);
+                BoostersControl(2);
             }
             else
             {
-                BoostersControl(2);
+                BoostersControl(0);
             }
         }
 
@@ -117,19 +117,19 @@ public class ShipController : MonoBehaviour
             if (i == theUsingOne)
                 continue;
 
-            boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();
+            boosters[i].GetComponentInChildren<ParticleSystem>().Stop();
         }
 
         float inputAngle = Mathf.Acos(Vector2.Dot(Vector2.up, moveInput.normalized)) * Mathf.Rad2Deg;
 
-        inputAngle = theUsingOne % 2 == 0 ? -inputAngle : inputAngle;
+        inputAngle = inputAngle > 90f ? inputAngle - 90f : inputAngle;
 
 
-        var boosterAngle = boosters[theUsingOne].eulerAngles.z > 180 ? boosters[theUsingOne].eulerAngles.z - 360 : boosters[theUsingOne].eulerAngles.z;
+        var boosterAngle = boosters[theUsingOne].eulerAngles.z > 180f ? boosters[theUsingOne].eulerAngles.z - 180f : boosters[theUsingOne].eulerAngles.z;
 
         Debug.Log("angle : " + inputAngle);
         Debug.Log("boosterAngle: " + boosterAngle);
-        Debug.Log("boosterAngle(Origin): " + boosters[theUsingOne].eulerAngles.z);
+        Debug.Log("boosterAngle(origin): " + boosters[theUsingOne].eulerAngles.z);
 
         if (boosterAngle > inputAngle + boostersAvoidShacking)
         {
@@ -143,18 +143,17 @@ public class ShipController : MonoBehaviour
         }
         else
         {
-            boosters[theUsingOne].up = moveInput.normalized;
-            boosters[theUsingOne].eulerAngles = new Vector3(0f, 0f, boosters[theUsingOne].eulerAngles.z);
+            boosters[theUsingOne].eulerAngles = new Vector3(boosters[theUsingOne].eulerAngles.x, boosters[theUsingOne].eulerAngles.y, inputAngle);
         }
 
 
         if (addForce)
         {
-            boosters[theUsingOne].GetChild(0).GetComponent<ParticleSystem>().Play();
-            shipRbody.velocity += ((Vector2)boosters[theUsingOne].up * shipSpeed * Time.deltaTime);
+            boosters[theUsingOne].GetComponentInChildren<ParticleSystem>().Play();
+            shipRbody.velocity += ((Vector2)boosters[theUsingOne].up * -1 * shipSpeed * Time.deltaTime);
         }
         else
-            boosters[theUsingOne].GetChild(0).GetComponent<ParticleSystem>().Stop();
+            boosters[theUsingOne].GetComponentInChildren<ParticleSystem>().Stop();
     }
 
 
