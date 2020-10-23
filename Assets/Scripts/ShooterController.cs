@@ -171,6 +171,12 @@ public class ShooterController : MonoBehaviour
 
     private void FireBullet(int index)
     {
+        var particle = firePoint[index].GetComponentInChildren<ParticleSystem>();
+        var particleMain = particle.main;
+        var color = bulletPrefab.GetComponentInChildren<SpriteRenderer>().color;
+        ParticleSystem.MinMaxGradient grad = new ParticleSystem.MinMaxGradient(color, Color.white);
+        particleMain.startColor = grad;
+        particle.Play();
         var bullet = Instantiate(bulletPrefab, firePoint[index].position, Quaternion.identity, bulletPool);
         bullet.GetComponent<BasicBullet>().bulletData.targetTag = "Enemy";
         bullet.GetComponent<BasicBullet>().bulletData.damage = bulletDamage;
