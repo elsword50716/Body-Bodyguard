@@ -48,14 +48,18 @@ public class Ship : MonoBehaviour
         currentHealth -= damage;
     }
 
-    private void Dead()
+    public void Dead()
     {
         Debug.Log("Ship Dead!!!!!!!");
     }
 
-    private void Heal(float healPoint)
+    public void Heal(float healPoint)
     {
         currentHealth += healPoint;
+    }
+
+    public float GetCurrentHP(){
+        return currentHealth;
     }
 
     private void OnCollisionEnter2D(Collision2D other)

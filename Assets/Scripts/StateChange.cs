@@ -62,7 +62,7 @@ public class StateChange : MonoBehaviour
 
         GameDataManager.nextSceneName = nextSceneName;
 
-        SceneManager.LoadScene("LoadingScene", LoadSceneMode.Additive);//把loadingScene加進來
+        SceneManager.LoadScene("LoadingScene", LoadSceneMode.Single);//把loadingScene加進來
     }
 
     public void ToPreviousState()
@@ -77,5 +77,5 @@ public class StateChange : MonoBehaviour
         GameDataManager.stateDatas.LevelAndStateHistory.RemoveAt(lastindex);
     }
 
-    
+
 }

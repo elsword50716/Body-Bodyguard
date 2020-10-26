@@ -16,6 +16,7 @@ public class EnemyAI : MonoBehaviour
     public LayerMask obstaclesLayer;
     public Transform BulletPrefab;
     [SerializeField] private float currentHealth;
+    public ParticleSystem deadExplosion;
 
 
     [Header("敵人資料")]
@@ -33,7 +34,6 @@ public class EnemyAI : MonoBehaviour
     private Vector3 roamPosotion;
     private Transform targetPosition;
     private GameObject ChasingPoint;
-    private bool isReachTarget = false;
     private State state;
     private float nextShootTimer = 0f;
     private float nextMoveTimer = 0f;
@@ -155,8 +155,7 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             case State.Dead:
-                Rbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
-                animator.SetBool("isDead", true);
+                Dead();
                 break;
         }
 
@@ -275,6 +274,23 @@ public class EnemyAI : MonoBehaviour
             state = State.ChaseTarget;
         }
 
+    }
+
+    private void Dead()
+    {
+        Rbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+        Color[] color = new Color[2];
+        for (int i = 0; i < 2; i++)
+        {
+            color[i] = transform.GetChild(i).GetComponent<SpriteRenderer>().color;
+        }
+        ParticleSystem.MinMaxGradient grad = new ParticleSystem.MinMaxGradient(color[0], Color.black);
+
+        var particle = Instantiate(deadExplosion, transform.position, Quaternion.identity);
+        var particleMain = particle.main;
+        particleMain.startColor = grad;
+        particle.Play();
+        Destroy(gameObject);
     }
 
     private bool IsObstaclesBetween()

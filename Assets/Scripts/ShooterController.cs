@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class ShooterController : MonoBehaviour
 {
     public Transform gunPivotPoint;
+    public float gunMaxRotationRange = 60f;
     public bool isGunHorizontal;
     public bool isShootting = false;
     public bool isOnControl = false;
@@ -13,6 +14,10 @@ public class ShooterController : MonoBehaviour
     public float bulletDamage;
     public Transform bulletPool;
     public bool isLaser = false;
+    public float laserChargeSpeedMulti = 1f;
+    public float laserConsumeSpeedMulti = 1f;
+    public Transform laserBatterySprite;
+    public Animator laserBatteryThunderAnimator;
     public float BulletSpeed = 1f;
     public float FireRate = 0.2f;
     public Animator gunAnimator;
@@ -21,6 +26,7 @@ public class ShooterController : MonoBehaviour
     public float gunMovingDegree = 1f;
     private float timer = 0f;
     private float gunRotationZ = 0f;
+    private float laserCurrentAmount;
     private int counter = 0;
     private Vector2 moveInput = Vector2.zero;
     private Transform[] firePoint;
@@ -34,11 +40,15 @@ public class ShooterController : MonoBehaviour
 
         var childCount = gunPivotPoint.childCount;
         firePoint = new Transform[childCount];
+        if(gunPivotPoint.GetComponentInChildren<Animator>() != null)
+            gunAnimator = gunPivotPoint.GetComponentInChildren<Animator>();
 
         for (int i = 0; i < firePoint.Length; i++)
         {
             firePoint[i] = gunPivotPoint.GetChild(i).GetChild(0);
         }
+
+        laserCurrentAmount = 100f;
     }
 
 
@@ -52,9 +62,6 @@ public class ShooterController : MonoBehaviour
                 playerInput = GetComponentInChildren<PlayerInput>();
                 m_GunMove = playerInput.actions["Move"];
                 m_Fire = playerInput.actions["Attack"];
-
-                //m_Fire.performed += context => isShootting = true;
-                //m_Fire.canceled += context => isShootting = false;
             }
             GunMove(m_GunMove);
             isShootting = m_Fire.ReadValue<float>() == 1 ? true : false;
@@ -68,21 +75,47 @@ public class ShooterController : MonoBehaviour
 
         if (isLaser)
         {
+            if (laserBatterySprite != null)
+                laserBatterySprite.localScale = new Vector3(laserCurrentAmount / 100f, 1f, 1f);
             if (isShootting)
             {
-                gunAnimator.SetBool("isShootting", true);
-                //bulletPrefab.SetActive(true);
+                if (laserCurrentAmount > 0)
+                {
+                    gunAnimator.SetBool("isShootting", true);
+                    bulletPrefab.SetActive(true);
+                    laserCurrentAmount -= laserConsumeSpeedMulti *Time.deltaTime;
+                    laserBatteryThunderAnimator.SetBool("isCharging", false);
+                }
+                else
+                {
+                    gunAnimator.SetBool("isShootting", false);
+                    bulletPrefab.SetActive(false);
+                    laserCurrentAmount = 0;
+                    laserBatteryThunderAnimator.SetBool("isCharging", false);
+                }
             }
             else
             {
                 gunAnimator.SetBool("isShootting", false);
                 bulletPrefab.SetActive(false);
+                if (laserCurrentAmount < 100f)
+                {
+                    laserCurrentAmount += laserChargeSpeedMulti * Time.deltaTime;
+                    laserBatteryThunderAnimator.SetBool("isCharging", true);
+                }
+                else
+                {
+                    laserCurrentAmount = 100f;
+                    laserBatteryThunderAnimator.SetBool("isCharging", false);
+                }
             }
         }
         else
         {
             if (isShootting)
             {
+                if(gunAnimator !=null)
+                    gunAnimator.SetFloat("ShootRate", 1/(FireRate * 10));
                 if (Time.time > timer)
                 {
                     counter++;
@@ -96,6 +129,9 @@ public class ShooterController : MonoBehaviour
 
                 }
 
+            }else{
+                if(gunAnimator !=null)
+                    gunAnimator.SetFloat("ShootRate", 0);
             }
 
 
@@ -118,38 +154,34 @@ public class ShooterController : MonoBehaviour
         }
 
         moveInput = context.ReadValue<Vector2>();
-        gunRotationZ = ClampAngle(gunPivotPoint.localEulerAngles.z, -60, 60);
 
-        gunPivotPoint.localEulerAngles = new Vector3(0f, 0f, gunRotationZ);
+        gunRotationZ = gunPivotPoint.localEulerAngles.z;
+        gunRotationZ = gunRotationZ > 180f ? gunRotationZ - 360f : gunRotationZ;
 
-        if (isGunHorizontal)
-        {
-            gunPivotPoint.Rotate(new Vector3(0f, 0f, -moveInput.x * gunMovingDegree * Time.deltaTime));
+        var moveDegree = isGunHorizontal ? -moveInput.x * gunMovingDegree * Time.deltaTime : -moveInput.y * gunMovingDegree * Time.deltaTime;
+
+        if (Mathf.Abs(gunRotationZ + moveDegree) < gunMaxRotationRange)
+            gunPivotPoint.Rotate(new Vector3(0f, 0f, moveDegree));
+        else{
+            if(Mathf.Abs(gunRotationZ) != gunMaxRotationRange)
+                gunPivotPoint.localEulerAngles = new Vector3(0f, 0f, gunRotationZ > 0 ? gunMaxRotationRange : -gunMaxRotationRange);
         }
-        else
-        {
-            gunPivotPoint.Rotate(new Vector3(0f, 0f, -moveInput.y * gunMovingDegree * Time.deltaTime));
-        }
+
     }
 
     private void FireBullet(int index)
     {
+        var particle = firePoint[index].GetComponentInChildren<ParticleSystem>();
+        var particleMain = particle.main;
+        var color = bulletPrefab.GetComponentInChildren<SpriteRenderer>().color;
+        ParticleSystem.MinMaxGradient grad = new ParticleSystem.MinMaxGradient(color, Color.white);
+        particleMain.startColor = grad;
+        particle.Play();
         var bullet = Instantiate(bulletPrefab, firePoint[index].position, Quaternion.identity, bulletPool);
         bullet.GetComponent<BasicBullet>().bulletData.targetTag = "Enemy";
         bullet.GetComponent<BasicBullet>().bulletData.damage = bulletDamage;
         var bulletRbody2D = bullet.GetComponent<Rigidbody2D>();
         bulletRbody2D.velocity = firePoint[index].up * BulletSpeed;
         bullet.transform.up = firePoint[index].up;
-    }
-
-
-
-    static float ClampAngle(float angle, float min, float max)
-    {
-        if (angle > 180)
-        {
-            angle -= 360;
-        }
-        return Mathf.Clamp(angle, min, max);
     }
 }
