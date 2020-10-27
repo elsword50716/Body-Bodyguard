@@ -312,7 +312,7 @@ public class EnemyAI : MonoBehaviour
 
     private void DamageShip(Collider2D collider)
     {
-        collider.GetComponent<Ship>().GetDamaged(enemyData.attackDamage);
+        collider.GetComponentInParent<Ship>().GetDamaged(enemyData.attackDamage);
     }
 
 
