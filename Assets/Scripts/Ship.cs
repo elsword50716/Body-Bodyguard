@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Ship : MonoBehaviour
 {
     public Transform mainCamera;
+    public float m_PixelsPerUnit = 20f;
     public Transform shipInside;
     public Slider healthBar;
     public ShipData shipData;
@@ -26,6 +27,7 @@ public class Ship : MonoBehaviour
 
     private void Update()
     {
+        //mainCamera.position = new Vector3(Round(transform.position.x), Round(transform.position.y), -10);
         mainCamera.position = new Vector3(transform.position.x, transform.position.y, -10);
         shipInside.position = transform.position;
         healthBar.value = currentHealth;
@@ -43,6 +45,11 @@ public class Ship : MonoBehaviour
         }
     }
 
+    float Round(float x)
+    {
+        return Mathf.Round(x * m_PixelsPerUnit) / m_PixelsPerUnit;
+    }
+
     public void GetDamaged(float damage)
     {
         currentHealth -= damage;
@@ -58,7 +65,8 @@ public class Ship : MonoBehaviour
         currentHealth += healPoint;
     }
 
-    public float GetCurrentHP(){
+    public float GetCurrentHP()
+    {
         return currentHealth;
     }
 
