@@ -227,6 +227,7 @@ public class EnemyAI : MonoBehaviour
             {
                 roamPosotion = GetRoamingPostion();
                 aIPath.endReachedDistance = 0;
+                nextMoveTimer = 0;
             }
             else
                 nextMoveTimer += Time.deltaTime;

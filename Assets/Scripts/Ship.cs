@@ -9,6 +9,7 @@ public class Ship : MonoBehaviour
     public float m_PixelsPerUnit = 20f;
     public Transform shipInside;
     public Slider healthBar;
+    public Animator shipDamageEffectAnimator;
     public ShipData shipData;
 
     [SerializeField] private float currentHealth;
@@ -21,7 +22,7 @@ public class Ship : MonoBehaviour
         currentHealth = shipData.maxHealth;
         healthBar.maxValue = shipData.maxHealth;
         maxHealth_temp = shipData.maxHealth;
-        mainCamera = Camera.main.transform;
+        //mainCamera = Camera.main.transform;
 
     }
 
@@ -52,6 +53,7 @@ public class Ship : MonoBehaviour
 
     public void GetDamaged(float damage)
     {
+        shipDamageEffectAnimator.SetTrigger("isShipHit");
         currentHealth -= damage;
     }
 
@@ -79,7 +81,8 @@ public class Ship : MonoBehaviour
 
         Debug.Log("ship Damage: " + other.relativeVelocity.magnitude);
 
-        GetDamaged(other.relativeVelocity.magnitude);
+        if(other.relativeVelocity.magnitude > 5f)
+            GetDamaged(other.relativeVelocity.magnitude * (shipData.maxHealth / 100f));
 
     }
 
