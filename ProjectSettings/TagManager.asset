@@ -32,7 +32,7 @@ TagManager:
   - Minimap
   - ShipInside
   - Particles
-  - 
+  - PIckUps
   - 
   - 
   - 
@@ -66,6 +66,9 @@ TagManager:
     locked: 0
   - name: Enemy
     uniqueID: 3418948859
+    locked: 0
+  - name: PickUps
+    uniqueID: 3105757285
     locked: 0
   - name: Bullet
     uniqueID: 3070054787

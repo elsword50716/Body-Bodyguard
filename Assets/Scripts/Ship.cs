@@ -10,6 +10,7 @@ public class Ship : MonoBehaviour
     public Transform shipInside;
     public Slider healthBar;
     public Animator shipDamageEffectAnimator;
+    public ParticleSystem shipHealParticle;
     public ShipData shipData;
 
     [SerializeField] private float currentHealth;
@@ -59,11 +60,12 @@ public class Ship : MonoBehaviour
 
     public void Dead()
     {
-        Debug.Log("Ship Dead!!!!!!!");
+        //Debug.Log("Ship Dead!!!!!!!");
     }
 
     public void Heal(float healPoint)
     {
+        shipHealParticle.Play();
         currentHealth += healPoint;
     }
 
@@ -81,7 +83,7 @@ public class Ship : MonoBehaviour
 
         Debug.Log("ship Damage: " + other.relativeVelocity.magnitude);
 
-        if(other.relativeVelocity.magnitude > 5f)
+        if (other.relativeVelocity.magnitude > 5f)
             GetDamaged(other.relativeVelocity.magnitude * (shipData.maxHealth / 100f));
 
     }
