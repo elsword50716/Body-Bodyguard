@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using System.IO;
 
 public class GameSettingManager : MonoBehaviour
@@ -8,16 +9,14 @@ public class GameSettingManager : MonoBehaviour
     public Dropdown resolutionDropdown;
     public Dropdown qualityDropdown;
     public Slider musicVolumeSlider;
-    public Slider SFXVolumeSlider;
-
-    public AudioSource musicSource;
-    public AudioSource SFXSource;
+    public Slider soundEffectVolumeSlider;
+    public AudioMixer audioMixer;
     public Button applyButton;
 
     private Resolution[] resolutions;
     private GameSettings gameSettings;
     private Text musicPercentText;
-    private Text SFXPercentText;
+    private Text soundEffectPercentText;
 
     private void OnEnable()
     {
@@ -27,13 +26,13 @@ public class GameSettingManager : MonoBehaviour
         resolutionDropdown.onValueChanged.AddListener(delegate { OnResolutionChanged(); });
         qualityDropdown.onValueChanged.AddListener(delegate { OnQualityChanged(); });
         musicVolumeSlider.onValueChanged.AddListener(delegate { OnMusicVolumeChanged(); });
-        SFXVolumeSlider.onValueChanged.AddListener(delegate { OnSFXVolumeChanged(); });
+        soundEffectVolumeSlider.onValueChanged.AddListener(delegate { OnSoundEffectVolumeChanged(); });
         applyButton.onClick.AddListener(delegate { OnApplyButtonClick(); });
 
         resolutions = Screen.resolutions;
         foreach (var resolution in resolutions)
         {
-            resolutionDropdown.options.Add(new Dropdown.OptionData(resolution.ToString()));
+            resolutionDropdown.options.Add(new Dropdown.OptionData(resolution.width + " x " + resolution.height));
             if (Screen.currentResolution.width == resolution.width && Screen.currentResolution.height == resolution.height)
             {
                 resolutionDropdown.value = resolutionDropdown.options.Count - 1;
@@ -42,9 +41,9 @@ public class GameSettingManager : MonoBehaviour
 
         fullscreenToggle.isOn = Screen.fullScreen;
         musicPercentText = musicVolumeSlider.GetComponentInChildren<Text>();
-        musicPercentText.text = $"{Mathf.Round(musicVolumeSlider.value * 100)}%";
-        SFXPercentText = SFXVolumeSlider.GetComponentInChildren<Text>();
-        SFXPercentText.text = $"{Mathf.Round(SFXVolumeSlider.value * 100)}%";
+        musicPercentText.text = $"{Mathf.Round((musicVolumeSlider.value + 80f) / 80f * 100f)}%";
+        soundEffectPercentText = soundEffectVolumeSlider.GetComponentInChildren<Text>();
+        soundEffectPercentText.text = $"{Mathf.Round((soundEffectVolumeSlider.value + 80f) / 80f * 100f)}%";
 
         if (File.Exists(Application.persistentDataPath + "/GameSetting.json"))
             LoadSettings();
@@ -66,19 +65,23 @@ public class GameSettingManager : MonoBehaviour
     {
         applyButton.interactable = true;
         gameSettings.QualityIndex = qualityDropdown.value;
+        QualitySettings.SetQualityLevel(gameSettings.QualityIndex);
     }
     public void OnMusicVolumeChanged()
     {
         applyButton.interactable = true;
-        gameSettings.MusicVolume = musicSource.volume = musicVolumeSlider.value;
-        musicPercentText.text = $"{Mathf.Round(musicVolumeSlider.value * 100)}%";
+        var volume = musicVolumeSlider.value;
+        gameSettings.MusicVolume = volume;
+        audioMixer.SetFloat("_musicVolume", volume);
+        musicPercentText.text = $"{Mathf.Round((musicVolumeSlider.value + 80f) / 80f * 100f)}%";
     }
-    public void OnSFXVolumeChanged()
+    public void OnSoundEffectVolumeChanged()
     {
         applyButton.interactable = true;
-        gameSettings.SFXVolume = SFXVolumeSlider.value;
-        //gameSettings.SFXVolume = SFXSource.volume = SFXVolumeSlider.value;
-        SFXPercentText.text = $"{Mathf.Round(SFXVolumeSlider.value * 100)}%";
+        var volume = soundEffectVolumeSlider.value;
+        gameSettings.SoundEffectVolume = volume;
+        audioMixer.SetFloat("_soundEffectVolume", volume);
+        soundEffectPercentText.text = $"{Mathf.Round((soundEffectVolumeSlider.value + 80f) / 80f * 100f)}%";
     }
 
     public void OnApplyButtonClick()
@@ -90,7 +93,6 @@ public class GameSettingManager : MonoBehaviour
     {
         Screen.fullScreen = gameSettings.Fullscreen;
         Screen.SetResolution(resolutions[gameSettings.ResolutionIndex].width, resolutions[gameSettings.ResolutionIndex].height, gameSettings.Fullscreen);
-        QualitySettings.masterTextureLimit = gameSettings.QualityIndex;
         string jsonData = JsonUtility.ToJson(gameSettings, true);
         File.WriteAllText(Application.persistentDataPath + "/GameSetting.json", jsonData);
         applyButton.interactable = false;
@@ -100,9 +102,9 @@ public class GameSettingManager : MonoBehaviour
     {
         gameSettings = JsonUtility.FromJson<GameSettings>(File.ReadAllText(Application.persistentDataPath + "/GameSetting.json"));
         musicVolumeSlider.value = gameSettings.MusicVolume;
-        SFXVolumeSlider.value = gameSettings.SFXVolume;
-        musicPercentText.text = $"{Mathf.Round(musicVolumeSlider.value * 100)}%";
-        SFXPercentText.text = $"{Mathf.Round(SFXVolumeSlider.value * 100)}%";
+        soundEffectVolumeSlider.value = gameSettings.SoundEffectVolume;
+        musicPercentText.text = $"{Mathf.Round((musicVolumeSlider.value + 80f) / 80f * 100f)}%";
+        soundEffectPercentText.text = $"{Mathf.Round((soundEffectVolumeSlider.value + 80f) / 80f * 100f)}%";
         qualityDropdown.value = gameSettings.QualityIndex;
         resolutionDropdown.value = gameSettings.ResolutionIndex;
         fullscreenToggle.isOn = gameSettings.Fullscreen;

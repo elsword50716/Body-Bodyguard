@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class StateChange : MonoBehaviour
 {
@@ -75,6 +78,15 @@ public class StateChange : MonoBehaviour
         GameDataManager.stateDatas.Current_Level_id = GameDataManager.stateDatas.LevelAndStateHistory[lastindex][0];
         GameDataManager.stateDatas.Current_State_id = GameDataManager.stateDatas.LevelAndStateHistory[lastindex][1];
         GameDataManager.stateDatas.LevelAndStateHistory.RemoveAt(lastindex);
+    }
+
+    public void QuitApplication()
+    {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 
 

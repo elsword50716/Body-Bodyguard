@@ -71,13 +71,14 @@ public class StateDatas
     public int Current_Level_id = 0;
 
     public List<List<int>> LevelAndStateHistory = new List<List<int>>();
-    
+
 }
 
-public class GameSettings{
+public class GameSettings
+{
     public bool Fullscreen;
     public int ResolutionIndex;
     public int QualityIndex;
     public float MusicVolume;
-    public float SFXVolume;
+    public float SoundEffectVolume;
 }
