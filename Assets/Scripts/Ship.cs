@@ -43,6 +43,7 @@ public class Ship : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            currentHealth = 0f;
             Dead();
         }
     }

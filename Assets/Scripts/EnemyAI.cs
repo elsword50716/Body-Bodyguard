@@ -77,7 +77,6 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-
         aIPath.maxSpeed = enemyData.moveSpeed;
 
 
@@ -100,15 +99,15 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             case State.ChaseTarget:
-                if (Vector3.Distance(transform.position, Ship.position) > enemyData.detectShipRange)
+                if ((transform.position - Ship.position).sqrMagnitude > enemyData.detectShipRange * enemyData.detectShipRange)
                     state = State.Roaming;
 
                 targetPosition.position = Ship.position + (transform.position - Ship.position).normalized * enemyData.ClosestDistanceToShip;
 
                 Debug.DrawLine(transform.position, Ship.position, Color.red);
 
-                if (Vector3.Distance(transform.position, Ship.position) >= enemyData.ClosestDistanceToShip + avoidShaking ||
-                    Vector3.Distance(transform.position, Ship.position) <= enemyData.ClosestDistanceToShip - avoidShaking)
+                if ((transform.position - Ship.position).sqrMagnitude >= (enemyData.ClosestDistanceToShip + avoidShaking) * (enemyData.ClosestDistanceToShip + avoidShaking) ||
+                    (transform.position - Ship.position).sqrMagnitude <= (enemyData.ClosestDistanceToShip - avoidShaking) * (enemyData.ClosestDistanceToShip - avoidShaking))
                 {
                     aIPath.canSearch = true;
                     aIPath.canMove = true;
@@ -194,7 +193,7 @@ public class EnemyAI : MonoBehaviour
 
     private void FindTarget()
     {
-        if (Vector3.Distance(transform.position, Ship.position) < enemyData.detectShipRange)
+        if ((transform.position - Ship.position).sqrMagnitude < enemyData.detectShipRange * enemyData.detectShipRange)
         {
             if (IsObstaclesBetween())
                 return;

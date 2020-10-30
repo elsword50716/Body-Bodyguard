@@ -36,7 +36,7 @@ public class EnemySimpleRoaming : MonoBehaviour
 
     private void Romaing()
     {
-        var distance = Vector3.Distance(transform.position, roamingPosition);
+        var distance = (transform.position - roamingPosition).sqrMagnitude;
 
         if (distance < 1f)
         {

@@ -225,7 +225,7 @@ public class @InputManager : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9be963cc-8f27-4a19-a033-b34c065ceaa0"",
-                    ""path"": ""<DualShockGamepad>/start"",
+                    ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",

@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 1256254976871152517}
   - component: {fileID: 1256254976871152516}
   - component: {fileID: 1256254976871152519}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: HealKit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,4 +288,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b48f44c8cf7beb40b766a87cc0d0922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healPoint: 10
+  healPercent: 0.25
