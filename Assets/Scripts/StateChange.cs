@@ -13,6 +13,12 @@ public class StateChange : MonoBehaviour
     public int nextLevel_id;
     public int nextState_id;
 
+    public StateChange(string nextSceneName, int nextLevel_id, int nextState_id){
+        this.nextSceneName = nextSceneName;
+        this.nextLevel_id = nextLevel_id;
+        this.nextState_id = nextState_id;
+    }
+
     int Current_Level_id;
     int Current_State_id;
 
@@ -59,6 +65,8 @@ public class StateChange : MonoBehaviour
     {
         if (string.IsNullOrEmpty(nextSceneName))
             return;
+
+        Time.timeScale = Time.timeScale == 0f ? 1f : Time.timeScale;
 
         GameDataManager.stateDatas.Current_Level_id = nextLevel_id;
         GameDataManager.stateDatas.Current_State_id = nextState_id;

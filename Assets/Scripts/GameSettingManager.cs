@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using TMPro;
 using System.IO;
 
 public class GameSettingManager : MonoBehaviour
@@ -15,8 +16,8 @@ public class GameSettingManager : MonoBehaviour
 
     private Resolution[] resolutions;
     private GameSettings gameSettings;
-    private Text musicPercentText;
-    private Text soundEffectPercentText;
+    private TextMeshProUGUI musicPercentText;
+    private TextMeshProUGUI soundEffectPercentText;
 
     private void OnEnable()
     {
@@ -30,6 +31,7 @@ public class GameSettingManager : MonoBehaviour
         applyButton.onClick.AddListener(delegate { OnApplyButtonClick(); });
 
         resolutions = Screen.resolutions;
+        resolutionDropdown.ClearOptions();
         foreach (var resolution in resolutions)
         {
             resolutionDropdown.options.Add(new Dropdown.OptionData(resolution.width + " x " + resolution.height));
@@ -40,10 +42,10 @@ public class GameSettingManager : MonoBehaviour
         }
 
         fullscreenToggle.isOn = Screen.fullScreen;
-        musicPercentText = musicVolumeSlider.GetComponentInChildren<Text>();
-        musicPercentText.text = $"{Mathf.Round((musicVolumeSlider.value + 80f) / 80f * 100f)}%";
-        soundEffectPercentText = soundEffectVolumeSlider.GetComponentInChildren<Text>();
-        soundEffectPercentText.text = $"{Mathf.Round((soundEffectVolumeSlider.value + 80f) / 80f * 100f)}%";
+        musicPercentText = musicVolumeSlider.GetComponentInChildren<TextMeshProUGUI>();
+        musicPercentText.SetText($"{Mathf.Round((musicVolumeSlider.value + 80f) / 80f * 100f)}%");
+        soundEffectPercentText = soundEffectVolumeSlider.GetComponentInChildren<TextMeshProUGUI>();
+        soundEffectPercentText.SetText($"{Mathf.Round((soundEffectVolumeSlider.value + 80f) / 80f * 100f)}%");
 
         if (File.Exists(Application.persistentDataPath + "/GameSetting.json"))
             LoadSettings();
@@ -73,7 +75,7 @@ public class GameSettingManager : MonoBehaviour
         var volume = musicVolumeSlider.value;
         gameSettings.MusicVolume = volume;
         audioMixer.SetFloat("_musicVolume", volume);
-        musicPercentText.text = $"{Mathf.Round((musicVolumeSlider.value + 80f) / 80f * 100f)}%";
+        musicPercentText.SetText($"{Mathf.Round((musicVolumeSlider.value + 80f) / 80f * 100f)}%");
     }
     public void OnSoundEffectVolumeChanged()
     {
@@ -81,7 +83,7 @@ public class GameSettingManager : MonoBehaviour
         var volume = soundEffectVolumeSlider.value;
         gameSettings.SoundEffectVolume = volume;
         audioMixer.SetFloat("_soundEffectVolume", volume);
-        soundEffectPercentText.text = $"{Mathf.Round((soundEffectVolumeSlider.value + 80f) / 80f * 100f)}%";
+        soundEffectPercentText.SetText($"{Mathf.Round((soundEffectVolumeSlider.value + 80f) / 80f * 100f)}%");
     }
 
     public void OnApplyButtonClick()
@@ -103,10 +105,13 @@ public class GameSettingManager : MonoBehaviour
         gameSettings = JsonUtility.FromJson<GameSettings>(File.ReadAllText(Application.persistentDataPath + "/GameSetting.json"));
         musicVolumeSlider.value = gameSettings.MusicVolume;
         soundEffectVolumeSlider.value = gameSettings.SoundEffectVolume;
-        musicPercentText.text = $"{Mathf.Round((musicVolumeSlider.value + 80f) / 80f * 100f)}%";
-        soundEffectPercentText.text = $"{Mathf.Round((soundEffectVolumeSlider.value + 80f) / 80f * 100f)}%";
+        musicPercentText.SetText($"{Mathf.Round((musicVolumeSlider.value + 80f) / 80f * 100f)}%");
+        soundEffectPercentText.SetText($"{Mathf.Round((soundEffectVolumeSlider.value + 80f) / 80f * 100f)}%");
         qualityDropdown.value = gameSettings.QualityIndex;
         resolutionDropdown.value = gameSettings.ResolutionIndex;
         fullscreenToggle.isOn = gameSettings.Fullscreen;
+        resolutionDropdown.RefreshShownValue();
+        qualityDropdown.RefreshShownValue();
+
     }
 }

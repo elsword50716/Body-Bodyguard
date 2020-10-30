@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     [Range(0, 1)] public float groundCheckRadious = 0.02f;
     public Animator animator;
     public float fade = 1f;
+    public PauseMenuController PauseMenuController;
 
     private float horizontalMove = 0f;
     private Rigidbody2D rbody2D;
@@ -157,6 +158,16 @@ public class PlayerController : MonoBehaviour
         if (transform.parent.CompareTag("ShipMoveController"))
         {
             ExitShipMoveController();
+        }
+    }
+
+    public void Pause(InputAction.CallbackContext context){
+        if(context.performed){
+            bool isPaused = PauseMenuController.isPaused;
+            if(isPaused)
+                PauseMenuController.Resume();
+            else
+                PauseMenuController.Pause(playerInput.playerIndex + 1);
         }
     }
 
