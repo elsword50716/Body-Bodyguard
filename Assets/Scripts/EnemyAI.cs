@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
@@ -15,6 +14,8 @@ public class EnemyAI : MonoBehaviour
     public float NextRoamingPositionDelay = 1f;
     public LayerMask obstaclesLayer;
     public Transform BulletPrefab;
+    public string bulletPoolTag;
+    public Transform bulletPool;
     [SerializeField] private float currentHealth;
     public ParticleSystem deadExplosion;
 
@@ -37,22 +38,23 @@ public class EnemyAI : MonoBehaviour
     private State state;
     private float nextShootTimer = 0f;
     private float nextMoveTimer = 0f;
-    private Transform bulletPool;
+
     private Animator animator;
     private CircleCollider2D circleCollider2D;
     private Rigidbody2D Rbody2D;
     private AIPath aIPath;
     private AIDestinationSetter destinationSetter;
     private float originalEndReachedDistance;
+    private ObjectPooler objectPooler;
 
 
     private void Awake()
     {
         Ship = GameObject.FindGameObjectWithTag("Ship").transform;
+
         destinationSetter = GetComponent<AIDestinationSetter>();
         aIPath = GetComponent<AIPath>();
-        if (!isVirus)
-            bulletPool = GetComponentInChildren<BulletManager>().transform;
+
         animator = GetComponentInChildren<Animator>();
         circleCollider2D = GetComponent<CircleCollider2D>();
         Rbody2D = GetComponent<Rigidbody2D>();
@@ -73,6 +75,7 @@ public class EnemyAI : MonoBehaviour
         roamPosotion = GetRoamingPostion();
         destinationSetter.target = targetPosition;
         originalEndReachedDistance = aIPath.endReachedDistance;
+        objectPooler = ObjectPooler.Instance;
     }
 
     private void Update()
@@ -265,7 +268,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            var bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity, bulletPool);
+            var bullet = objectPooler.SpawnFromPool(bulletPoolTag, transform.position, bulletPool);
             var bulletRbody = bullet.GetComponent<Rigidbody2D>();
             bulletRbody.velocity = (Ship.position - transform.position).normalized * enemyData.BulletSpeed;
             bullet.transform.up = bulletRbody.velocity.normalized;
@@ -279,17 +282,32 @@ public class EnemyAI : MonoBehaviour
     private void Dead()
     {
         Rbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
-        Color[] color = new Color[2];
-        for (int i = 0; i < 2; i++)
-        {
-            color[i] = transform.GetChild(i).GetComponent<SpriteRenderer>().color;
-        }
-        ParticleSystem.MinMaxGradient grad = new ParticleSystem.MinMaxGradient(color[0], Color.black);
 
-        var particle = Instantiate(deadExplosion, transform.position, Quaternion.identity);
-        var particleMain = particle.main;
-        particleMain.startColor = grad;
-        particle.Play();
+        if (isVirus)
+        {
+            Color[] color = new Color[2];
+            for (int i = 0; i < 2; i++)
+            {
+                color[i] = transform.GetChild(i).GetComponent<SpriteRenderer>().color;
+            }
+            ParticleSystem.MinMaxGradient grad = new ParticleSystem.MinMaxGradient(color[0], Color.black);
+
+            var particle = Instantiate(deadExplosion, transform.position, Quaternion.identity);
+            var particleMain = particle.main;
+            particleMain.startColor = grad;
+            particle.Play();
+        }
+        else
+        {
+            foreach (Transform bullet in bulletPool)
+            {
+                bullet.transform.parent = objectPooler.transform;
+                bullet.gameObject.SetActive(false);
+            }
+            var particle = Instantiate(deadExplosion, transform.position, Quaternion.identity);
+            particle.Play();
+        }
+
         Destroy(gameObject);
     }
 

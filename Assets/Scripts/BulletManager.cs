@@ -4,25 +4,14 @@ using UnityEngine;
 
 public class BulletManager : MonoBehaviour
 {
-    public float poolMaxVolume;
-    public bool isShip;
     public float poolMaxRadious;
     private void Update()
     {
-        if (transform.childCount > poolMaxVolume)
+        foreach (Transform bullet in transform)
         {
-            Destroy(transform.GetChild(0).gameObject);
-        }
-
-        if (isShip)
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                var distance = (transform.GetChild(i).position - transform.position).sqrMagnitude;
-                if (distance > poolMaxRadious * poolMaxRadious)
-                    Destroy(transform.GetChild(i).gameObject);
-            }
-
+            var distance = (bullet.position - transform.position).sqrMagnitude;
+            if (distance > poolMaxRadious * poolMaxRadious)
+                bullet.gameObject.SetActive(false);
         }
     }
 

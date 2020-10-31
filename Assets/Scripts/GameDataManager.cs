@@ -74,7 +74,7 @@ public class StateDatas
 
 }
 
-public class GameSettings
+public struct GameSettings
 {
     public bool Fullscreen;
     public int ResolutionIndex;

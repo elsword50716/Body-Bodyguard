@@ -5,12 +5,13 @@ using UnityEngine;
 public class ShipBodyDamgeController : MonoBehaviour
 {
     public GameObject[] sprites;
-    
+
     private float shipHP;
     private float shipMaxHP;
     private Ship ship;
 
-    private void Start() {
+    private void Start()
+    {
         for (int i = 0; i < sprites.Length; i++)
         {
             sprites[i].SetActive(false);
@@ -20,36 +21,30 @@ public class ShipBodyDamgeController : MonoBehaviour
         shipMaxHP = ship.shipData.maxHealth;
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         shipHP = ship.GetCurrentHP();
         shipMaxHP = ship.shipData.maxHealth;
         var ratio = shipHP / shipMaxHP;
-        var compare = 0.8f;
 
-        // for (int i = -1; i < 4; i++)
-        // {
-        //     if(ratio > compare)
-        //         ShowAndOff(i);
-            
-        //     compare -= 0.2f;
-        // }
-
-        if(ratio > 0.8f)
+        if (ratio > 0.8f)
             ShowAndOff(-1);
-        else if(ratio > 0.6f)
+        else if (ratio > 0.6f)
             ShowAndOff(0);
-        else if(ratio > 0.4f)
+        else if (ratio > 0.4f)
             ShowAndOff(1);
-        else if(ratio > 0.2f)
+        else if (ratio > 0.2f)
             ShowAndOff(2);
-        else if(ratio > 0f)
+        else if (ratio > 0f)
             ShowAndOff(3);
     }
 
-    private void ShowAndOff(int showIndex){
+    private void ShowAndOff(int showIndex)
+    {
         for (int i = 0; i < sprites.Length; i++)
         {
-            if(i == showIndex){
+            if (i == showIndex)
+            {
                 sprites[i].SetActive(true);
                 continue;
             }

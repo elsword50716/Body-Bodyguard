@@ -12,7 +12,7 @@ public class BasicBullet : MonoBehaviour
         if (other.gameObject.layer == 13)
         {
             ExplosionHandler();
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
         if (!other.CompareTag(bulletData.targetTag))
@@ -22,14 +22,14 @@ public class BasicBullet : MonoBehaviour
         {
             other.GetComponent<EnemyAI>().GetDamaged(bulletData.damage);
             ExplosionHandler();
-            Destroy(gameObject);
+            gameObject.SetActive(false);
 
         }
         else if (other.GetComponent<Ship>() != null)
         {
             other.GetComponent<Ship>().GetDamaged(bulletData.damage);
             ExplosionHandler();
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
 

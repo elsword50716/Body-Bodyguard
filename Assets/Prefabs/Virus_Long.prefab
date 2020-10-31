@@ -69,7 +69,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1224912509
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 1789509253714588447, guid: cc3b4ee14e6314846b62398171623c5c,
     type: 3}
@@ -114,7 +114,6 @@ GameObject:
   - component: {fileID: 6059382244594554240}
   - component: {fileID: 4471055008314880363}
   - component: {fileID: 806086047842319373}
-  - component: {fileID: 134515916092342650}
   m_Layer: 12
   m_Name: Virus_Long
   m_TagString: Untagged
@@ -196,16 +195,3 @@ MonoBehaviour:
     chasingDelay: 0.5
     chasingSpeed: 20
     targetTag: 
---- !u!114 &134515916092342650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6495595872801340779}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71398f94c5287b8478f5cc2f0a8f3c8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
