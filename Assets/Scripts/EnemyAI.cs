@@ -17,7 +17,8 @@ public class EnemyAI : MonoBehaviour
     public string bulletPoolTag;
     public Transform bulletPool;
     [SerializeField] private float currentHealth;
-    public ParticleSystem deadExplosion;
+    public string deadExplosionTag;
+    //public ParticleSystem deadExplosion;
 
 
     [Header("敵人資料")]
@@ -29,7 +30,6 @@ public class EnemyAI : MonoBehaviour
         Roaming,
         ChaseTarget,
         Attacking,
-        Dead,
     }
     private Vector3 startingPosotion;
     private Vector3 roamPosotion;
@@ -80,9 +80,13 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            Dead();
+        }
+
         aIPath.maxSpeed = enemyData.moveSpeed;
-
-
 
         switch (state)
         {
@@ -155,16 +159,8 @@ public class EnemyAI : MonoBehaviour
             case State.Attacking:
                 Attack();
                 break;
-
-            case State.Dead:
-                Dead();
-                break;
         }
 
-        if (currentHealth <= 0)
-        {
-            state = State.Dead;
-        }
 
     }
 
@@ -283,30 +279,22 @@ public class EnemyAI : MonoBehaviour
     {
         Rbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
 
+        var deadExplosion = objectPooler.SpawnFromPool(deadExplosionTag, transform.position, null).GetComponent<ParticleSystem>();
+
         if (isVirus)
         {
-            Color[] color = new Color[2];
-            for (int i = 0; i < 2; i++)
-            {
-                color[i] = transform.GetChild(i).GetComponent<SpriteRenderer>().color;
-            }
-            ParticleSystem.MinMaxGradient grad = new ParticleSystem.MinMaxGradient(color[0], Color.black);
-
-            var particle = Instantiate(deadExplosion, transform.position, Quaternion.identity);
-            var particleMain = particle.main;
-            particleMain.startColor = grad;
-            particle.Play();
+            SetDeadExplotionParticleColor(deadExplosion);
         }
         else
         {
             foreach (Transform bullet in bulletPool)
             {
                 bullet.transform.parent = objectPooler.transform;
-                bullet.gameObject.SetActive(false);
+                //bullet.gameObject.SetActive(false);
             }
-            var particle = Instantiate(deadExplosion, transform.position, Quaternion.identity);
-            particle.Play();
         }
+
+        deadExplosion.Play();
 
         Destroy(gameObject);
     }
@@ -317,10 +305,19 @@ public class EnemyAI : MonoBehaviour
 
         RaycastHit2D hit2D = Physics2D.Raycast(transform.position, toShipDir.normalized, toShipDir.magnitude, obstaclesLayer);
 
-        if (hit2D.collider != null)
-            return true;
-        else
-            return false;
+        return hit2D.collider != null ? true : false;
+    }
+
+    private void SetDeadExplotionParticleColor(ParticleSystem particle)
+    {
+        Color[] color = new Color[2];
+        for (int i = 0; i < 2; i++)
+        {
+            color[i] = transform.GetChild(i).GetComponent<SpriteRenderer>().color;
+        }
+        ParticleSystem.MinMaxGradient grad = new ParticleSystem.MinMaxGradient(color[0], Color.black);
+        var particleMain = particle.main;
+        particleMain.startColor = grad;
     }
 
     public void GetDamaged(float damage)

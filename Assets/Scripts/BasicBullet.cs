@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class BasicBullet : MonoBehaviour
 {
-    public ParticleSystem explosionParicle;
+    public string explosionParicleTag;
     public BulletData bulletData;
+
+    private ObjectPooler objectPooler;
+
+    private void Start()
+    {
+        objectPooler = ObjectPooler.Instance;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -37,12 +44,11 @@ public class BasicBullet : MonoBehaviour
 
     private void ExplosionHandler()
     {
-        if (explosionParicle != null)
+        if (!string.IsNullOrEmpty(explosionParicleTag))
         {
-            var particle = Instantiate(explosionParicle, transform.position, Quaternion.identity);
+            var particle = objectPooler.SpawnFromPool(explosionParicleTag, transform.position, null).GetComponent<ParticleSystem>();
             var particleMain = particle.main;
             particleMain.startColor = GetComponentInChildren<SpriteRenderer>().color;
-            particle.transform.up = transform.up * -1;
             particle.Play();
 
         }

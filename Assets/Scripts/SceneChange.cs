@@ -18,7 +18,7 @@ public class SceneChange : MonoBehaviour
         StartCoroutine(SceneLoad());
     }
 
-    
+
     void Update()
     {
         progressBar.value = progressValue;
@@ -35,6 +35,7 @@ public class SceneChange : MonoBehaviour
             while (progressValue < async.progress)
             {
                 ++progressValue;
+                Debug.Log("Loading....");
                 yield return new WaitForEndOfFrame();
             }
 

@@ -68,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1224912509
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8bace0f0d73a7814d8a12d20df8c07b3, type: 3}
   m_Color: {r: 0, g: 0.37927818, b: 1, a: 1}
@@ -164,8 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba1e63712b411f4397688cc42b532c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionParicle: {fileID: 1306162878203118078, guid: c198c95613692cc438da6956724be5c3,
-    type: 3}
+  explosionParicleTag: Bullet_beam_Explosion
   bulletData:
     id: 0
     name: ChasingSperm

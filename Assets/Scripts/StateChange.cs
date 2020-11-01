@@ -13,7 +13,8 @@ public class StateChange : MonoBehaviour
     public int nextLevel_id;
     public int nextState_id;
 
-    public StateChange(string nextSceneName, int nextLevel_id, int nextState_id){
+    public StateChange(string nextSceneName, int nextLevel_id, int nextState_id)
+    {
         this.nextSceneName = nextSceneName;
         this.nextLevel_id = nextLevel_id;
         this.nextState_id = nextState_id;
@@ -21,9 +22,6 @@ public class StateChange : MonoBehaviour
 
     int Current_Level_id;
     int Current_State_id;
-
-    AsyncOperation async;
-    float progressValue = 0;
 
     List<int> tempList;
 

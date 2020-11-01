@@ -53,7 +53,8 @@ public class ObjectPooler : MonoBehaviour
 
         objToSpawn.SetActive(true);
         objToSpawn.transform.position = position;
-        objToSpawn.transform.parent = parent;
+        if (parent != null)
+            objToSpawn.transform.parent = parent;
 
         poolDictionary[tag].Enqueue(objToSpawn);
 

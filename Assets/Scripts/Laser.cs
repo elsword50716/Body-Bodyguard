@@ -4,14 +4,38 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
+    public ContactFilter2D enemy;
     public float damagePerSec;
 
-    private void OnTriggerStay2D(Collider2D other)
+    private BoxCollider2D boxCollider2D;
+    private List<Collider2D> enemyInLaser;
+
+    private void Start()
     {
-        if (!other.CompareTag("Enemy"))
-            return;
-
-        other.GetComponent<EnemyAI>().GetDamaged(damagePerSec * Time.deltaTime);
-
+        boxCollider2D = GetComponent<BoxCollider2D>();
+        enemyInLaser = new List<Collider2D>();
     }
+
+    private void Update()
+    {
+        if (boxCollider2D.OverlapCollider(enemy, enemyInLaser) > 0)
+        {
+            foreach (var enemy in enemyInLaser)
+            {
+                if (enemy.GetComponent<EnemyAI>() != null)
+                {
+                    enemy.GetComponent<EnemyAI>().GetDamaged(damagePerSec * Time.deltaTime);
+                }
+            }
+        }
+    }
+
+    // private void OnTriggerStay2D(Collider2D other)
+    // {
+    //     if (other.GetComponent<EnemyAI>() == null)
+    //         return;
+
+    //     other.GetComponent<EnemyAI>().GetDamaged(damagePerSec * Time.deltaTime);
+
+    // }
 }

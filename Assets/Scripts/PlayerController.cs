@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         m_Move = playerInput.actions["Move"];
         rbody2D = GetComponent<Rigidbody2D>();
+        rbody2D.gravityScale = 1f;
         transform.parent = originalParent;
         transform.position = respwanPoint.position;
     }
@@ -161,10 +162,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void Pause(InputAction.CallbackContext context){
-        if(context.performed){
+    public void Pause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
             bool isPaused = PauseMenuController.isPaused;
-            if(isPaused)
+            if (isPaused)
                 PauseMenuController.Resume();
             else
                 PauseMenuController.Pause(playerInput.playerIndex + 1);

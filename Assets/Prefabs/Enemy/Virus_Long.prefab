@@ -110,8 +110,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5570697961327086739}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 157.57, y: -131.62, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5708752410936454151}
@@ -270,9 +270,10 @@ MonoBehaviour:
     m_Bits: 8192
   BulletPrefab: {fileID: 5015754369081956346, guid: 03de25fef3bc082409a4b74c072ab657,
     type: 3}
+  bulletPoolTag: 
+  bulletPool: {fileID: 0}
   currentHealth: 0
-  deadExplosion: {fileID: 8587222420244648422, guid: 94d5e8b8c05b42a4cbf19ef3aa2402d9,
-    type: 3}
+  deadExplosionTag: Virus_DeadExplosion
   enemyData:
     id: 0
     name: BooleanAgbra
