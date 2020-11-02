@@ -82,3 +82,15 @@ public struct GameSettings
     public float MusicVolume;
     public float SoundEffectVolume;
 }
+
+public struct Point2
+    {
+        public int x;
+        public int y;
+
+        public Point2(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+    }
