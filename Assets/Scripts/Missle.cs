@@ -6,7 +6,7 @@ using UnityEngine;
 public class Missle : MonoBehaviour
 {
     public Transform target;
-
+    public float rotateSpeed = 200f;
 
     private GameObject[] targetPool;
     private float timer = 0;
@@ -40,7 +40,12 @@ public class Missle : MonoBehaviour
         }
 
         if (target != null)
-            transform.up = missleRbody.velocity = (target.position - transform.position).normalized * bulletData.chasingSpeed;
+        {
+            Vector2 dir = (Vector2)(target.position - transform.position).normalized;
+            float rotateAmount = Vector3.Cross(dir, transform.up).z;
+            missleRbody.angularVelocity = -rotateAmount * rotateSpeed;
+            missleRbody.velocity = transform.up * bulletData.chasingSpeed;
+        }
 
     }
 

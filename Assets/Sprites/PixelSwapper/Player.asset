@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   colors:
-  - {r: 0.6392157, g: 0.9490196, b: 0.10980392, a: 1}
-  - {r: 0.9490196, g: 0.7764706, b: 0.10980392, a: 1}
-  - {r: 0.67058825, g: 0, b: 0.99215686, a: 1}
-  - {r: 1, g: 0, b: 0, a: 1}
   - {r: 1, g: 0, b: 0.79607844, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0.67058825, g: 0, b: 0.99215686, a: 1}
+  - {r: 0.9490196, g: 0.7764706, b: 0.10980392, a: 1}
+  - {r: 0.6392157, g: 0.9490196, b: 0.10980392, a: 1}
   _colorsPositionFilePath: Assets/Sprites/PixelSwapper/Player-positions.txt

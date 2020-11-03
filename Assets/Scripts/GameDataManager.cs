@@ -83,14 +83,15 @@ public struct GameSettings
     public float SoundEffectVolume;
 }
 
+[System.Serializable]
 public struct Point2
-    {
-        public int x;
-        public int y;
+{
+    public int x;
+    public int y;
 
-        public Point2(int x, int y)
-        {
-            this.x = x;
-            this.y = y;
-        }
+    public Point2(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
     }
+}
