@@ -5,10 +5,12 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(SpriteRenderer))]
 public class ChangePlayerColor : MonoBehaviour
 {
+    public bool test;
     public Color[] originalColors;
     public Color[] newColors;
     public Key swapKey;
     public SpriteRenderer spriteRenderer;
+    public Animator animator;
     public Texture2D texture2D;
     public Texture2D textureTemp;
     public Point2[][] point2s;
@@ -22,11 +24,17 @@ public class ChangePlayerColor : MonoBehaviour
         }
     }
 
+    private void LateUpdate() {
+        if(test)
+            SetColor();
+    }
+
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         texture2D = spriteRenderer.sprite.texture;
         textureTemp = duplicateTexture(texture2D);
+        
         // textureTemp = new Texture2D(texture2D.width, texture2D.height);
         // textureTemp.SetPixels(texture2D.GetPixels());
         // textureTemp.Apply();
@@ -74,6 +82,7 @@ public class ChangePlayerColor : MonoBehaviour
             }
         }
         textureTemp.Apply();
+        //spriteRenderer.material.SetTexture("_MainTex", textureTemp);
         MaterialPropertyBlock block = new MaterialPropertyBlock();
         block.SetTexture("_MainTex", textureTemp);
         spriteRenderer.SetPropertyBlock(block);
