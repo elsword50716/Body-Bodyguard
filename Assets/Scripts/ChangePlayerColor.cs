@@ -15,26 +15,15 @@ public class ChangePlayerColor : MonoBehaviour
     public Texture2D textureTemp;
     public Point2[][] point2s;
 
-    private void Update()
-    {
-        if (Keyboard.current[swapKey].wasPressedThisFrame)
-        {
-            RandomSetColors();
-            SetColor();
-        }
-    }
-
-    private void LateUpdate() {
-        if(test)
-            SetColor();
-    }
+    private int playerIndex;
 
     private void Start()
     {
+        playerIndex = GetComponentInParent<PlayerInput>().playerIndex;
         spriteRenderer = GetComponent<SpriteRenderer>();
         texture2D = spriteRenderer.sprite.texture;
         textureTemp = duplicateTexture(texture2D);
-        
+
         // textureTemp = new Texture2D(texture2D.width, texture2D.height);
         // textureTemp.SetPixels(texture2D.GetPixels());
         // textureTemp.Apply();
@@ -45,6 +34,22 @@ public class ChangePlayerColor : MonoBehaviour
             Debug.Log(point2s[i].Length);
         }
     }
+
+    private void Update()
+    {
+        if (Keyboard.current[swapKey].wasPressedThisFrame)
+        {
+            RandomSetColors();
+            SetColor();
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (test)
+            SetColor();
+    }
+
 
     private Point2[][] GetColorPosition(Color[] targetColor)
     {
@@ -70,6 +75,18 @@ public class ChangePlayerColor : MonoBehaviour
         }
 
         return point2s_temp;
+    }
+
+    private void LoadColorsFromPlayerConfig()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (GameDataManager.playerColorConfig[playerIndex].colors[i] != null)
+            {
+                newColors[i] = GameDataManager.playerColorConfig[playerIndex].colors[i];
+            }
+
+        }
     }
 
     private void SetColor()
