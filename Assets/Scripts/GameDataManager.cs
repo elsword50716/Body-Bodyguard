@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-static class GameDataManager
+public static class GameDataManager
 {
     public static StateDatas stateDatas = new StateDatas();
     public static string nextSceneName;
-    public static PlayerColor[] playerColorConfig = new PlayerColor[4];
+    public static List<List<Color>> playersColorList = new List<List<Color>>();
 }
 
 [System.Serializable]
@@ -95,9 +95,4 @@ public struct Point2
         this.x = x;
         this.y = y;
     }
-}
-
-public class PlayerColor
-{
-    public Color[] colors = new Color[5];
 }

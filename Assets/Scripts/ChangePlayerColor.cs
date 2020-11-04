@@ -5,10 +5,9 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(SpriteRenderer))]
 public class ChangePlayerColor : MonoBehaviour
 {
-    public bool test;
+    public bool isPlayMode;
     public Color[] originalColors;
     public Color[] newColors;
-    public Key swapKey;
     public SpriteRenderer spriteRenderer;
     public Animator animator;
     public Texture2D texture2D;
@@ -28,6 +27,13 @@ public class ChangePlayerColor : MonoBehaviour
         // textureTemp.SetPixels(texture2D.GetPixels());
         // textureTemp.Apply();
 
+        //GameDataManager.playerColorConfig[playerIndex].colors = originalColors;
+        List<Color> colorList = new List<Color>();
+        foreach (var color in originalColors)
+        {
+            colorList.Add(color);
+        }
+        GameDataManager.playersColorList.Add(colorList);
         point2s = GetColorPosition(originalColors);
         for (int i = 0; i < point2s.Length; i++)
         {
@@ -37,17 +43,12 @@ public class ChangePlayerColor : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current[swapKey].wasPressedThisFrame)
-        {
-            RandomSetColors();
-            SetColor();
-        }
+
     }
 
     private void LateUpdate()
     {
-        if (test)
-            SetColor();
+        SetColor();
     }
 
 
@@ -79,18 +80,21 @@ public class ChangePlayerColor : MonoBehaviour
 
     private void LoadColorsFromPlayerConfig()
     {
+        if (GameDataManager.playersColorList.Count == 0)
+            return;
+
+        if (GameDataManager.playersColorList[playerIndex].Count == 0)
+            return;
+
         for (int i = 0; i < 4; i++)
         {
-            if (GameDataManager.playerColorConfig[playerIndex].colors[i] != null)
-            {
-                newColors[i] = GameDataManager.playerColorConfig[playerIndex].colors[i];
-            }
-
+            newColors[i] = GameDataManager.playersColorList[playerIndex][i];
         }
     }
 
     private void SetColor()
     {
+        LoadColorsFromPlayerConfig();
         for (int i = 0; i < point2s.Length; i++)
         {
             foreach (var point in point2s[i])
