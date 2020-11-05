@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public static class GameDataManager
 {
     public static StateDatas stateDatas = new StateDatas();
     public static string nextSceneName;
     public static List<List<Color>> playersColorList = new List<List<Color>>();
+    public static List<PlayerInput> playerInputs = new List<PlayerInput>();
 }
 
 [System.Serializable]

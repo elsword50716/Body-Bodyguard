@@ -8,6 +8,7 @@ public class ChangePlayerColor : MonoBehaviour
     public bool isPlayMode;
     public Color[] originalColors;
     public Color[] newColors;
+    public ReadyCountDownController readyCountDownController;
     public SpriteRenderer spriteRenderer;
     public Animator animator;
     public Texture2D texture2D;
@@ -15,25 +16,28 @@ public class ChangePlayerColor : MonoBehaviour
     public Point2[][] point2s;
 
     private int playerIndex;
+    private Sprite originalSprite;
 
-    private void Start()
+    private void Awake()
     {
         playerIndex = GetComponentInParent<PlayerInput>().playerIndex;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         texture2D = spriteRenderer.sprite.texture;
+        originalSprite = spriteRenderer.sprite;
         textureTemp = duplicateTexture(texture2D);
-
-        // textureTemp = new Texture2D(texture2D.width, texture2D.height);
-        // textureTemp.SetPixels(texture2D.GetPixels());
-        // textureTemp.Apply();
-
-        //GameDataManager.playerColorConfig[playerIndex].colors = originalColors;
-        List<Color> colorList = new List<Color>();
-        foreach (var color in originalColors)
+    }
+    private void Start()
+    {
+        if (!isPlayMode)
         {
-            colorList.Add(color);
+            List<Color> colorList = new List<Color>();
+            foreach (var color in originalColors)
+            {
+                colorList.Add(color);
+            }
+            GameDataManager.playersColorList.Add(colorList);
         }
-        GameDataManager.playersColorList.Add(colorList);
         point2s = GetColorPosition(originalColors);
         for (int i = 0; i < point2s.Length; i++)
         {
@@ -43,7 +47,15 @@ public class ChangePlayerColor : MonoBehaviour
 
     private void Update()
     {
+        if (readyCountDownController.isReady.Length == 0)
+            return;
 
+        if (readyCountDownController.isReady[playerIndex])
+            animator.enabled = true;
+        else{
+            animator.enabled = false;
+            spriteRenderer.sprite = originalSprite;
+        }
     }
 
     private void LateUpdate()

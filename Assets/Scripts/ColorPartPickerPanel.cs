@@ -7,6 +7,7 @@ public class ColorPartPickerPanel : MonoBehaviour
 {
     public int playerIndex;
     public ColorPickerPanel colorPickerPanel;
+    public ReadyCountDownController readyCountDownController;
     public Button[] partBTs;
     public Button randomColorBT;
     public Toggle isReady;
@@ -46,6 +47,15 @@ public class ColorPartPickerPanel : MonoBehaviour
         {
             partBTImages[i].color = GameDataManager.playersColorList[playerIndex][i];
         }
+
+        readyCountDownController.isReady[playerIndex] = isReady.isOn;
+
+        foreach (var partBT in partBTs)
+        {
+            partBT.interactable = isReady.isOn ? false : true;
+        }
+        
+        randomColorBT.interactable = isReady.isOn ? false : true;
     }
 
     public void OnPartBTClicked(int partIndex)

@@ -19,8 +19,9 @@ public class ChooseColorPlayerController : MonoBehaviour
 
     private void Awake()
     {
-        //multiplayerEventSystem = GetComponent<MultiplayerEventSystem>();
+        multiplayerEventSystem = GetComponentInChildren<MultiplayerEventSystem>();
         playerInput = GetComponent<PlayerInput>();
+        GameDataManager.playerInputs.Add(playerInput);
         playerIndex = playerInput.playerIndex;
         multiplayerEventSystem.playerRoot = partPickerPanels[playerIndex];
         multiplayerEventSystem.firstSelectedGameObject = partPickerPanels[playerIndex].transform.GetChild(0).GetChild(0).GetChild(1).gameObject;
@@ -49,12 +50,14 @@ public class ChooseColorPlayerController : MonoBehaviour
         {
             multiplayerEventSystem.playerRoot = colorPickerPanels[playerIndex];
             multiplayerEventSystem.firstSelectedGameObject = colorPickerPanels[playerIndex].transform.GetChild(0).GetChild(0).GetChild(1).gameObject;
+            multiplayerEventSystem.SetSelectedGameObject(colorPickerPanels[playerIndex].transform.GetChild(0).GetChild(0).GetChild(1).gameObject);
             multiplayerEventSystem.UpdateModules();
         }
         else
         {
             multiplayerEventSystem.playerRoot = partPickerPanels[playerIndex];
             multiplayerEventSystem.firstSelectedGameObject = partPickerPanels[playerIndex].transform.GetChild(0).GetChild(0).GetChild(1).gameObject;
+            multiplayerEventSystem.SetSelectedGameObject(partPickerPanels[playerIndex].transform.GetChild(0).GetChild(0).GetChild(1).gameObject);
             multiplayerEventSystem.UpdateModules();
         }
     }
