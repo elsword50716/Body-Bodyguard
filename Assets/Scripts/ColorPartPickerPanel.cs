@@ -45,7 +45,7 @@ public class ColorPartPickerPanel : MonoBehaviour
     {
         for (int i = 0; i < partBTImages.Length; i++)
         {
-            partBTImages[i].color = GameDataManager.playersColorList[playerIndex][i];
+            partBTImages[i].color = GameDataManager.playerDatas[playerIndex].colors[i];
         }
 
         readyCountDownController.isReady[playerIndex] = isReady.isOn;
@@ -54,7 +54,7 @@ public class ColorPartPickerPanel : MonoBehaviour
         {
             partBT.interactable = isReady.isOn ? false : true;
         }
-        
+
         randomColorBT.interactable = isReady.isOn ? false : true;
     }
 
@@ -75,7 +75,7 @@ public class ColorPartPickerPanel : MonoBehaviour
             Random.Range(0f, 1f)
             );
 
-            GameDataManager.playersColorList[playerIndex][i] = color;
+            GameDataManager.playerDatas[playerIndex].colors[i] = color;
         }
     }
 }

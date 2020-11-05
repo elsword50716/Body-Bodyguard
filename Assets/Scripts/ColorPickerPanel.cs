@@ -39,7 +39,7 @@ public class ColorPickerPanel : MonoBehaviour
     }
     private void OnEnable()
     {
-        color = GameDataManager.playersColorList[playerIndex][partColorIndex];
+        color = GameDataManager.playerDatas[playerIndex].colors[partColorIndex];
         Color.RGBToHSV(color, out h, out s, out v);
         SetSlidersValue(h, s, v);
         previewColor.color = color;
@@ -57,7 +57,7 @@ public class ColorPickerPanel : MonoBehaviour
     private void RefreshThePanel()
     {
         previewColor.color = color;
-        GameDataManager.playersColorList[playerIndex][partColorIndex] = color;
+        GameDataManager.playerDatas[playerIndex].colors[partColorIndex] = color;
         s_SliderImage.color = Color.HSVToRGB(h, 1f, 1f);
         v_SliderImage.color = Color.HSVToRGB(h, 1f, 1f);
     }

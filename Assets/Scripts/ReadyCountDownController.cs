@@ -23,24 +23,24 @@ public class ReadyCountDownController : MonoBehaviour
         }
         countDownPanel.countDownSec = countDownSec;
         countDownPanel.gameObject.SetActive(false);
-        playerCount_Temp = GameDataManager.playersColorList.Count;
+        playerCount_Temp = GameDataManager.playerDatas.Count;
     }
 
     private void Update()
     {
         CheckIsNewPlayerJoin();
-        
+
         CheckIsAllPlayerReady();
-        
-        
+
+
     }
 
     private void CheckIsNewPlayerJoin()
     {
-        if (playerCount_Temp == GameDataManager.playersColorList.Count)
+        if (playerCount_Temp == GameDataManager.playerDatas.Count)
             return;
 
-        playerCount_Temp = GameDataManager.playersColorList.Count;
+        playerCount_Temp = GameDataManager.playerDatas.Count;
 
         isReady = new bool[playerCount_Temp];
     }
@@ -55,14 +55,15 @@ public class ReadyCountDownController : MonoBehaviour
 
         if (readyNumberConter == isReady.Length && readyNumberConter != 0)
         {
-            if(countDownPanel.gameObject.activeInHierarchy != true){
+            if (countDownPanel.gameObject.activeInHierarchy != true)
+            {
                 countDownPanel.countDownSec = countDownSec;
                 countDownPanel.gameObject.SetActive(true);
             }
         }
         else
         {
-            if(countDownPanel.gameObject.activeInHierarchy != false)
+            if (countDownPanel.gameObject.activeInHierarchy != false)
                 countDownPanel.gameObject.SetActive(false);
         }
     }

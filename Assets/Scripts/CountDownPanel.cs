@@ -10,15 +10,19 @@ public class CountDownPanel : MonoBehaviour
     public StateChange stateChange;
     private float counter;
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         counter = countDownSec;
     }
 
-    private void Update() {
-        if(counter > 0f){
-            countDownText.SetText($"Game Start in {(int)counter}...");
+    private void Update()
+    {
+        if (counter > 0f)
+        {
+            countDownText.SetText($"Game Start in {(int)counter + 1}...");
             counter -= Time.deltaTime;
-            if(counter <= 0f){
+            if (counter <= 0f)
+            {
                 counter = 0f;
                 Debug.Log("Game Start!!!");
                 stateChange.CrossScene();

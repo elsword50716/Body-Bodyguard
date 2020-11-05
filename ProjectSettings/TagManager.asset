@@ -12,6 +12,7 @@ TagManager:
   - Bullet
   - BulletBound
   - EnemyChadingPoint
+  - PauseMenu
   layers:
   - Default
   - TransparentFX

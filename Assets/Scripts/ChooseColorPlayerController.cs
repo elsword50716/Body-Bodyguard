@@ -21,7 +21,6 @@ public class ChooseColorPlayerController : MonoBehaviour
     {
         multiplayerEventSystem = GetComponentInChildren<MultiplayerEventSystem>();
         playerInput = GetComponent<PlayerInput>();
-        GameDataManager.playerInputs.Add(playerInput);
         playerIndex = playerInput.playerIndex;
         multiplayerEventSystem.playerRoot = partPickerPanels[playerIndex];
         multiplayerEventSystem.firstSelectedGameObject = partPickerPanels[playerIndex].transform.GetChild(0).GetChild(0).GetChild(1).gameObject;

@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public int playerIndex;
     public Transform originalParent;
     public Transform respwanPoint;
     public Transform groudCheck;
@@ -15,7 +17,8 @@ public class PlayerController : MonoBehaviour
     [Range(0, 1)] public float groundCheckRadious = 0.02f;
     public Animator animator;
     public float fade = 1f;
-    public PauseMenuController PauseMenuController;
+    public PauseMenuController pauseMenuController;
+    public MultiplayerEventSystem multiplayerEventSystem;
 
     private float horizontalMove = 0f;
     private Rigidbody2D rbody2D;
@@ -29,21 +32,17 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        var playerColor = GetComponentInChildren<SpriteRenderer>();
-        playerColor.color = new Color(
-            Random.Range(0f, 1f),
-            Random.Range(0f, 1f),
-            Random.Range(0f, 1f)
-        );
-        originalParent = GameObject.Find("PlayerRespawnPoint").transform;
+        originalParent = transform.parent;
         respwanPoint = originalParent;
         animator = GetComponentInChildren<Animator>();
         playerInput = GetComponent<PlayerInput>();
+        var playerUser = playerInput.user;
+        playerUser = GameDataManager.playerDatas[playerIndex].input.user;
         m_Move = playerInput.actions["Move"];
         rbody2D = GetComponent<Rigidbody2D>();
         rbody2D.gravityScale = 1f;
-        transform.parent = originalParent;
-        transform.position = respwanPoint.position;
+        pauseMenuController = GameObject.FindGameObjectWithTag("PauseMenu").GetComponent<PauseMenuController>();
+        multiplayerEventSystem = GetComponentInChildren<MultiplayerEventSystem>();
     }
 
 
@@ -119,6 +118,8 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
+        if (Time.timeScale == 0f)
+            return;
         if (context.performed)
         {
             if (canJump)
@@ -166,11 +167,11 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            bool isPaused = PauseMenuController.isPaused;
+            bool isPaused = pauseMenuController.isPaused;
             if (isPaused)
-                PauseMenuController.Resume();
+                pauseMenuController.Resume(playerIndex + 1);
             else
-                PauseMenuController.Pause(playerInput.playerIndex + 1);
+                pauseMenuController.Pause(playerInput.playerIndex + 1, multiplayerEventSystem);
         }
     }
 

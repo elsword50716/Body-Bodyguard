@@ -7,8 +7,9 @@ public static class GameDataManager
 {
     public static StateDatas stateDatas = new StateDatas();
     public static string nextSceneName;
-    public static List<List<Color>> playersColorList = new List<List<Color>>();
-    public static List<PlayerInput> playerInputs = new List<PlayerInput>();
+    //public static List<List<Color>> playersColorList = new List<List<Color>>();
+    //public static List<PlayerInput> playerInputs = new List<PlayerInput>();
+    public static List<PlayerData> playerDatas = new List<PlayerData>();
 }
 
 [System.Serializable]
@@ -96,5 +97,18 @@ public struct Point2
     {
         this.x = x;
         this.y = y;
+    }
+}
+
+public struct PlayerData
+{
+    public List<Color> colors;
+    public PlayerInput input;
+
+    public PlayerData(List<Color> colors, PlayerInput input)
+    {
+        this.colors = new List<Color>();
+        this.colors = colors;
+        this.input = input;
     }
 }

@@ -17,10 +17,12 @@ public class ChangePlayerColor : MonoBehaviour
 
     private int playerIndex;
     private Sprite originalSprite;
+    private PlayerInput playerInput;
 
     private void Awake()
     {
-        playerIndex = GetComponentInParent<PlayerInput>().playerIndex;
+        playerInput = GetComponentInParent<PlayerInput>();
+        playerIndex = playerInput.playerIndex;
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         texture2D = spriteRenderer.sprite.texture;
@@ -36,8 +38,10 @@ public class ChangePlayerColor : MonoBehaviour
             {
                 colorList.Add(color);
             }
-            GameDataManager.playersColorList.Add(colorList);
+            GameDataManager.playerDatas.Add(new PlayerData(colorList, playerInput));
         }
+        else
+            LoadColorsFromPlayerConfig();
         point2s = GetColorPosition(originalColors);
         for (int i = 0; i < point2s.Length; i++)
         {
@@ -47,12 +51,16 @@ public class ChangePlayerColor : MonoBehaviour
 
     private void Update()
     {
+        if (isPlayMode)
+            return;
+
         if (readyCountDownController.isReady.Length == 0)
             return;
 
         if (readyCountDownController.isReady[playerIndex])
             animator.enabled = true;
-        else{
+        else
+        {
             animator.enabled = false;
             spriteRenderer.sprite = originalSprite;
         }
@@ -92,15 +100,15 @@ public class ChangePlayerColor : MonoBehaviour
 
     private void LoadColorsFromPlayerConfig()
     {
-        if (GameDataManager.playersColorList.Count == 0)
+        if (GameDataManager.playerDatas.Count == 0)
             return;
 
-        if (GameDataManager.playersColorList[playerIndex].Count == 0)
+        if (GameDataManager.playerDatas[playerIndex].colors.Count == 0)
             return;
 
         for (int i = 0; i < 4; i++)
         {
-            newColors[i] = GameDataManager.playersColorList[playerIndex][i];
+            newColors[i] = GameDataManager.playerDatas[playerIndex].colors[i];
         }
     }
 
@@ -144,11 +152,6 @@ public class ChangePlayerColor : MonoBehaviour
         return readableText;
     }
 
-    public void ChangeColorByIndex(Color color, int index)
-    {
-        newColors[index] = color;
-    }
-
     public void RandomSetColors()
     {
         for (int i = 0; i < newColors.Length; i++)
@@ -159,10 +162,5 @@ public class ChangePlayerColor : MonoBehaviour
             Random.Range(0f, 1f)
             );
         }
-    }
-
-    public void CommintSetColor()
-    {
-        SetColor();
     }
 }
