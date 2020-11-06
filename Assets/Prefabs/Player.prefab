@@ -352,36 +352,8 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9d24a8d3-53c9-463e-86a5-c386ea40875d
     m_ActionName: UI/MiddleClick[/Mouse/middleButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 965f5c87-db5f-4271-b70a-74cbf1d669d5
-    m_ActionName: Player/Submit[/XInputControllerWindows/buttonSouth,/Keyboard/k]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 7b028fb4-4a47-4bb4-acd1-cc9dbf0ff83a
-    m_ActionName: Player/Canel[/XInputControllerWindows/buttonEast,/Keyboard/l]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e150aadb-c066-4b84-9382-c6b0ccdc41c0
-    m_ActionName: Player/Point[/Mouse/position]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 46720450-8fd8-445d-8fcb-004c81024817
-    m_ActionName: Player/Click[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 59a01b85-9e98-4ff0-a79f-80269a8c615c
-    m_ActionName: Player/ScrollWheel[/Mouse/scroll]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 976cb5dc-85e2-458a-89f0-a14bdf47150e
-    m_ActionName: Player/RightClick[/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: f0211ee2-bf8b-47dd-b1dd-0e9637327a28
-    m_ActionName: Player/MiddleClick[/Mouse/middleButton]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}

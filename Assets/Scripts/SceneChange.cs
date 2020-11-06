@@ -1,15 +1,15 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class SceneChange : MonoBehaviour
 {
     public Slider progressBar;
+    public TextMeshProUGUI progressText;
 
     AsyncOperation async;
-    float progressValue = 0;
     string nextSceneName;
 
     void Start()
@@ -21,27 +21,40 @@ public class SceneChange : MonoBehaviour
 
     void Update()
     {
-        progressBar.value = progressValue;
+        
+        // if(Keyboard.current[Key.Space].wasPressedThisFrame){
+        //     async.allowSceneActivation = true;
+        // }
     }
 
     IEnumerator SceneLoad()
     {
+        int displayProgress = 0;
+        int toProgress = 0;
         async = SceneManager.LoadSceneAsync($"{nextSceneName}");
 
         async.allowSceneActivation = false;
 
         while (async.progress < 0.9f)
         {
-            while (progressValue < async.progress)
+            toProgress = (int)async.progress * 100;
+            while (displayProgress < toProgress)
             {
-                ++progressValue;
-                Debug.Log("Loading....");
+                ++displayProgress;
+                progressBar.value = displayProgress;
+                progressText.SetText($"Loading...{displayProgress}%");
                 yield return new WaitForEndOfFrame();
             }
 
         }
 
-        progressValue = 1;
+        toProgress = 100;
+        while(displayProgress < toProgress){
+            ++displayProgress;
+            progressBar.value = displayProgress;
+            progressText.SetText($"Loading...{displayProgress}%");
+            yield return new WaitForEndOfFrame();
+        }
         async.allowSceneActivation = true;//先load純場景
         //SceneManager.LoadSceneAsync($"{nextSceneName}_Scene_Functions", LoadSceneMode.Additive);//在load功能
     }

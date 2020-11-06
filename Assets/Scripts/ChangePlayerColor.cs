@@ -106,7 +106,7 @@ public class ChangePlayerColor : MonoBehaviour
         if (GameDataManager.playerDatas[playerIndex].colors.Count == 0)
             return;
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < GameDataManager.playerDatas[playerIndex].colors.Count; i++)
         {
             newColors[i] = GameDataManager.playerDatas[playerIndex].colors[i];
         }

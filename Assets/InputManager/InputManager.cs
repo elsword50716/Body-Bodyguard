@@ -461,6 +461,17 @@ public class @InputManager : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""a12a7a28-d076-4c09-9c96-96e2296fff32"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ScrollWheel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""37ae26bb-4c3b-42e8-b6f1-dda1337cfb73"",
                     ""path"": ""<Mouse>/middleButton"",
                     ""interactions"": """",
