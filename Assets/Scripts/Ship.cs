@@ -85,7 +85,7 @@ public class Ship : MonoBehaviour
         Debug.Log("ship Damage: " + other.relativeVelocity.magnitude);
 
         if (other.relativeVelocity.magnitude > 5f)
-            GetDamaged(other.relativeVelocity.magnitude * (shipData.maxHealth / 100f));
+            GetDamaged(other.relativeVelocity.magnitude * (shipData.maxHealth / 500f));
 
     }
 

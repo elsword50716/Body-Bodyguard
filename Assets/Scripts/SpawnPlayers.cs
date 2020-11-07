@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SpawnPlayers : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class SpawnPlayers : MonoBehaviour
         {
             var player = Instantiate(playerPrefab, playerPositions[i].position, Quaternion.identity, transform);
             player.GetComponent<PlayerController>().playerIndex = i;
+            var playerUser = GetComponent<PlayerInput>().user;
+            playerUser = GameDataManager.playerDatas[i].input.user;
         }
     }
 }

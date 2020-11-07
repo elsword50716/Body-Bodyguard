@@ -13,11 +13,14 @@ public class ShipController : MonoBehaviour
     public float boostersRotateSpeed = 1f;
     public float boostersAvoidShacking = 1.5f;
     public Transform[] boosters;
+    public Animator mapAnimator;
 
     private Vector2 moveInput = Vector2.zero;
     private PlayerInput playerInput;
     private InputAction m_ShipMove;
     private InputAction m_AddForce;
+    private InputAction m_OpenMap;
+    private bool isMapOpen = false;
 
     private void Awake()
     {
@@ -42,8 +45,17 @@ public class ShipController : MonoBehaviour
                 playerInput = GetComponentInChildren<PlayerInput>();
                 m_ShipMove = playerInput.actions["Move"];
                 m_AddForce = playerInput.actions["Attack"];
+                m_OpenMap = playerInput.actions["Interactions"];
             }
             addForce = m_AddForce.ReadValue<float>() == 1 ? true : false;
+
+            if (m_OpenMap.triggered)
+            {
+                isMapOpen = mapAnimator.GetBool("isOpen");
+                mapAnimator.SetBool("isOpen", isMapOpen ? false : true);
+            }
+
+
             ShipMove(m_ShipMove);
         }
         else

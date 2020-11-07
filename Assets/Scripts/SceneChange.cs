@@ -8,6 +8,7 @@ public class SceneChange : MonoBehaviour
 {
     public Slider progressBar;
     public TextMeshProUGUI progressText;
+    public Transform scrollingBackground;
 
     AsyncOperation async;
     string nextSceneName;
@@ -21,7 +22,7 @@ public class SceneChange : MonoBehaviour
 
     void Update()
     {
-        
+
         // if(Keyboard.current[Key.Space].wasPressedThisFrame){
         //     async.allowSceneActivation = true;
         // }
@@ -41,6 +42,7 @@ public class SceneChange : MonoBehaviour
             while (displayProgress < toProgress)
             {
                 ++displayProgress;
+                scrollingBackground.transform.position -= new Vector3(0.05f, 0f, 0f);
                 progressBar.value = displayProgress;
                 progressText.SetText($"Loading...{displayProgress}%");
                 yield return new WaitForEndOfFrame();
@@ -49,8 +51,10 @@ public class SceneChange : MonoBehaviour
         }
 
         toProgress = 100;
-        while(displayProgress < toProgress){
+        while (displayProgress < toProgress)
+        {
             ++displayProgress;
+            scrollingBackground.transform.position -= new Vector3(0.05f, 0f, 0f);
             progressBar.value = displayProgress;
             progressText.SetText($"Loading...{displayProgress}%");
             yield return new WaitForEndOfFrame();

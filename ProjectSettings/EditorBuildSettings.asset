@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level_Stomach.unity
     guid: 0d94ed0ebf8bd96469a8f2917d4f6f5f
+  - enabled: 1
+    path: Assets/Scenes/Level_Intestine.unity
+    guid: fb533d06ee22a7e47a463c87b2b1fd04
   m_configObjects: {}
