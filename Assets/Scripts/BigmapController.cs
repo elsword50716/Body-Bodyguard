@@ -14,14 +14,14 @@ public class BigmapController : MonoBehaviour
     }
     public void OpenMap()
     {
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
         bigmapCamera.SetActive(true);
         shipIcon.SetActive(true);
     }
 
     public void CloseMap()
     {
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         bigmapCamera.SetActive(false);
         shipIcon.SetActive(false);
     }
