@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5307865851000628463}
-  - component: {fileID: 5307865851000628462}
+  - component: {fileID: 6316011325819741074}
   - component: {fileID: 5307865851000628461}
   - component: {fileID: 5307865851000628460}
   - component: {fileID: 5307865851000628459}
@@ -39,8 +39,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &5307865851000628462
-CircleCollider2D:
+--- !u!60 &6316011325819741074
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -53,8 +53,48 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 6.5
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 11.875, y: 14.25}
+    newSize: {x: 0.95, y: 1.06}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 4.3125, y: -5.125}
+      - {x: 4.3125, y: -4.25}
+      - {x: 3.6875, y: -3.625}
+      - {x: 4.0625, y: -3.375}
+      - {x: 5.0625, y: -1.375}
+      - {x: 5.9375, y: 0.875}
+      - {x: 5.9375, y: 4.375}
+      - {x: 5.4375, y: 5.5}
+      - {x: 4.8125, y: 6}
+      - {x: 4.0625, y: 6.375}
+      - {x: 2.8125, y: 6.75}
+      - {x: 2.3125, y: 6.875}
+      - {x: -1.6875, y: 6.875}
+      - {x: -3.4375, y: 6.375}
+      - {x: -4.1875, y: 6}
+      - {x: -5.4375, y: 4.875}
+      - {x: -5.9375, y: 4}
+      - {x: -5.9375, y: 0.125}
+      - {x: -5.6875, y: -1}
+      - {x: -4.8125, y: -2.375}
+      - {x: -4.0625, y: -3.125}
+      - {x: -3.1875, y: -3.625}
+      - {x: -3.5625, y: -4.25}
+      - {x: -3.4375, y: -5.375}
+      - {x: -2.8125, y: -5.75}
+      - {x: -1.9375, y: -5.875}
+      - {x: -0.1875, y: -6.875}
+      - {x: 0.9375, y: -6.875}
+      - {x: 1.3125, y: -6.5}
+      - {x: 2.0625, y: -6.125}
+      - {x: 3.6875, y: -5.625}
 --- !u!50 &5307865851000628461
 Rigidbody2D:
   serializedVersion: 4
@@ -203,6 +243,7 @@ MonoBehaviour:
     attackDamage: 10
     moveSpeed: 5
     inAttackRangeMoveSpeed: 10
+    aiRadius: 6.2
     roamRange: 10
     detectShipRange: 40
     ClosestDistanceToShip: 20
@@ -359,7 +400,7 @@ Transform:
   m_GameObject: {fileID: 5307865852950667250}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 12.5, y: 13.443397, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5307865851000628463}
   m_RootOrder: 0
@@ -408,7 +449,7 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 1
+  m_DrawMode: 0
   m_Size: {x: 0.95, y: 1.06}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0

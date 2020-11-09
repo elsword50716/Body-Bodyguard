@@ -22,7 +22,6 @@ public class ChangePlayerColor : MonoBehaviour
     private void Awake()
     {
         playerInput = GetComponentInParent<PlayerInput>();
-        playerIndex = playerInput.playerIndex;
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         texture2D = spriteRenderer.sprite.texture;
@@ -32,13 +31,20 @@ public class ChangePlayerColor : MonoBehaviour
     private void Start()
     {
         if (!isPlayMode)
+            playerIndex = playerInput.playerIndex;
+        else
+        {
+            playerIndex = GetComponentInParent<PlayerController>().playerIndex;
+        }
+        if (!isPlayMode)
         {
             List<Color> colorList = new List<Color>();
             foreach (var color in originalColors)
             {
                 colorList.Add(color);
             }
-            GameDataManager.playerDatas.Add(new PlayerData(colorList, playerInput));
+            GameDataManager.playerDatas.Add(new PlayerData(colorList, playerInput.devices[0].deviceId));
+            //Debug.Log(GameDataManager.playerDatas[GameDataManager.playerDatas.Count - 1].input.playerIndex, gameObject);
         }
         else
             LoadColorsFromPlayerConfig();

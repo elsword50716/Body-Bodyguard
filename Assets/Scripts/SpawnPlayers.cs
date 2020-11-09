@@ -17,12 +17,25 @@ public class SpawnPlayers : MonoBehaviour
 
         for (int i = 0; i < GameDataManager.playerDatas.Count; i++)
         {
-            var player = Instantiate(playerPrefab, playerPositions[i].position, Quaternion.identity, transform);
-            player.GetComponent<PlayerController>().playerIndex = i;
-            var playerUser = player.GetComponent<PlayerInput>().user;
-            playerUser = GameDataManager.playerDatas[i].input.user;
+            var player = Instantiate(playerPrefab, transform);
+            var playerDeviceId = player.GetComponent<PlayerInput>().devices[0].deviceId;
+            for (int j = 0; j < GameDataManager.playerDatas.Count; j++)
+            {
+                var id_temp = GameDataManager.playerDatas[j].deviceId;
+                if (playerDeviceId == id_temp)
+                {
+                    player.GetComponent<PlayerController>().playerIndex = j;
+                    player.transform.position = playerPositions[j].position;
+                }
+            }
+
+            // var player = Instantiate(playerPrefab, playerPositions[i].position, Quaternion.identity, transform);
+            // player.GetComponent<PlayerController>().playerIndex = i;
+            // var playerInput = player.GetComponent<PlayerInput>();
+            // Debug.Log(playerInput.devices[0].deviceId, player.gameObject);
+            // Debug.Log(playerInput.devices[0].name, player.gameObject);
         }
 
-        
+
     }
 }

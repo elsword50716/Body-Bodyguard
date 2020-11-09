@@ -23,6 +23,7 @@ public struct EnemyData
     public float attackDamage;
     public float moveSpeed;
     public float inAttackRangeMoveSpeed;
+    public float aiRadius;
     [Tooltip("Yellow Sphere")] [Range(0f, 50f)] public float roamRange;
     [Tooltip("White Sphere")] [Range(0f, 50f)] public float detectShipRange;
     [Tooltip("Blue Sphere")] [Range(0f, 100f)] public float ClosestDistanceToShip;
@@ -103,12 +104,12 @@ public struct Point2
 public struct PlayerData
 {
     public List<Color> colors;
-    public PlayerInput input;
+    public int deviceId;
 
-    public PlayerData(List<Color> colors, PlayerInput input)
+    public PlayerData(List<Color> colors, int deviceId)
     {
         this.colors = new List<Color>();
         this.colors = colors;
-        this.input = input;
+        this.deviceId = deviceId;
     }
 }

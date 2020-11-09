@@ -40,7 +40,7 @@ public class EnemyAI : MonoBehaviour
     private float nextMoveTimer = 0f;
 
     private Animator animator;
-    private CircleCollider2D circleCollider2D;
+    private PolygonCollider2D polygonCollider2D;
     private Rigidbody2D Rbody2D;
     private AIPath aIPath;
     private AIDestinationSetter destinationSetter;
@@ -56,7 +56,7 @@ public class EnemyAI : MonoBehaviour
         aIPath = GetComponent<AIPath>();
 
         animator = GetComponentInChildren<Animator>();
-        circleCollider2D = GetComponent<CircleCollider2D>();
+        polygonCollider2D = GetComponent<PolygonCollider2D>();
         Rbody2D = GetComponent<Rigidbody2D>();
         ChasingPoint = new GameObject("ChasingPoint");
         ChasingPoint.transform.parent = transform;
@@ -69,7 +69,7 @@ public class EnemyAI : MonoBehaviour
     {
         aIPath.canSearch = true;
         aIPath.canMove = true;
-        aIPath.radius = circleCollider2D.radius;
+        aIPath.radius = enemyData.aiRadius;
         currentHealth = enemyData.maxHealth;
         startingPosotion = transform.position;
         roamPosotion = GetRoamingPostion();
@@ -212,13 +212,7 @@ public class EnemyAI : MonoBehaviour
     {
         var dir = roamPosotion - transform.position;
 
-        // RaycastHit2D hit2D = Physics2D.Raycast(transform.position, dir.normalized, dir.magnitude + circleCollider2D.radius * 1.5f, obstaclesLayer);
 
-        // if (hit2D.collider != null)
-        // {
-        //     roamPosotion = new Vector3(hit2D.point.x, hit2D.point.y) - dir.normalized * circleCollider2D.radius * 1.5f;
-        //     targetPosition.position = roamPosotion;
-        // }
         if (aIPath.reachedEndOfPath)
         {
             if (nextMoveTimer > NextRoamingPositionDelay)

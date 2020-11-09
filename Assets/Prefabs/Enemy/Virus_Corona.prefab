@@ -317,6 +317,7 @@ MonoBehaviour:
     attackDamage: 15
     moveSpeed: 5
     inAttackRangeMoveSpeed: 10
+    aiRadius: 1.45
     roamRange: 15
     detectShipRange: 30
     ClosestDistanceToShip: 15
