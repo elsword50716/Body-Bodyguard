@@ -36,6 +36,9 @@ public class PlayerController : MonoBehaviour
         respwanPoint = originalParent;
         animator = GetComponentInChildren<Animator>();
         playerInput = GetComponent<PlayerInput>();
+        //playerIndex = playerInput.user.index;
+        // var playerUser = playerInput.user;
+        // playerUser = GameDataManager.playerDatas[playerIndex].input.user;
         m_Move = playerInput.actions["Move"];
         rbody2D = GetComponent<Rigidbody2D>();
         rbody2D.gravityScale = 1f;
@@ -148,7 +151,7 @@ public class PlayerController : MonoBehaviour
             if (isPaused)
                 pauseMenuController.Resume(playerIndex + 1);
             else
-                pauseMenuController.Pause(playerInput.playerIndex + 1, multiplayerEventSystem);
+                pauseMenuController.Pause(playerIndex + 1, multiplayerEventSystem);
         }
     }
 

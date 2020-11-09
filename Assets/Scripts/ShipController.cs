@@ -64,6 +64,10 @@ public class ShipController : MonoBehaviour
             m_ShipMove = null;
             m_AddForce = null;
 
+            if(mapAnimator.GetBool("isOpen")){
+                mapAnimator.SetBool("isOpen", false);
+            }
+
             for (int i = 0; i < 4; i++)
             {
                 boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();

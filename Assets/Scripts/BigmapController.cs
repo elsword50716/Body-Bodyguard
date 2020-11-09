@@ -15,6 +15,7 @@ public class BigmapController : MonoBehaviour
     public void OpenMap()
     {
         //Time.timeScale = 0f;
+        SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.MapOpen);
         bigmapCamera.SetActive(true);
         shipIcon.SetActive(true);
     }
@@ -22,6 +23,7 @@ public class BigmapController : MonoBehaviour
     public void CloseMap()
     {
         //Time.timeScale = 1f;
+        SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.MapClose);
         bigmapCamera.SetActive(false);
         shipIcon.SetActive(false);
     }

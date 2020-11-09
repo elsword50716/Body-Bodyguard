@@ -42,6 +42,8 @@ public class ReadyCountDownController : MonoBehaviour
 
         playerCount_Temp = GameDataManager.playerDatas.Count;
 
+        Debug.Log(playerCount_Temp);
+
         isReady = new bool[playerCount_Temp];
     }
 

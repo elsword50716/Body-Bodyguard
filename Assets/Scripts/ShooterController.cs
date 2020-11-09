@@ -82,6 +82,7 @@ public class ShooterController : MonoBehaviour
             {
                 if (laserCurrentAmount > 0)
                 {
+                    SoundManager.Instance.PlaySound(SoundManager.SoundType.laserFire);
                     gunAnimator.SetBool("isShootting", true);
                     bulletPrefab.SetActive(true);
                     laserCurrentAmount -= laserConsumeSpeedMulti * Time.deltaTime;
@@ -89,6 +90,7 @@ public class ShooterController : MonoBehaviour
                 }
                 else
                 {
+                    SoundManager.Instance.StopPlaySound(SoundManager.SoundType.laserFire);
                     gunAnimator.SetBool("isShootting", false);
                     bulletPrefab.SetActive(false);
                     laserCurrentAmount = 0;
@@ -97,6 +99,7 @@ public class ShooterController : MonoBehaviour
             }
             else
             {
+                SoundManager.Instance.StopPlaySound(SoundManager.SoundType.laserFire);
                 gunAnimator.SetBool("isShootting", false);
                 bulletPrefab.SetActive(false);
                 if (laserCurrentAmount < 100f)
@@ -181,6 +184,7 @@ public class ShooterController : MonoBehaviour
         ParticleSystem.MinMaxGradient grad = new ParticleSystem.MinMaxGradient(color, Color.white);
         particleMain.startColor = grad;
         particle.Play();
+        SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.shoooterFire);
         var bullet = objectPooler.SpawnFromPool(bulletPoolTag, firePoint[index].position, bulletPool);
         bullet.GetComponent<BasicBullet>().bulletData.targetTag = "Enemy";
         bullet.GetComponent<BasicBullet>().bulletData.damage = bulletDamage;

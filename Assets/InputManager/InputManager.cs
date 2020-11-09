@@ -252,7 +252,7 @@ public class @InputManager : IInputActionCollection, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Move"",
-                    ""type"": ""Value"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""b9a7ccd6-a522-4930-b55c-1f305cca7dcb"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
@@ -260,7 +260,7 @@ public class @InputManager : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Submit"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""76099be3-2689-486e-b9c8-a7e6c0bed284"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -268,7 +268,7 @@ public class @InputManager : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Canel"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""543feff3-4c8c-448d-a0c9-9cbde9ad3a52"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",

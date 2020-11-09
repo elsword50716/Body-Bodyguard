@@ -54,7 +54,7 @@ public class ChangePlayerColor : MonoBehaviour
         if (isPlayMode)
             return;
 
-        if (readyCountDownController.isReady.Length == 0)
+        if (readyCountDownController.isReady.Length == 0 || readyCountDownController.isReady.Length == playerIndex)
             return;
 
         if (readyCountDownController.isReady[playerIndex])

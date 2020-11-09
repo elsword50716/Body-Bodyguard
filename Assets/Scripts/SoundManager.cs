@@ -1,0 +1,84 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SoundManager : MonoBehaviour
+{
+    public enum SoundType{
+        
+        TeleportPipelineSound,
+        shoooterFire,
+        laserFire,
+        enemyDamaged,
+        shipDamaged_Large,
+        shipDamaged_Medium,
+        shipDamaged_Little,
+        MapOpen,
+        MapClose,
+    }
+
+    [System.Serializable]
+    public class SoundClip{
+        public SoundType soundType;
+        public AudioClip audioClip;
+        public bool isLoop;
+        [Range(.1f, 3f)]
+        public float pitch;
+        [Range(0f, 1f)]
+        public float volume;
+
+        [HideInInspector]
+        public AudioSource audioSource;
+        
+    }
+
+    public static SoundManager Instance;
+    public SoundClip[] soundClips;
+
+    private void Awake() {
+        Instance = this;
+        foreach (SoundClip clip in soundClips)
+        {
+            clip.audioSource = gameObject.AddComponent<AudioSource>();
+            clip.audioSource.clip = clip.audioClip;
+            clip.audioSource.loop = clip.isLoop;
+            clip.audioSource.pitch = clip.pitch;
+            clip.audioSource.volume = clip.volume;
+        }
+    }
+
+    public void PlaySoundOneShot(SoundType sound){
+        AudioSource audioSource = GetAudioSource(sound);
+        audioSource.PlayOneShot(audioSource.clip);
+    }
+
+    public void PlaySoundLoop(SoundType sound){
+        AudioSource audioSource = GetAudioSource(sound);
+        if(!audioSource.isPlaying)
+            audioSource.Play();
+    }
+
+    public void PlaySound(SoundType sound){
+        AudioSource audioSource = GetAudioSource(sound);
+        if(!audioSource.isPlaying)
+            audioSource.Play();
+    }
+    
+    public void StopPlaySound(SoundType sound){
+        AudioSource audioSource = GetAudioSource(sound);
+        if(audioSource.isPlaying)
+            audioSource.Stop();
+    }
+
+    public AudioSource GetAudioSource(SoundType sound){
+        foreach (var soundClip in soundClips)
+        {
+            if(soundClip.soundType == sound)
+                return soundClip.audioSource;
+        }
+
+        Debug.LogError($"audioSource '{sound.ToString()}' not found");
+        return null;
+    }
+    
+}

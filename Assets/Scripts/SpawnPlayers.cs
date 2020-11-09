@@ -13,12 +13,16 @@ public class SpawnPlayers : MonoBehaviour
         if (GameDataManager.playerDatas.Count == 0)
             return;
 
+        Debug.Log(GameDataManager.playerDatas.Count);
+
         for (int i = 0; i < GameDataManager.playerDatas.Count; i++)
         {
             var player = Instantiate(playerPrefab, playerPositions[i].position, Quaternion.identity, transform);
             player.GetComponent<PlayerController>().playerIndex = i;
-            var playerUser = GetComponent<PlayerInput>().user;
+            var playerUser = player.GetComponent<PlayerInput>().user;
             playerUser = GameDataManager.playerDatas[i].input.user;
         }
+
+        
     }
 }

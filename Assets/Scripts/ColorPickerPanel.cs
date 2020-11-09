@@ -59,7 +59,7 @@ public class ColorPickerPanel : MonoBehaviour
         previewColor.color = color;
         GameDataManager.playerDatas[playerIndex].colors[partColorIndex] = color;
         s_SliderImage.color = Color.HSVToRGB(h, 1f, 1f);
-        v_SliderImage.color = Color.HSVToRGB(h, 1f, 1f);
+        v_SliderImage.color = Color.HSVToRGB(h, s, 1f);;
     }
 
     public void OnSliderValueChanged()
