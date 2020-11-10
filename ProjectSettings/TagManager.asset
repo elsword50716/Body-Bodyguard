@@ -13,6 +13,7 @@ TagManager:
   - BulletBound
   - EnemyChadingPoint
   - PauseMenu
+  - Laser
   layers:
   - Default
   - TransparentFX

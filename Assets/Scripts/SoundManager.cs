@@ -15,6 +15,9 @@ public class SoundManager : MonoBehaviour
         shipDamaged_Large,
         shipDamaged_Medium,
         shipDamaged_Little,
+        shipHeal_Large,
+        shipHeal_Medium,
+        shipHeal_Little,
         MapOpen,
         MapClose,
     }

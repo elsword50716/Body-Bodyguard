@@ -10,7 +10,7 @@ public class HealKit : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponentInParent<Ship>() != null)
+        if (other.GetComponentInParent<Ship>() != null && !other.CompareTag("Laser"))
         {
             var ship = other.GetComponentInParent<Ship>();
             ship.Heal(healPercent * ship.shipData.maxHealth);
