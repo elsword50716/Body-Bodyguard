@@ -54,6 +54,7 @@ public class TeleportPipeline : MonoBehaviour
         if (m_Interaction != null && m_Interaction.triggered && fade == 1f)
         {
             isTeleporting = true;
+            SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.TeleportPipelineSound);
         }
 
 

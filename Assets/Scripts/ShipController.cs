@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class ShipController : MonoBehaviour
 {
+    public bool isMapUnlocked;
     public Rigidbody2D shipRbody;
     public Transform ship;
     public ShipData shipData;
@@ -49,7 +50,7 @@ public class ShipController : MonoBehaviour
             }
             addForce = m_AddForce.ReadValue<float>() == 1 ? true : false;
 
-            if (m_OpenMap.triggered)
+            if (m_OpenMap.triggered && isMapUnlocked)
             {
                 isMapOpen = mapAnimator.GetBool("isOpen");
                 mapAnimator.SetBool("isOpen", isMapOpen ? false : true);
