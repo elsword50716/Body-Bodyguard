@@ -40,12 +40,12 @@ public class EnemyAI : MonoBehaviour
     private float nextMoveTimer = 0f;
 
     private Animator animator;
-    private PolygonCollider2D polygonCollider2D;
     private Rigidbody2D Rbody2D;
     private AIPath aIPath;
     private AIDestinationSetter destinationSetter;
     private float originalEndReachedDistance;
     private ObjectPooler objectPooler;
+    private Transform enemySprite;
 
 
     private void Awake()
@@ -56,13 +56,14 @@ public class EnemyAI : MonoBehaviour
         aIPath = GetComponent<AIPath>();
 
         animator = GetComponentInChildren<Animator>();
-        polygonCollider2D = GetComponent<PolygonCollider2D>();
+
         Rbody2D = GetComponent<Rigidbody2D>();
         ChasingPoint = new GameObject("ChasingPoint");
         ChasingPoint.transform.parent = transform;
         targetPosition = ChasingPoint.transform;
         //targetPosition = Instantiate(ChasingPoint.transform, Vector2.zero, Quaternion.identity, transform);
         state = State.Roaming;
+        enemySprite = transform.GetChild(0);
     }
 
     private void Start()
@@ -128,7 +129,7 @@ public class EnemyAI : MonoBehaviour
                 }
 
                 if (isVirus)
-                    GetComponentInChildren<SpriteRenderer>().transform.up = aIPath.desiredVelocity;
+                    enemySprite.up = aIPath.desiredVelocity;
 
                 if (IsObstaclesBetween())
                     return;
@@ -141,7 +142,7 @@ public class EnemyAI : MonoBehaviour
                 if (isVirus)
                 {
                     var spriteUpDir = (Ship.position - transform.position).normalized;
-                    GetComponentInChildren<SpriteRenderer>().transform.up = spriteUpDir;
+                    enemySprite.up = spriteUpDir;
                 }
 
                 if (nextShootTimer > enemyData.FireRate)
@@ -178,7 +179,7 @@ public class EnemyAI : MonoBehaviour
             if (isVirus)
             {
                 var spriteUpDir = (targetPosition - transform.position).normalized;
-                GetComponentInChildren<SpriteRenderer>().transform.up = spriteUpDir;
+                enemySprite.up = spriteUpDir;
             }
             Rbody2D.velocity = (targetPosition - transform.position).normalized * speedMultiply;
             //transform.Translate((targetPosition - transform.position).normalized * speedMultiply * Time.deltaTime);
@@ -230,7 +231,7 @@ public class EnemyAI : MonoBehaviour
                 aIPath.endReachedDistance = originalEndReachedDistance;
 
             if (isVirus)
-                GetComponentInChildren<SpriteRenderer>().transform.up = aIPath.desiredVelocity;
+                enemySprite.up = aIPath.desiredVelocity;
 
             targetPosition.position = roamPosotion;
             //MoveTo(roamPosotion, true, false);
@@ -304,12 +305,8 @@ public class EnemyAI : MonoBehaviour
 
     private void SetDeadExplotionParticleColor(ParticleSystem particle)
     {
-        Color[] color = new Color[2];
-        for (int i = 0; i < 2; i++)
-        {
-            color[i] = transform.GetChild(i).GetComponent<SpriteRenderer>().color;
-        }
-        ParticleSystem.MinMaxGradient grad = new ParticleSystem.MinMaxGradient(color[0], Color.black);
+        Color color = transform.GetChild(1).GetComponent<SpriteRenderer>().color;
+        ParticleSystem.MinMaxGradient grad = new ParticleSystem.MinMaxGradient(color, Color.black);
         var particleMain = particle.main;
         particleMain.startColor = grad;
     }

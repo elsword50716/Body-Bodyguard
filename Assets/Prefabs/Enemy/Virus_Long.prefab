@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d8479a89d14bd0049bee0e815f58373a, type: 3}
-  m_Color: {r: 0, g: 0.38431376, b: 0.38431376, a: 1}
+  m_Color: {r: 0, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -280,7 +280,7 @@ MonoBehaviour:
     maxHealth: 25
     FireRate: 0.5
     BulletSpeed: 10
-    attackDamage: 10
+    attackDamage: 2.5
     moveSpeed: 10
     inAttackRangeMoveSpeed: 15
     aiRadius: 1.7

@@ -237,7 +237,7 @@ MonoBehaviour:
   enemyData:
     id: 0
     name: BooleanAgbra
-    maxHealth: 100
+    maxHealth: 150
     FireRate: 0.5
     BulletSpeed: 10
     attackDamage: 10

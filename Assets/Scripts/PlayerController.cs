@@ -16,7 +16,10 @@ public class PlayerController : MonoBehaviour
     public float jumpTimeRange = 0.5f;
     [Range(0, 1)] public float groundCheckRadious = 0.02f;
     public Animator animator;
+    public Animator teleportAnimator;
     public float fade = 1f;
+    public float fadeSpeed = 1f;
+    public Transform teleportOtherSide;
     public PauseMenuController pauseMenuController;
     public MultiplayerEventSystem multiplayerEventSystem;
 
@@ -34,7 +37,6 @@ public class PlayerController : MonoBehaviour
     {
         originalParent = transform.parent;
         respwanPoint = originalParent;
-        animator = GetComponentInChildren<Animator>();
         playerInput = GetComponent<PlayerInput>();
         //playerIndex = playerInput.user.index;
         // var playerUser = playerInput.user;
@@ -65,11 +67,17 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void SetPlayerFreezed(bool set)
+    public void SetPlayerFreezed(int onOrOff)
     {
+        bool set = onOrOff == 1 ? true : false;
         freezePosition = set;
         if (set)
+        {
             rbody2D.velocity = Vector2.zero;
+            rbody2D.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+        }
+        else
+            rbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     public void Move(InputAction context)
@@ -122,10 +130,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void Interactions(InputAction.CallbackContext context)
-    {
-
-    }
     public void Back(InputAction.CallbackContext context)
     {
         if (!context.performed)
@@ -224,5 +228,15 @@ public class PlayerController : MonoBehaviour
         rbody2D.gravityScale = 0;
         transform.localPosition = new Vector3(0.08f, 0.35f, 0f);
         transform.localEulerAngles = Vector3.zero;
+    }
+
+    public void TeleportToOtherSide()
+    {
+        transform.position = teleportOtherSide.position;
+    }
+
+    public void PlayTeleportSound()
+    {
+        SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.TeleportPipelineSound);
     }
 }
