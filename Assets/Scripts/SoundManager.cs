@@ -20,6 +20,7 @@ public class SoundManager : MonoBehaviour
         shipHeal_Little,
         MapOpen,
         MapClose,
+        booster,
     }
 
     [System.Serializable]

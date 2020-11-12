@@ -374,7 +374,7 @@ MonoBehaviour:
   originalParent: {fileID: 0}
   respwanPoint: {fileID: 0}
   groudCheck: {fileID: 2516848130953424712}
-  walkSpeed: 5
+  walkSpeed: 7.5
   shipGround:
     serializedVersion: 2
     m_Bits: 1024

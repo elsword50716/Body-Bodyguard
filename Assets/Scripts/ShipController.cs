@@ -86,6 +86,7 @@ public class ShipController : MonoBehaviour
 
         if (moveInput == Vector2.zero)
         {
+            SoundManager.Instance.StopPlaySound(SoundManager.SoundType.booster);
             for (int i = 0; i < 4; i++)
             {
                 boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();
@@ -174,11 +175,14 @@ public class ShipController : MonoBehaviour
 
         if (addForce)
         {
+            SoundManager.Instance.PlaySoundLoop(SoundManager.SoundType.booster);
             boosters[theUsingOne].GetChild(0).GetComponent<ParticleSystem>().Play();
             shipRbody.velocity += ((Vector2)boosters[theUsingOne].up * shipSpeed * Time.deltaTime);
         }
-        else
+        else{
+            SoundManager.Instance.StopPlaySound(SoundManager.SoundType.booster);
             boosters[theUsingOne].GetChild(0).GetComponent<ParticleSystem>().Stop();
+        }
     }
 
 

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemySpawnController : MonoBehaviour
 {
+    public bool isContainTurret;
+    public int turretId;
+    public float rotateAngle;
     [Range(0f, 1000f)]
     public float spawnAreaHeight;
     [Range(0f, 1000f)]
@@ -23,6 +26,16 @@ public class EnemySpawnController : MonoBehaviour
             var randomIndex = Random.Range(0, enemyPrefabs.Count - 1);
             var randomPosition = GetRandomPostion();
             GameObject enemy = Instantiate(enemyPrefabs[randomIndex], randomPosition, Quaternion.identity, transform);
+            if (isContainTurret)
+            {
+                if (randomIndex == turretId)
+                {
+                    var turretEnemyAi = enemy.GetComponent<EnemyAI>();
+                    enemy.transform.GetChild(0).rotation = Quaternion.Euler(0, 0, rotateAngle);
+                    turretEnemyAi.SetStartPosition(transform.position);
+                    turretEnemyAi.enemyData.roamRange = spawnAreaHeight == 0 ? spawnAreaWeight : spawnAreaHeight;
+                }
+            }
             enemy.SetActive(false);
         }
     }

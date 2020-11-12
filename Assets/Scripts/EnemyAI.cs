@@ -6,6 +6,7 @@ using Pathfinding;
 [RequireComponent(typeof(AIDestinationSetter))]
 public class EnemyAI : MonoBehaviour
 {
+    public bool isTurret;
     public bool isVirus;
     public float virusAttackMoveSpeed;
     public Transform Ship;
@@ -47,6 +48,12 @@ public class EnemyAI : MonoBehaviour
     private ObjectPooler objectPooler;
     private Transform enemySprite;
 
+    private void OnValidate()
+    {
+        startingPosotion = transform.position;
+        if(enemySprite == null)
+            enemySprite = transform.GetChild(0);
+    }
 
     private void Awake()
     {
@@ -72,7 +79,8 @@ public class EnemyAI : MonoBehaviour
         aIPath.canMove = true;
         aIPath.radius = enemyData.aiRadius;
         currentHealth = enemyData.maxHealth;
-        startingPosotion = transform.position;
+        if(!isTurret)
+            startingPosotion = transform.position;
         roamPosotion = GetRoamingPostion();
         destinationSetter.target = targetPosition;
         originalEndReachedDistance = aIPath.endReachedDistance;
@@ -167,7 +175,10 @@ public class EnemyAI : MonoBehaviour
 
     private Vector3 GetRoamingPostion()
     {
-        return startingPosotion + new Vector3(Random.Range(-1f, 1f) * enemyData.roamRange, Random.Range(-1f, 1f) * enemyData.roamRange);
+        if (!isTurret)
+            return startingPosotion + new Vector3(Random.Range(-1f, 1f) * enemyData.roamRange, Random.Range(-1f, 1f) * enemyData.roamRange);
+        else
+            return startingPosotion + enemySprite.right * enemyData.roamRange * Random.Range(-1f, 1f);
     }
 
     private void MoveTo(Vector3 targetPosition, bool isApproaching, bool isAttacking)
@@ -199,8 +210,10 @@ public class EnemyAI : MonoBehaviour
                 return;
 
             Rbody2D.velocity = Vector2.zero;
-
-            state = State.ChaseTarget;
+            if (isTurret)
+                state = State.Attacking;
+            else
+                state = State.ChaseTarget;
         }
         else
         {
@@ -259,13 +272,16 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            var bullet = objectPooler.SpawnFromPool(bulletPoolTag, transform.position, bulletPool);
-            var bulletRbody = bullet.GetComponent<Rigidbody2D>();
-            bulletRbody.velocity = (Ship.position - transform.position).normalized * enemyData.BulletSpeed;
-            bullet.transform.up = bulletRbody.velocity.normalized;
-            bullet.GetComponent<BasicBullet>().bulletData.targetTag = "Ship";
-            bullet.GetComponent<BasicBullet>().bulletData.damage = enemyData.attackDamage;
-            state = State.ChaseTarget;
+            if(isTurret){
+                if (nextShootTimer > enemyData.FireRate)
+                {
+                    FireBullet();
+                    nextShootTimer = 0;
+                }
+                else
+                    nextShootTimer += Time.deltaTime;
+            }else
+                FireBullet();
         }
 
     }
@@ -276,7 +292,7 @@ public class EnemyAI : MonoBehaviour
 
         var deadExplosion = objectPooler.SpawnFromPool(deadExplosionTag, transform.position, null).GetComponent<ParticleSystem>();
 
-        if (isVirus)
+        if (isVirus || isTurret)
         {
             SetDeadExplotionParticleColor(deadExplosion);
         }
@@ -321,15 +337,38 @@ public class EnemyAI : MonoBehaviour
         collider.GetComponentInParent<Ship>().GetDamaged(enemyData.attackDamage);
     }
 
+    private void FireBullet()
+    {
+        var bullet = objectPooler.SpawnFromPool(bulletPoolTag, transform.position, bulletPool);
+        var bulletRbody = bullet.GetComponent<Rigidbody2D>();
+        bulletRbody.velocity = (Ship.position - transform.position).normalized * enemyData.BulletSpeed;
+        bullet.transform.up = bulletRbody.velocity.normalized;
+        bullet.GetComponent<BasicBullet>().bulletData.targetTag = "Ship";
+        bullet.GetComponent<BasicBullet>().bulletData.damage = enemyData.attackDamage;
+        if (isTurret)
+            state = State.Roaming;
+        else
+            state = State.ChaseTarget;
+    }
+
+    public void SetStartPosition(Vector3 position){
+        startingPosotion = position;
+    }
+
 
     private void OnDrawGizmosSelected()
     {
 
         Gizmos.DrawWireSphere(transform.position, enemyData.detectShipRange);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(startingPosotion, enemyData.roamRange);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, enemyData.ClosestDistanceToShip);
+        if (isTurret)
+            Gizmos.DrawWireCube(startingPosotion, enemySprite.right * enemyData.roamRange * 2);
+        else
+        {
+            Gizmos.DrawWireCube(startingPosotion, new Vector3(enemyData.roamRange, enemyData.roamRange, 0f));
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, enemyData.ClosestDistanceToShip);
+        }
 
     }
 
