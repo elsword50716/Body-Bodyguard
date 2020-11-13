@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using Pathfinding;
 
@@ -292,7 +293,7 @@ public class EnemyAI : MonoBehaviour
 
         var deadExplosion = objectPooler.SpawnFromPool(deadExplosionTag, transform.position, null).GetComponent<ParticleSystem>();
 
-        if (isVirus || isTurret)
+        if (isVirus)
         {
             SetDeadExplotionParticleColor(deadExplosion);
         }
@@ -301,10 +302,15 @@ public class EnemyAI : MonoBehaviour
             foreach (Transform bullet in bulletPool)
             {
                 bullet.transform.parent = objectPooler.transform;
+                Debug.Log("Bullet BAck");
                 //bullet.gameObject.SetActive(false);
             }
+            if(isTurret)
+                SetDeadExplotionParticleColor(deadExplosion);
         }
-
+        if(bulletPool.childCount > 0)
+            return;
+        
         deadExplosion.Play();
 
         Destroy(gameObject);

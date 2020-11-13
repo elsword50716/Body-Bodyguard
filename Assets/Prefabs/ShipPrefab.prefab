@@ -463,7 +463,7 @@ MonoBehaviour:
   originalParent: {fileID: 0}
   respwanPoint: {fileID: 0}
   groudCheck: {fileID: 8313880606365604232}
-  walkSpeed: 5
+  walkSpeed: 7.5
   shipGround:
     serializedVersion: 2
     m_Bits: 1024
@@ -25592,7 +25592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 739354a6d3884c5488860b298b722195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolMaxRadious: 45
+  poolMaxRadious: 60
 --- !u!1 &8423476918742627061
 GameObject:
   m_ObjectHideFlags: 0
@@ -31074,7 +31074,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8423476918879870366}
-  m_LocalRotation: {x: -0, y: 0.000000040216893, z: -0, w: 1}
+  m_LocalRotation: {x: -0.00062560936, y: -0.0006256098, z: -0.00000039138746, w: 0.99999964}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -46023,8 +46023,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8423476919449329903}
-  m_LocalRotation: {x: -0, y: 0.000000040216893, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalRotation: {x: -0.00062560936, y: -0.0006256098, z: -0.00000039138746, w: 0.99999964}
+  m_LocalPosition: {x: 0.012512207, y: -0.012512207, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6050753258094744445}
