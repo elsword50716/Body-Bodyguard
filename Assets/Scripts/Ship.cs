@@ -56,7 +56,7 @@ public class Ship : MonoBehaviour
     public void GetDamaged(float damage)
     {
         shipDamageEffectAnimator.SetTrigger("isShipHit");
-        CameraController.Instance.ShakeCamera(damage, .1f);
+        //CameraController.Instance.ShakeCamera(damage, .1f);
         currentHealth -= damage;
     }
 
@@ -68,7 +68,10 @@ public class Ship : MonoBehaviour
     public void Heal(float healPoint)
     {
         shipHealParticle.Play();
-        currentHealth += healPoint;
+        if (currentHealth + healPoint >= maxHealth_temp)
+            currentHealth = maxHealth_temp;
+        else
+            currentHealth += healPoint;
     }
 
     public float GetCurrentHP()

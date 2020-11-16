@@ -8935,7 +8935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d003deecf7658440b0de5b3674843a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: Level_Stomach
+  nextSceneName: Level_Intestine
   nextLevel_id: 0
   nextState_id: 0
 --- !u!114 &724584398

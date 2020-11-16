@@ -16,8 +16,6 @@ public class PlayerController : MonoBehaviour
     public float jumpTimeRange = 0.5f;
     [Range(0, 1)] public float groundCheckRadious = 0.02f;
     public Animator animator;
-    public Animator teleportAnimator;
-    public float fade = 1f;
     public float fadeSpeed = 1f;
     public Transform teleportOtherSide;
     public PauseMenuController pauseMenuController;
@@ -27,9 +25,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rbody2D;
     private Transform Controller_temp;
     private bool freezePosition = false;
+    private bool isTeleporting = false;
+    private bool isTeleportingAdding = false;
     [SerializeField] private bool canJump = true;
     private PlayerInput playerInput;
     private InputAction m_Move;
+    private SpriteRenderer playerSprite;
+    private float fadeTimer = 1f;
 
     const float gravityScale = 9.8f;
 
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour
         rbody2D.gravityScale = 1f;
         pauseMenuController = GameObject.FindGameObjectWithTag("PauseMenu").GetComponent<PauseMenuController>();
         multiplayerEventSystem = GetComponentInChildren<MultiplayerEventSystem>();
+        playerSprite = GetComponentInChildren<SpriteRenderer>();
     }
 
 
@@ -57,6 +60,38 @@ public class PlayerController : MonoBehaviour
         else
             canJump = false;
 
+        if (isTeleporting)
+        {
+            SetPlayerFreezed(1);
+
+            if (fadeTimer == 1f)
+                PlayTeleportSound();
+
+            if (!isTeleportingAdding)
+            {
+                fadeTimer -= Time.deltaTime * fadeSpeed;
+                if (fadeTimer <= 0f)
+                {
+                    fadeTimer = 0f;
+                    isTeleportingAdding = true;
+                    TeleportToOtherSide();
+                }
+                playerSprite.material.SetFloat("_Fade", fadeTimer);
+            }
+            else
+            {
+                fadeTimer += Time.deltaTime * fadeSpeed;
+                if (fadeTimer >= 1f)
+                {
+                    fadeTimer = 1f;
+                    isTeleportingAdding = false;
+                    isTeleporting = false;
+                    SetPlayerFreezed(0);
+                }
+                playerSprite.material.SetFloat("_Fade", fadeTimer);
+            }
+        }
+
         if (freezePosition)
         {
             animator.SetBool("isWalking", false);
@@ -64,6 +99,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Move(m_Move);
+
 
     }
 
@@ -239,5 +275,10 @@ public class PlayerController : MonoBehaviour
     public void PlayTeleportSound()
     {
         SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.TeleportPipelineSound);
+    }
+
+    public void SetTeleport()
+    {
+        isTeleporting = true;
     }
 }
