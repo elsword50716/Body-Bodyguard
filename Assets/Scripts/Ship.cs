@@ -56,6 +56,7 @@ public class Ship : MonoBehaviour
     public void GetDamaged(float damage)
     {
         shipDamageEffectAnimator.SetTrigger("isShipHit");
+        CameraController.Instance.ShakeCamera(damage, .1f);
         currentHealth -= damage;
     }
 

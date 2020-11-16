@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63fbc28f82ca6944c8bba9cc0433c966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTurret: 0
   isVirus: 1
   virusAttackMoveSpeed: 20
   Ship: {fileID: 0}
@@ -189,7 +190,7 @@ MonoBehaviour:
     aiRadius: 5.5
     roamRange: 15
     detectShipRange: 30
-    ClosestDistanceToShip: 20
+    ClosestDistanceToShip: 30
 --- !u!66 &4185094283751982455
 CompositeCollider2D:
   m_ObjectHideFlags: 0

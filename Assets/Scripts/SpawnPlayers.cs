@@ -31,8 +31,9 @@ public class SpawnPlayers : MonoBehaviour
         {
             if (players[i].GetComponent<PlayerInput>().devices.Count == 0)
             {
+                Debug.Log("destroy player with no user");
                 Destroy(players[i]);
-                return;
+                continue;
             }
             var playerDeviceId = players[i].GetComponent<PlayerInput>().devices[0].deviceId;
             isFound = false;
@@ -48,8 +49,10 @@ public class SpawnPlayers : MonoBehaviour
                 }
             }
             Debug.Log(isFound, players[i]);
-            if (!isFound)
+            if (!isFound){
+                Debug.Log("destroy player with no user/2");
                 Destroy(players[i]);
+            }
 
         }
 

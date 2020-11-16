@@ -52,7 +52,7 @@ public class EnemyAI : MonoBehaviour
     private void OnValidate()
     {
         startingPosotion = transform.position;
-        if(enemySprite == null)
+        if (enemySprite == null)
             enemySprite = transform.GetChild(0);
     }
 
@@ -80,7 +80,7 @@ public class EnemyAI : MonoBehaviour
         aIPath.canMove = true;
         aIPath.radius = enemyData.aiRadius;
         currentHealth = enemyData.maxHealth;
-        if(!isTurret)
+        if (!isTurret)
             startingPosotion = transform.position;
         roamPosotion = GetRoamingPostion();
         destinationSetter.target = targetPosition;
@@ -273,7 +273,8 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            if(isTurret){
+            if (isTurret)
+            {
                 if (nextShootTimer > enemyData.FireRate)
                 {
                     FireBullet();
@@ -281,7 +282,8 @@ public class EnemyAI : MonoBehaviour
                 }
                 else
                     nextShootTimer += Time.deltaTime;
-            }else
+            }
+            else
                 FireBullet();
         }
 
@@ -305,14 +307,15 @@ public class EnemyAI : MonoBehaviour
                 Debug.Log("Bullet BAck");
                 //bullet.gameObject.SetActive(false);
             }
-            if(isTurret)
+            if (bulletPool.childCount > 0)
+                return;
+
+            if (isTurret)
                 SetDeadExplotionParticleColor(deadExplosion);
         }
-        if(bulletPool.childCount > 0)
-            return;
-        
-        deadExplosion.Play();
 
+        deadExplosion.Play();
+        CameraController.Instance.ShakeCamera(10f, .1f);
         Destroy(gameObject);
     }
 
@@ -357,7 +360,8 @@ public class EnemyAI : MonoBehaviour
             state = State.ChaseTarget;
     }
 
-    public void SetStartPosition(Vector3 position){
+    public void SetStartPosition(Vector3 position)
+    {
         startingPosotion = position;
     }
 

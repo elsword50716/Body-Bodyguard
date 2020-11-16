@@ -246,6 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63fbc28f82ca6944c8bba9cc0433c966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTurret: 0
   isVirus: 1
   virusAttackMoveSpeed: 30
   Ship: {fileID: 0}
@@ -286,7 +287,7 @@ MonoBehaviour:
     aiRadius: 1.7
     roamRange: 15
     detectShipRange: 30
-    ClosestDistanceToShip: 15
+    ClosestDistanceToShip: 22.5
 --- !u!1 &5708752410936454144
 GameObject:
   m_ObjectHideFlags: 0

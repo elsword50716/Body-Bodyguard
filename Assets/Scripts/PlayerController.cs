@@ -216,6 +216,7 @@ public class PlayerController : MonoBehaviour
         transform.parent = originalParent;
         rbody2D.gravityScale = 1;
         Controller_temp.GetComponent<ShipController>().isOnControl = false;
+        SoundManager.Instance.StopPlaySound(SoundManager.SoundType.booster);
     }
 
     private void EnterShipMoveController()
