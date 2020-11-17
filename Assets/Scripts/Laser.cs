@@ -26,6 +26,11 @@ public class Laser : MonoBehaviour
                 {
                     enemy.GetComponent<EnemyAI>().GetDamaged(damagePerSec * Time.deltaTime);
                 }
+
+                if (enemy.GetComponent<EnemyLairAI>() != null)
+                {
+                    enemy.GetComponent<EnemyLairAI>().GetDamaged(damagePerSec * Time.deltaTime);
+                }
             }
         }
     }

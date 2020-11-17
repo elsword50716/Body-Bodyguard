@@ -10,6 +10,8 @@ public static class GameDataManager
     //public static List<List<Color>> playersColorList = new List<List<Color>>();
     //public static List<PlayerInput> playerInputs = new List<PlayerInput>();
     public static List<PlayerData> playerDatas = new List<PlayerData>();
+    public static int lairTotalNumber;
+    public static int lairCurrentNumber;
 }
 
 [System.Serializable]
@@ -27,6 +29,15 @@ public struct EnemyData
     [Tooltip("Yellow Sphere")] [Range(0f, 50f)] public float roamRange;
     [Tooltip("White Sphere")] [Range(0f, 50f)] public float detectShipRange;
     [Tooltip("Blue Sphere")] [Range(0f, 100f)] public float ClosestDistanceToShip;
+}
+
+[System.Serializable]
+public struct EnemyLairData{
+    public int id;
+    public string name;
+    public float maxHealth;
+    public float SpawnRate;
+    [Tooltip("White Sphere")] [Range(0f, 500f)] public float detectShipRange;
 }
 
 [System.Serializable]

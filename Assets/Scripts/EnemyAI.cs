@@ -48,6 +48,7 @@ public class EnemyAI : MonoBehaviour
     private float originalEndReachedDistance;
     private ObjectPooler objectPooler;
     private Transform enemySprite;
+    private bool alreadySetStartPosition = false;
 
     private void OnValidate()
     {
@@ -80,7 +81,7 @@ public class EnemyAI : MonoBehaviour
         aIPath.canMove = true;
         aIPath.radius = enemyData.aiRadius;
         currentHealth = enemyData.maxHealth;
-        if (!isTurret)
+        if (!alreadySetStartPosition)
             startingPosotion = transform.position;
         roamPosotion = GetRoamingPostion();
         destinationSetter.target = targetPosition;
@@ -315,7 +316,7 @@ public class EnemyAI : MonoBehaviour
         }
 
         deadExplosion.Play();
-        CameraController.Instance.ShakeCamera(10f, .1f);
+        CameraController.Instance.ShakeCamera(10f, .1f, false);
         Destroy(gameObject);
     }
 
@@ -339,6 +340,8 @@ public class EnemyAI : MonoBehaviour
     public void GetDamaged(float damage)
     {
         currentHealth -= damage;
+        if(currentHealth <= 0f)
+            Dead();
     }
 
     private void DamageShip(Collider2D collider)
@@ -363,6 +366,7 @@ public class EnemyAI : MonoBehaviour
     public void SetStartPosition(Vector3 position)
     {
         startingPosotion = position;
+        alreadySetStartPosition = true;
     }
 
 

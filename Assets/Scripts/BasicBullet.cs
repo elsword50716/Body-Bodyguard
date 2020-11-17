@@ -32,9 +32,14 @@ public class BasicBullet : MonoBehaviour
             gameObject.SetActive(false);
 
         }
-        else if (other.GetComponent<Ship>() != null)
+        if (other.GetComponent<Ship>() != null)
         {
             other.GetComponent<Ship>().GetDamaged(bulletData.damage);
+            ExplosionHandler();
+            gameObject.SetActive(false);
+        }
+        if(other.GetComponent<EnemyLairAI>() != null){
+            other.GetComponent<EnemyLairAI>().GetDamaged(bulletData.damage);
             ExplosionHandler();
             gameObject.SetActive(false);
         }

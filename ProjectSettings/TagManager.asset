@@ -57,6 +57,9 @@ TagManager:
   - name: MiniMap
     uniqueID: 304698617
     locked: 0
+  - name: EnemyLair
+    uniqueID: 956010911
+    locked: 0
   - name: Ship
     uniqueID: 1707305225
     locked: 0
