@@ -20,10 +20,6 @@ public class TeleportPipeline : MonoBehaviour
     private PlayerController playerController;
     private Material playerMaterial;
     private InputAction m_Interaction;
-    private float fade;
-    private Vector2 overlapPosition;
-    private Vector2 overlapSize;
-    private List<Collider2D> overLapResult;
     private float fadeSpeed;
 
 
@@ -34,23 +30,11 @@ public class TeleportPipeline : MonoBehaviour
         isTeleporting = false;
         Light = transform.GetChild(2).GetComponent<SpriteRenderer>();
         var boxCollider2D = GetComponent<BoxCollider2D>();
-        overlapPosition = boxCollider2D.offset;
-        overlapSize = boxCollider2D.size;
-        overLapResult = new List<Collider2D>();
-        Physics2D.queriesHitTriggers = true;
     }
 
 
     void Update()
     {
-
-        if (Physics2D.OverlapBox(overlapPosition, overlapSize, 0f, playerLayer, overLapResult) > 0)
-        {
-            foreach (var player in overLapResult)
-            {
-                Debug.Log("player on it!!", player.gameObject);
-            }
-        }
         if (player == null)
         {
             if (Light != null)

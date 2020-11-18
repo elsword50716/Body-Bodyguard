@@ -7,7 +7,6 @@ public class EnemyLairAI : MonoBehaviour
 {
     public EnemyLairData enemyLairData;
     public Transform virusPool;
-    public ParticleSystem[] deadParticle;
     public int maxEnemyNumber;
     public List<GameObject> enemyPrefabs;
     [Range(0f, 1000f)]
@@ -15,13 +14,13 @@ public class EnemyLairAI : MonoBehaviour
     [Range(0f, 1000f)]
     public float spawnAreaWeight;
     public CinemachineVirtualCamera virtualCamera;
+    public Animator CameraAnimator;
 
     [SerializeField] private float currentHealth;
     private List<GameObject> enemyList;
     private Transform ship;
     private float spawnTimer = 0f;
     private int virusIndex = 0;
-    private CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin;
     private bool isFirstDead = true;
 
     private void Awake()
@@ -50,7 +49,6 @@ public class EnemyLairAI : MonoBehaviour
     private void Start()
     {
         currentHealth = enemyLairData.maxHealth;
-        cinemachineBasicMultiChannelPerlin = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
     }
 
     private void Update()
@@ -107,27 +105,13 @@ public class EnemyLairAI : MonoBehaviour
 
     private void Dead()
     {
-        if (deadParticle != null)
+        if (isFirstDead)
         {
-            if (isFirstDead)
-            {
-                foreach (var particle in deadParticle)
-                {
-                    particle.Play();
-                }
-                GameDataManager.lairCurrentNumber++;
-                virtualCamera.GetComponent<CameraController>().ShakeCamera(30f, 3f, true);
-                foreach (Transform sprite in transform)
-                {
-                    Destroy(sprite.gameObject);
-                }
-                isFirstDead = false;
-            }
-            if (cinemachineBasicMultiChannelPerlin.m_AmplitudeGain != 0)
-                return;
-            virtualCamera.Priority = 0;
-            Destroy(gameObject);
+            GameDataManager.lairCurrentNumber++;
+            CameraAnimator.SetBool("isDead", true);
+            isFirstDead = false;
         }
+        Destroy(gameObject, 1.75f);
     }
 
     private void OnDrawGizmosSelected()
