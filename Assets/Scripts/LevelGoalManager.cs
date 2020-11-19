@@ -6,7 +6,9 @@ using TMPro;
 public class LevelGoalManager : MonoBehaviour
 {
     public string goalName;
+    public bool isFinished;
     public TextMeshProUGUI goalText;
+    public TentacleBlockController tentacleBlock;
 
     private void Update() {
         var lairCurrentNumber = GameDataManager.lairCurrentNumber;
@@ -14,7 +16,9 @@ public class LevelGoalManager : MonoBehaviour
 
         goalText.SetText($"{lairCurrentNumber}/{lairTotalNumber}");
         
-        if(lairCurrentNumber == lairTotalNumber)
+        if(lairCurrentNumber == lairTotalNumber){
             goalText.color = Color.green;
+            isFinished = true;
+        }
     }
 }
