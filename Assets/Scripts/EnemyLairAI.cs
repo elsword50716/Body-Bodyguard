@@ -107,11 +107,14 @@ public class EnemyLairAI : MonoBehaviour
     {
         if (isFirstDead)
         {
-            GameDataManager.lairCurrentNumber++;
+            //GameDataManager.lairCurrentNumber++;
+            StartCoroutine(AddLairCurrentNumber());
             CameraAnimator.SetBool("isDead", true);
             isFirstDead = false;
+            return;
         }
-        Destroy(gameObject, 1.75f);
+
+
     }
 
     private void OnDrawGizmosSelected()
@@ -119,5 +122,19 @@ public class EnemyLairAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, enemyLairData.detectShipRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(virusPool.position, new Vector3(spawnAreaWeight * 2, spawnAreaHeight * 2, 0f));
+    }
+
+    IEnumerator AddLairCurrentNumber()
+    {
+        yield return new WaitForSeconds(110f / 60f);
+        foreach (Transform sprite in transform)
+        {
+            sprite.gameObject.SetActive(false);
+        }
+        yield return new WaitForSeconds((202f - 110f) / 60f);
+        GameDataManager.lairCurrentNumber++;
+        yield return new WaitForSeconds(2f);
+        Destroy(virtualCamera.gameObject);
+        Destroy(gameObject);
     }
 }

@@ -10,13 +10,20 @@ public class LevelGoalManager : MonoBehaviour
     public TextMeshProUGUI goalText;
     public TentacleBlockController tentacleBlock;
 
-    private void Update() {
+    private void Update()
+    {
         var lairCurrentNumber = GameDataManager.lairCurrentNumber;
         var lairTotalNumber = GameDataManager.lairTotalNumber;
 
         goalText.SetText($"{lairCurrentNumber}/{lairTotalNumber}");
-        
-        if(lairCurrentNumber == lairTotalNumber){
+
+        if (isFinished)
+        {
+            tentacleBlock.isOpen = true;
+        }
+
+        if (lairCurrentNumber == lairTotalNumber)
+        {
             goalText.color = Color.green;
             isFinished = true;
         }
