@@ -16,6 +16,21 @@ public class EnemySpawnController : MonoBehaviour
 
     private void Awake()
     {
+        //SpawnEnemies();
+    }
+
+    private Vector3 GetRandomPostion()
+    {
+        return transform.position + new Vector3(Random.Range(-1f, 1f) * spawnAreaWeight, Random.Range(-1f, 1f) * spawnAreaHeight);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(transform.position, new Vector3(spawnAreaWeight * 2, spawnAreaHeight * 2, 0f));
+    }
+
+    public void SpawnEnemies(){
         if (enemyPrefabs.Count == 0)
             return;
 
@@ -40,14 +55,10 @@ public class EnemySpawnController : MonoBehaviour
         }
     }
 
-    private Vector3 GetRandomPostion()
-    {
-        return transform.position + new Vector3(Random.Range(-1f, 1f) * spawnAreaWeight, Random.Range(-1f, 1f) * spawnAreaHeight);
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.position, new Vector3(spawnAreaWeight * 2, spawnAreaHeight * 2, 0f));
+    public void ClearAllEnemy(){
+        foreach (Transform enemy in transform)
+        {
+            Destroy(enemy.gameObject);
+        }
     }
 }

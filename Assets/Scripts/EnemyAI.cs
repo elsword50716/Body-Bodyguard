@@ -15,7 +15,7 @@ public class EnemyAI : MonoBehaviour
     public float avoidShaking = 1f;
     public float NextRoamingPositionDelay = 1f;
     public LayerMask obstaclesLayer;
-    public Transform BulletPrefab;
+    public string DropingPoolTag;
     public string bulletPoolTag;
     public Transform bulletPool;
     [SerializeField] private float currentHealth;
@@ -317,6 +317,10 @@ public class EnemyAI : MonoBehaviour
 
         deadExplosion.Play();
         CameraController.Instance.ShakeCamera(10f, .1f, false);
+        if(!string.IsNullOrEmpty(DropingPoolTag)){
+            if(Random.Range(0f, 1f) <= enemyData.dropProbability)
+                objectPooler.SpawnFromPool(DropingPoolTag, transform.position, null);
+        }
         Destroy(gameObject);
     }
 

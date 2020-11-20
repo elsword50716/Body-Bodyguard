@@ -172,8 +172,7 @@ MonoBehaviour:
   obstaclesLayer:
     serializedVersion: 2
     m_Bits: 8192
-  BulletPrefab: {fileID: 5015754369081956346, guid: 03de25fef3bc082409a4b74c072ab657,
-    type: 3}
+  DropingPoolTag: 
   bulletPoolTag: 
   bulletPool: {fileID: 0}
   currentHealth: 0
@@ -181,6 +180,7 @@ MonoBehaviour:
   enemyData:
     id: 6
     name: Cock
+    dropProbability: 0.15
     maxHealth: 100
     FireRate: 0.5
     BulletSpeed: 10
@@ -321,7 +321,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -876018437
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -7431173070802203054, guid: ccdd31b43c257714b9fe88f46834a710,
     type: 3}

@@ -182,7 +182,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -876018437
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 4679046567986707817, guid: 3fd3083c185c9cd42bec88c2db2e6b42,
     type: 3}
@@ -425,8 +425,7 @@ MonoBehaviour:
   obstaclesLayer:
     serializedVersion: 2
     m_Bits: 8192
-  BulletPrefab: {fileID: 5015754369081956346, guid: 03de25fef3bc082409a4b74c072ab657,
-    type: 3}
+  DropingPoolTag: 
   bulletPoolTag: 
   bulletPool: {fileID: 0}
   currentHealth: 0
@@ -434,6 +433,7 @@ MonoBehaviour:
   enemyData:
     id: 6
     name: Avocado
+    dropProbability: 0.15
     maxHealth: 75
     FireRate: 0.5
     BulletSpeed: 10

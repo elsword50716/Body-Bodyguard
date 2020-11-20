@@ -19,6 +19,7 @@ public struct EnemyData
 {
     public int id;
     public string name;
+    public float dropProbability;
     public float maxHealth;
     public float FireRate;
     public float BulletSpeed;
@@ -32,7 +33,8 @@ public struct EnemyData
 }
 
 [System.Serializable]
-public struct EnemyLairData{
+public struct EnemyLairData
+{
     public int id;
     public string name;
     public float maxHealth;
@@ -61,6 +63,12 @@ public struct ShipData
     public float NormalSpeed;
     public float BoostSpeed;
     public float ShootterRotateAngle;
+    [HideInInspector] public Vector3 shipPosition;
+    public int topShooterLevel;
+    public int leftShooterLevel;
+    public int rightShooterLevel;
+    public int laserLevel;
+    public int boosterLevel;
 }
 
 
@@ -123,4 +131,15 @@ public struct PlayerData
         this.colors = colors;
         this.deviceId = deviceId;
     }
+}
+
+[System.Serializable]
+public class GameSaveData
+{
+    public string LevelName;
+    public ShipData shipData;
+    public int lairTotalNumber;
+    public int lairCurrentNumber;
+    public bool[] LairIsDead;
+
 }

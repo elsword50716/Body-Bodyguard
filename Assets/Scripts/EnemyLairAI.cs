@@ -5,6 +5,7 @@ using Cinemachine;
 
 public class EnemyLairAI : MonoBehaviour
 {
+    public bool isDead;
     public EnemyLairData enemyLairData;
     public Transform virusPool;
     public int maxEnemyNumber;
@@ -48,6 +49,9 @@ public class EnemyLairAI : MonoBehaviour
 
     private void Start()
     {
+        if(isDead){
+            gameObject.SetActive(false);
+        }
         currentHealth = enemyLairData.maxHealth;
     }
 
@@ -108,6 +112,7 @@ public class EnemyLairAI : MonoBehaviour
         if (isFirstDead)
         {
             //GameDataManager.lairCurrentNumber++;
+            isDead = true;
             StartCoroutine(AddLairCurrentNumber());
             CameraAnimator.SetBool("isDead", true);
             isFirstDead = false;

@@ -172,8 +172,7 @@ MonoBehaviour:
   obstaclesLayer:
     serializedVersion: 2
     m_Bits: 8192
-  BulletPrefab: {fileID: 5015754369081956346, guid: 03de25fef3bc082409a4b74c072ab657,
-    type: 3}
+  DropingPoolTag: 
   bulletPoolTag: 
   bulletPool: {fileID: 0}
   currentHealth: 0
@@ -181,6 +180,7 @@ MonoBehaviour:
   enemyData:
     id: 7
     name: Pussy
+    dropProbability: 0.15
     maxHealth: 75
     FireRate: 0.5
     BulletSpeed: 10
@@ -448,7 +448,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -876018437
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: -1
   m_Sprite: {fileID: 4427678001126981045, guid: 6bada8e99c638624cabced167817f67c,
     type: 3}
@@ -530,7 +530,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -876018437
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: -1
   m_Sprite: {fileID: -716930510695185899, guid: 6bada8e99c638624cabced167817f67c,
     type: 3}
@@ -612,7 +612,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -876018437
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: -1
   m_Sprite: {fileID: 2237575026545899871, guid: 6bada8e99c638624cabced167817f67c,
     type: 3}
@@ -695,7 +695,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -876018437
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 2323384315131318815, guid: 6bada8e99c638624cabced167817f67c,
     type: 3}

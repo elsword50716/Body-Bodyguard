@@ -269,8 +269,7 @@ MonoBehaviour:
   obstaclesLayer:
     serializedVersion: 2
     m_Bits: 8192
-  BulletPrefab: {fileID: 5015754369081956346, guid: 03de25fef3bc082409a4b74c072ab657,
-    type: 3}
+  DropingPoolTag: HealKit_Small
   bulletPoolTag: 
   bulletPool: {fileID: 0}
   currentHealth: 0
@@ -278,6 +277,7 @@ MonoBehaviour:
   enemyData:
     id: 0
     name: BooleanAgbra
+    dropProbability: 0.05
     maxHealth: 25
     FireRate: 0.5
     BulletSpeed: 10
@@ -358,7 +358,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -876018437
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 1789509253714588447, guid: cc3b4ee14e6314846b62398171623c5c,
     type: 3}

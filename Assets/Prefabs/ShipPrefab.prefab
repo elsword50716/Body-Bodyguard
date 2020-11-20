@@ -304,7 +304,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goalName: 
+  isFinished: 0
   goalText: {fileID: 1248346935}
+  tentacleBlock: {fileID: 0}
 --- !u!1 &1248346933
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,11 +527,31 @@ MonoBehaviour:
   - tag: Bullet_beam_Explosion
     prefab: {fileID: 1306162878203118076, guid: c198c95613692cc438da6956724be5c3,
       type: 3}
-    size: 100
-  - tag: Virus_Spider_Bullet
+    size: 300
+  - tag: Virus_Spider_Bullet_Green
     prefab: {fileID: 8982459522226206512, guid: 62d8d26031210b04fbf7a53fd1667d94,
       type: 3}
     size: 100
+  - tag: Virus_Spider_Bullet_Blue
+    prefab: {fileID: 8982459522226206512, guid: 0354ee12af8aba948accac4b203c6da4,
+      type: 3}
+    size: 100
+  - tag: Virus_Spider_Bullet_Red
+    prefab: {fileID: 8982459522226206512, guid: 70cb1b000e41fea429bfde0282685633,
+      type: 3}
+    size: 100
+  - tag: Virus_Spider_Bullet_Purple
+    prefab: {fileID: 8982459522226206512, guid: 43afdb607a7e321469ceb15069b5e26d,
+      type: 3}
+    size: 100
+  - tag: Virus_Spider_Bullet_Yellow
+    prefab: {fileID: 8982459522226206512, guid: 62d8d26031210b04fbf7a53fd1667d94,
+      type: 3}
+    size: 100
+  - tag: HealKit_Small
+    prefab: {fileID: 1256254976871152518, guid: 0fd29092137af2345ab0da80b28a9c81,
+      type: 3}
+    size: 200
 --- !u!1 &2028719195
 GameObject:
   m_ObjectHideFlags: 0
@@ -4081,7 +4103,7 @@ GameObject:
   - component: {fileID: 8423476917901559164}
   m_Layer: 8
   m_Name: Laser
-  m_TagString: Untagged
+  m_TagString: Laser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31634,8 +31656,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8423476918879870366}
-  m_LocalRotation: {x: 3.469447e-18, y: -4.3368087e-19, z: 3.698917e-30, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalRotation: {x: -0.00031280515, y: 0.000000040218634, z: 1.2580596e-11, w: 0.99999994}
+  m_LocalPosition: {x: 0, y: -0.006225586, z: -9.999997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8423476918253622437}
@@ -34150,7 +34172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 172.5}
+  m_AnchoredPosition: {x: 0, y: 172.50002}
   m_SizeDelta: {x: -400, y: -405}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8423476919148477738
@@ -46594,8 +46616,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8423476919449329903}
-  m_LocalRotation: {x: 3.469447e-18, y: -4.3368087e-19, z: 3.698917e-30, w: 1}
-  m_LocalPosition: {x: 0.012500763, y: 0.012496948, z: -10}
+  m_LocalRotation: {x: -0.00031280515, y: 0.000000040218634, z: 1.2580596e-11, w: 0.99999994}
+  m_LocalPosition: {x: 0.012496948, y: -0.006225586, z: -9.999997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6050753258094744445}
@@ -46610,8 +46632,8 @@ Camera:
   m_GameObject: {fileID: 8423476919449329903}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.99607843, g: 0.6431373, b: 0.43137255, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

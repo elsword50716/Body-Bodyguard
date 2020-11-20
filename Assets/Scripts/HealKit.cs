@@ -14,7 +14,7 @@ public class HealKit : MonoBehaviour
         {
             var ship = other.GetComponentInParent<Ship>();
             ship.Heal(healPercent * ship.shipData.maxHealth);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

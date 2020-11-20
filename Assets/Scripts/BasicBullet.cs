@@ -16,8 +16,10 @@ public class BasicBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == 13 || other.gameObject.layer == 12)
+        if (other.gameObject.layer == 13 || other.gameObject.layer == 12 || other.CompareTag("Laser"))
         {
+            if(other.CompareTag(gameObject.tag))
+                return;
             ExplosionHandler();
             gameObject.SetActive(false);
         }
