@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class Ship : MonoBehaviour
 {
-    public Transform mainCamera;
-    public float m_PixelsPerUnit = 20f;
+    public Transform MinimapCamera;
     public Transform shipInside;
     public Slider healthBar;
     public Animator shipDamageEffectAnimator;
@@ -23,14 +22,11 @@ public class Ship : MonoBehaviour
         currentHealth = shipData.maxHealth;
         healthBar.maxValue = shipData.maxHealth;
         maxHealth_temp = shipData.maxHealth;
-        //mainCamera = Camera.main.transform;
-
     }
 
     private void Update()
     {
-        //mainCamera.position = new Vector3(Round(transform.position.x), Round(transform.position.y), -10);
-        mainCamera.position = new Vector3(transform.position.x, transform.position.y, -10);
+        MinimapCamera.position = new Vector3(transform.position.x, transform.position.y, -10);
         shipInside.position = transform.position;
         healthBar.value = currentHealth;
 
@@ -48,11 +44,6 @@ public class Ship : MonoBehaviour
         }
     }
 
-    float Round(float x)
-    {
-        return Mathf.Round(x * m_PixelsPerUnit) / m_PixelsPerUnit;
-    }
-
     public void GetDamaged(float damage)
     {
         shipDamageEffectAnimator.SetTrigger("isShipHit");
@@ -63,6 +54,7 @@ public class Ship : MonoBehaviour
     public void Dead()
     {
         //Debug.Log("Ship Dead!!!!!!!");
+        GameSaveLoadManager.Instance.LoadData();
     }
 
     public void Heal(float healPoint)
@@ -77,6 +69,11 @@ public class Ship : MonoBehaviour
     public float GetCurrentHP()
     {
         return currentHealth;
+    }
+
+    public void SetCurrentHP(float HP)
+    {
+        currentHealth = HP;
     }
 
     private void OnCollisionEnter2D(Collision2D other)

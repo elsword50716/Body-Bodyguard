@@ -138,8 +138,6 @@ public class GameSaveData
 {
     public string LevelName;
     public ShipData shipData;
-    public int lairTotalNumber;
-    public int lairCurrentNumber;
     public bool[] LairIsDead;
 
 }

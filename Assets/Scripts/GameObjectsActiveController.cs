@@ -9,34 +9,7 @@ public class GameObjectsActiveController : MonoBehaviour
     public List<GameObject> gameObjects;
     private void Start()
     {
-        gameObjects = new List<GameObject>();
-
-        if (ship == null)
-            ship = GameObject.FindGameObjectWithTag("Ship").transform;
-
-        foreach (Transform child in transform)
-        {
-            gameObjects.Add(child.gameObject);
-        }
-
-        foreach (GameObject gameObject in gameObjects)
-        {
-            if (gameObject == null)
-            {
-                gameObjects.Remove(gameObject);
-                return;
-            }
-
-            var distance = (gameObject.transform.position - ship.position).sqrMagnitude;
-            if (distance > activeDistance * activeDistance)
-            {
-                gameObject.SetActive(false);
-            }
-            else
-            {
-                gameObject.SetActive(true);
-            }
-        }
+        SetGameObjectsList();
     }
 
     private void FixedUpdate()
@@ -70,6 +43,38 @@ public class GameObjectsActiveController : MonoBehaviour
         foreach (Transform child in transform)
         {
             gameObjects.Add(child.gameObject);
+        }
+    }
+
+    public void SetGameObjectsList()
+    {
+        gameObjects = new List<GameObject>();
+
+        if (ship == null)
+            ship = GameObject.FindGameObjectWithTag("Ship").transform;
+
+        foreach (Transform child in transform)
+        {
+            gameObjects.Add(child.gameObject);
+        }
+
+        foreach (GameObject gameObject in gameObjects)
+        {
+            if (gameObject == null)
+            {
+                gameObjects.Remove(gameObject);
+                return;
+            }
+
+            var distance = (gameObject.transform.position - ship.position).sqrMagnitude;
+            if (distance > activeDistance * activeDistance)
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                gameObject.SetActive(true);
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public int playerIndex;
+    public int OnWhichController; // 0無 1船身 2砲台
     public Transform originalParent;
     public Transform respwanPoint;
     public Transform groudCheck;
@@ -225,6 +226,7 @@ public class PlayerController : MonoBehaviour
 
     private void ExitShooterController()
     {
+        OnWhichController = 1;
         animator.SetBool("isOnControl", false);
         freezePosition = false;
         transform.parent = originalParent;
@@ -235,6 +237,7 @@ public class PlayerController : MonoBehaviour
 
     private void EnterShooterController()
     {
+        OnWhichController = 0;
         animator.SetBool("isOnControl", true);
         Controller_temp.GetComponent<ShooterController>().isOnControl = true;
         freezePosition = true;
@@ -247,6 +250,7 @@ public class PlayerController : MonoBehaviour
 
     private void ExitShipMoveController()
     {
+        OnWhichController = 2;
         animator.SetBool("isOnControl", false);
         freezePosition = false;
         transform.parent = originalParent;
@@ -257,6 +261,7 @@ public class PlayerController : MonoBehaviour
 
     private void EnterShipMoveController()
     {
+        OnWhichController = 0;
         animator.SetBool("isOnControl", true);
         Controller_temp.GetComponent<ShipController>().isOnControl = true;
         freezePosition = true;

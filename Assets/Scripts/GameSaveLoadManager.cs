@@ -10,18 +10,27 @@ public class GameSaveLoadManager : MonoBehaviour
     public Transform ship;
     public Transform enemyLairs;
     public Transform enemySpawnPoints;
+    public Animator savingIconAnimator;
     public static GameSaveLoadManager Instance;
 
     private List<EnemyLairAI> enemyLairAIs;
     private List<EnemySpawnController> enemySpawnControllers;
 
-    private void Awake() {
-        if(isInMainMenu)
+    private void Awake()
+    {
+        if (isInMainMenu)
             return;
 
         Instance = this;
 
-        ship = GameObject.FindGameObjectWithTag("Ship").transform;
+        if (ship == null)
+            ship = GameObject.FindGameObjectWithTag("Ship").transform;
+
+        if (enemyLairs == null)
+            enemyLairs = GameObject.FindGameObjectWithTag("EnemyLairs").transform;
+
+        if (enemySpawnPoints == null)
+            enemySpawnPoints = GameObject.FindGameObjectWithTag("EnemySpawnPoints").transform;
 
         enemyLairAIs = new List<EnemyLairAI>();
         enemySpawnControllers = new List<EnemySpawnController>();
@@ -43,13 +52,13 @@ public class GameSaveLoadManager : MonoBehaviour
             SaveData();
     }
 
-    public void SaveData(){
+    public void SaveData()
+    {
+        savingIconAnimator.SetTrigger("isSaving");
         var saveData = new GameSaveData();
         saveData.LevelName = SceneManager.GetActiveScene().name;
         saveData.shipData = ship.GetComponent<Ship>().shipData;
         saveData.shipData.shipPosition = ship.position;
-        saveData.lairCurrentNumber = GameDataManager.lairCurrentNumber;
-        saveData.lairTotalNumber = GameDataManager.lairTotalNumber;
         saveData.LairIsDead = new bool[enemyLairAIs.Count];
         for (int i = 0; i < enemyLairAIs.Count; i++)
         {
@@ -60,14 +69,17 @@ public class GameSaveLoadManager : MonoBehaviour
         File.WriteAllText(Application.persistentDataPath + "/Save.json", jsonData);
     }
 
-    public void LoadData(){
-        if (!File.Exists(Application.persistentDataPath + "/Save.json")){
+    public void LoadData()
+    {
+        if (!File.Exists(Application.persistentDataPath + "/Save.json"))
+        {
             Debug.Log("GameSave doesn't exist!!!");
             return;
         }
         var saveData = new GameSaveData();
         saveData = JsonUtility.FromJson<GameSaveData>(File.ReadAllText(Application.persistentDataPath + "/Save.json"));
         ship.GetComponent<Ship>().shipData = saveData.shipData;
+        ship.GetComponent<Ship>().SetCurrentHP(saveData.shipData.maxHealth);
         ship.position = saveData.shipData.shipPosition;
 
         for (int i = 0; i < saveData.LairIsDead.Length; i++)
@@ -75,22 +87,24 @@ public class GameSaveLoadManager : MonoBehaviour
             enemyLairAIs[i].isDead = saveData.LairIsDead[i];
         }
 
-        GameDataManager.lairCurrentNumber = saveData.lairCurrentNumber;
-        GameDataManager.lairTotalNumber = saveData.lairTotalNumber;
-
         foreach (var enemySpawnController in enemySpawnControllers)
         {
-            if(enemySpawnController.transform.childCount < enemySpawnController.maxEnemyNumber){
-                enemySpawnController.ClearAllEnemy();
-                enemySpawnController.SpawnEnemies();
-            }
+            enemySpawnController.ClearAllEnemy();
+            enemySpawnController.SpawnEnemies();
+            enemySpawnController.GetComponent<GameObjectsActiveController>().SetGameObjectsList();
         }
     }
 
-    public void SetSceneName(){
-        if(GetComponent<StateChange>() == null)
+    public void RemoveSaveFile()
+    {
+        File.Delete(Application.persistentDataPath + "/Save.json");
+    }
+
+    public void SetSceneName()
+    {
+        if (GetComponent<StateChange>() == null)
             return;
-        
+
         var stateChange = GetComponent<StateChange>();
         stateChange.nextSceneName = JsonUtility.FromJson<GameSaveData>(File.ReadAllText(Application.persistentDataPath + "/Save.json")).LevelName;
         stateChange.CrossScene();

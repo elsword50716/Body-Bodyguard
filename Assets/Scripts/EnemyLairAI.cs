@@ -49,7 +49,9 @@ public class EnemyLairAI : MonoBehaviour
 
     private void Start()
     {
-        if(isDead){
+        if (isDead)
+        {
+            GameDataManager.lairCurrentNumber++;
             gameObject.SetActive(false);
         }
         currentHealth = enemyLairData.maxHealth;
@@ -138,6 +140,7 @@ public class EnemyLairAI : MonoBehaviour
         }
         yield return new WaitForSeconds((202f - 110f) / 60f);
         GameDataManager.lairCurrentNumber++;
+        GameSaveLoadManager.Instance.SaveData();
         yield return new WaitForSeconds(2f);
         Destroy(virtualCamera.gameObject);
         Destroy(gameObject);
