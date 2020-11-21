@@ -15,6 +15,7 @@ public class GameSaveLoadManager : MonoBehaviour
 
     private List<EnemyLairAI> enemyLairAIs;
     private List<EnemySpawnController> enemySpawnControllers;
+    private Ship shipScript;
 
     private void Awake()
     {
@@ -31,6 +32,8 @@ public class GameSaveLoadManager : MonoBehaviour
 
         if (enemySpawnPoints == null)
             enemySpawnPoints = GameObject.FindGameObjectWithTag("EnemySpawnPoints").transform;
+
+        shipScript = ship.GetComponent<Ship>();
 
         enemyLairAIs = new List<EnemyLairAI>();
         enemySpawnControllers = new List<EnemySpawnController>();
@@ -57,7 +60,7 @@ public class GameSaveLoadManager : MonoBehaviour
         savingIconAnimator.SetTrigger("isSaving");
         var saveData = new GameSaveData();
         saveData.LevelName = SceneManager.GetActiveScene().name;
-        saveData.shipData = ship.GetComponent<Ship>().shipData;
+        saveData.shipData = shipScript.shipData;
         saveData.shipData.shipPosition = ship.position;
         saveData.LairIsDead = new bool[enemyLairAIs.Count];
         for (int i = 0; i < enemyLairAIs.Count; i++)
@@ -78,8 +81,8 @@ public class GameSaveLoadManager : MonoBehaviour
         }
         var saveData = new GameSaveData();
         saveData = JsonUtility.FromJson<GameSaveData>(File.ReadAllText(Application.persistentDataPath + "/Save.json"));
-        ship.GetComponent<Ship>().shipData = saveData.shipData;
-        ship.GetComponent<Ship>().SetCurrentHP(saveData.shipData.maxHealth);
+        shipScript.shipData = saveData.shipData;
+        shipScript.SetCurrentHP(saveData.shipData.maxHealth);
         ship.position = saveData.shipData.shipPosition;
 
         for (int i = 0; i < saveData.LairIsDead.Length; i++)

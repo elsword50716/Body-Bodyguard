@@ -16,6 +16,7 @@ public class EnemyLairAI : MonoBehaviour
     public float spawnAreaWeight;
     public CinemachineVirtualCamera virtualCamera;
     public Animator CameraAnimator;
+    public string DropingPoolTag;
 
     [SerializeField] private float currentHealth;
     private List<GameObject> enemyList;
@@ -140,6 +141,9 @@ public class EnemyLairAI : MonoBehaviour
         }
         yield return new WaitForSeconds((202f - 110f) / 60f);
         GameDataManager.lairCurrentNumber++;
+        if(!string.IsNullOrEmpty(DropingPoolTag)){
+            ObjectPooler.Instance.SpawnFromPool(DropingPoolTag, transform.position, null);
+        }
         GameSaveLoadManager.Instance.SaveData();
         yield return new WaitForSeconds(2f);
         Destroy(virtualCamera.gameObject);

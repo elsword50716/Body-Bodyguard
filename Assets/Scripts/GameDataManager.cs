@@ -59,6 +59,8 @@ public struct ShipData
 {
     public int id;
     public string name;
+    public int wrenchNumber;
+    public int upgradeTimes;
     public float maxHealth;
     public float NormalSpeed;
     public float BoostSpeed;

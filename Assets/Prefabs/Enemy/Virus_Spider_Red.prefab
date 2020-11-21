@@ -426,7 +426,9 @@ MonoBehaviour:
   obstaclesLayer:
     serializedVersion: 2
     m_Bits: 8192
-  DropingPoolTag: 
+  DropingPoolTag:
+  - HealKit_Medium
+  - Wrench
   bulletPoolTag: Virus_Spider_Bullet_Red
   bulletPool: {fileID: 4769867287865049938}
   currentHealth: 0

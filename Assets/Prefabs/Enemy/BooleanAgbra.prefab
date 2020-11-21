@@ -229,7 +229,9 @@ MonoBehaviour:
   obstaclesLayer:
     serializedVersion: 2
     m_Bits: 8192
-  DropingPoolTag: 
+  DropingPoolTag:
+  - HealKit_Medium_2
+  - Wrench
   bulletPoolTag: BooleanAgbra_Bullet
   bulletPool: {fileID: 5307865851089599201}
   currentHealth: 0

@@ -384,7 +384,9 @@ MonoBehaviour:
   obstaclesLayer:
     serializedVersion: 2
     m_Bits: 8192
-  DropingPoolTag: HealKit_Small
+  DropingPoolTag:
+  - HealKit_Small
+  - Wrench
   bulletPoolTag: 
   bulletPool: {fileID: 0}
   currentHealth: 0

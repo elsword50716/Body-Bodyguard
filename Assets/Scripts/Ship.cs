@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Ship : MonoBehaviour
 {
     public Transform MinimapCamera;
     public Transform shipInside;
     public Slider healthBar;
+    public TextMeshProUGUI wrenchText;
+    public Animator wrenchAnimator;
     public Animator shipDamageEffectAnimator;
     public ParticleSystem shipHealParticle;
     public ShipData shipData;
@@ -22,6 +25,7 @@ public class Ship : MonoBehaviour
         currentHealth = shipData.maxHealth;
         healthBar.maxValue = shipData.maxHealth;
         maxHealth_temp = shipData.maxHealth;
+        wrenchText.SetText($"{shipData.wrenchNumber}/{15 + shipData.upgradeTimes * 10}");
     }
 
     private void Update()
@@ -74,6 +78,12 @@ public class Ship : MonoBehaviour
     public void SetCurrentHP(float HP)
     {
         currentHealth = HP;
+    }
+
+    public void GetWrench(int number){
+        wrenchAnimator.SetTrigger("isGetWrench");
+        shipData.wrenchNumber += number;
+        wrenchText.SetText($"{shipData.wrenchNumber}/{15 + shipData.upgradeTimes * 10}");
     }
 
     private void OnCollisionEnter2D(Collision2D other)
