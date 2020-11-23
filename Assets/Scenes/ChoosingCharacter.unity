@@ -6435,7 +6435,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -620914713
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 0
   m_Sprite: {fileID: 7920441373255586989, guid: 3f34fbd464eafc64399ccc457dfc7f00,
     type: 3}
@@ -7578,7 +7578,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -620914713
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 0
   m_Sprite: {fileID: -4025335428925429263, guid: 3f34fbd464eafc64399ccc457dfc7f00,
     type: 3}
@@ -8935,7 +8935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d003deecf7658440b0de5b3674843a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: Level_Intestine
+  nextSceneName: Level_Stomach
   nextLevel_id: 0
   nextState_id: 0
 --- !u!114 &724584398
@@ -9191,7 +9191,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -620914713
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 0
   m_Sprite: {fileID: -5729779858882064522, guid: 3f34fbd464eafc64399ccc457dfc7f00,
     type: 3}
@@ -10163,7 +10163,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -620914713
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 0
   m_Sprite: {fileID: 7920441373255586989, guid: 3f34fbd464eafc64399ccc457dfc7f00,
     type: 3}
@@ -11360,7 +11360,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -620914713
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 0
   m_Sprite: {fileID: -4025335428925429263, guid: 3f34fbd464eafc64399ccc457dfc7f00,
     type: 3}
@@ -13588,7 +13588,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -620914713
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 0
   m_Sprite: {fileID: -5729779858882064522, guid: 3f34fbd464eafc64399ccc457dfc7f00,
     type: 3}
@@ -15241,7 +15241,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -620914713
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 0
   m_Sprite: {fileID: -4025335428925429263, guid: 3f34fbd464eafc64399ccc457dfc7f00,
     type: 3}
@@ -17441,7 +17441,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -620914713
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 0
   m_Sprite: {fileID: -5729779858882064522, guid: 3f34fbd464eafc64399ccc457dfc7f00,
     type: 3}
@@ -18258,7 +18258,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1111369685
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: -4369657949941532669, guid: 497da0cf25fd532418fe242ff45cc226,
     type: 3}
@@ -19364,7 +19364,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -620914713
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 0
   m_Sprite: {fileID: -5729779858882064522, guid: 3f34fbd464eafc64399ccc457dfc7f00,
     type: 3}
@@ -23007,7 +23007,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -620914713
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 0
   m_Sprite: {fileID: 7920441373255586989, guid: 3f34fbd464eafc64399ccc457dfc7f00,
     type: 3}
@@ -23109,7 +23109,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -620914713
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 0
   m_Sprite: {fileID: -4025335428925429263, guid: 3f34fbd464eafc64399ccc457dfc7f00,
     type: 3}
@@ -24783,7 +24783,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -620914713
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 0
   m_Sprite: {fileID: 7920441373255586989, guid: 3f34fbd464eafc64399ccc457dfc7f00,
     type: 3}

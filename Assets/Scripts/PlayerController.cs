@@ -224,12 +224,13 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void ExitShooterController()
+    public void ExitShooterController()
     {
         OnWhichController = 1;
         animator.SetBool("isOnControl", false);
         freezePosition = false;
         transform.parent = originalParent;
+        SetPlayerFreezed(0);
         rbody2D.gravityScale = 1;
         Controller_temp.GetComponent<ShooterController>().isOnControl = false;
         Controller_temp.GetComponent<ShooterController>().isShootting = false;
@@ -242,18 +243,19 @@ public class PlayerController : MonoBehaviour
         Controller_temp.GetComponent<ShooterController>().isOnControl = true;
         freezePosition = true;
         transform.parent = Controller_temp;
-        rbody2D.velocity = Vector2.zero;
         rbody2D.gravityScale = 0;
         transform.localPosition = new Vector3(0.08f, 0.35f, 0f);
         transform.localEulerAngles = Vector3.zero;
+        SetPlayerFreezed(1);
     }
 
-    private void ExitShipMoveController()
+    public void ExitShipMoveController()
     {
         OnWhichController = 2;
         animator.SetBool("isOnControl", false);
         freezePosition = false;
         transform.parent = originalParent;
+        SetPlayerFreezed(0);
         rbody2D.gravityScale = 1;
         Controller_temp.GetComponent<ShipController>().isOnControl = false;
         SoundManager.Instance.StopPlaySound(SoundManager.SoundType.booster);
@@ -266,10 +268,10 @@ public class PlayerController : MonoBehaviour
         Controller_temp.GetComponent<ShipController>().isOnControl = true;
         freezePosition = true;
         transform.parent = Controller_temp;
-        rbody2D.velocity = Vector2.zero;
         rbody2D.gravityScale = 0;
         transform.localPosition = new Vector3(0.08f, 0.35f, 0f);
         transform.localEulerAngles = Vector3.zero;
+        SetPlayerFreezed(1);
     }
 
     public void TeleportToOtherSide()

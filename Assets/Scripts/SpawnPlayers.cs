@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 public class SpawnPlayers : MonoBehaviour
 {
@@ -10,9 +11,17 @@ public class SpawnPlayers : MonoBehaviour
 
     private bool isFound;
     private GameObject[] players;
+    private Ship ship;
 
     private void Awake()
     {
+        ship = GameObject.FindGameObjectWithTag("Ship").GetComponent<Ship>();
+        Spawn();
+
+
+    }
+
+    public void Spawn(){
         if (GameDataManager.playerDatas.Count == 0)
             return;
 
@@ -42,6 +51,8 @@ public class SpawnPlayers : MonoBehaviour
                 var id_temp = GameDataManager.playerDatas[j].deviceId;
                 if (playerDeviceId == id_temp)
                 {
+                    if(j == 0)
+                        ship.P1_EventSystem = players[i].GetComponentInChildren<MultiplayerEventSystem>();
                     players[i].GetComponent<PlayerController>().playerIndex = j;
                     players[i].transform.position = playerPositions[j].position;
                     isFound = true;
@@ -56,6 +67,26 @@ public class SpawnPlayers : MonoBehaviour
 
         }
 
+    }
 
+    public void ResetPlayersPosition(){
+        foreach(var player in players){
+            var playerController = player.GetComponent<PlayerController>();
+            switch (playerController.OnWhichController)
+            {
+                case 0:
+                    player.transform.position = playerPositions[playerController.playerIndex].position;
+                    break;
+                case 1:
+                    playerController.ExitShipMoveController();
+                    player.transform.position = playerPositions[playerController.playerIndex].position;
+                    break;
+                case 2:
+                    playerController.ExitShooterController();
+                    player.transform.position = playerPositions[playerController.playerIndex].position;
+                    break;
+                
+            }
+        }
     }
 }

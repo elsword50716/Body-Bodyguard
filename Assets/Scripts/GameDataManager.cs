@@ -66,11 +66,7 @@ public struct ShipData
     public float BoostSpeed;
     public float ShootterRotateAngle;
     [HideInInspector] public Vector3 shipPosition;
-    public int topShooterLevel;
-    public int leftShooterLevel;
-    public int rightShooterLevel;
-    public int laserLevel;
-    public int boosterLevel;
+    public int[] ShipPartLevel;
 }
 
 
