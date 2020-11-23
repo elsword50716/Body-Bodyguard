@@ -33,6 +33,7 @@ public class Ship : MonoBehaviour
         MinimapCamera.position = new Vector3(transform.position.x, transform.position.y, -10);
         shipInside.position = transform.position;
         healthBar.value = currentHealth;
+        wrenchText.SetText($"{shipData.wrenchNumber}/{15 + shipData.upgradeTimes * 10}");
 
         if (maxHealth_temp != shipData.maxHealth)
         {
@@ -80,10 +81,10 @@ public class Ship : MonoBehaviour
         currentHealth = HP;
     }
 
-    public void GetWrench(int number){
+    public void GetWrench(int number)
+    {
         wrenchAnimator.SetTrigger("isGetWrench");
         shipData.wrenchNumber += number;
-        wrenchText.SetText($"{shipData.wrenchNumber}/{15 + shipData.upgradeTimes * 10}");
     }
 
     private void OnCollisionEnter2D(Collision2D other)

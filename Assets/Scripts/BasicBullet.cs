@@ -8,17 +8,25 @@ public class BasicBullet : MonoBehaviour
     public BulletData bulletData;
 
     private ObjectPooler objectPooler;
+    private Rigidbody2D Rbody2D;
 
     private void Start()
     {
         objectPooler = ObjectPooler.Instance;
+        Rbody2D = GetComponent<Rigidbody2D>();
+    }
+
+    private void LateUpdate()
+    {
+        if (Rbody2D.velocity == Vector2.zero)
+            gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.layer == 13 || other.gameObject.layer == 12 || other.CompareTag("Laser"))
         {
-            if(other.CompareTag(gameObject.tag))
+            if (other.CompareTag(gameObject.tag))
                 return;
             ExplosionHandler();
             gameObject.SetActive(false);
