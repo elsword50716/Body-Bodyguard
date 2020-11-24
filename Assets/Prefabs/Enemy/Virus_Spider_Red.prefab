@@ -436,7 +436,7 @@ MonoBehaviour:
   enemyData:
     id: 9
     name: Spider
-    dropProbability: 0.1
+    dropProbability: 0.2
     maxHealth: 75
     FireRate: 1
     BulletSpeed: 10

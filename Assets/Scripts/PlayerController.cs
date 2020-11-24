@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (freezePosition)
+        if (freezePosition || Time.timeScale == 0)
         {
             animator.SetBool("isWalking", false);
             return;

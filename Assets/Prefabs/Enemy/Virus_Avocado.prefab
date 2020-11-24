@@ -435,7 +435,7 @@ MonoBehaviour:
   enemyData:
     id: 6
     name: Avocado
-    dropProbability: 0.15
+    dropProbability: 0.25
     maxHealth: 75
     FireRate: 0.5
     BulletSpeed: 10

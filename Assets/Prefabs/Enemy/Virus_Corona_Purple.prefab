@@ -313,7 +313,7 @@ MonoBehaviour:
   enemyData:
     id: 0
     name: BooleanAgbra
-    dropProbability: 0.05
+    dropProbability: 0.1
     maxHealth: 40
     FireRate: 0.5
     BulletSpeed: 10

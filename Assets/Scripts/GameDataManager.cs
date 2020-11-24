@@ -55,6 +55,20 @@ public struct BulletData
 }
 
 [System.Serializable]
+public struct ShooterData{
+    public bool isGunHorizontal;
+    public Transform gunPivotPoint;
+    public Animator gunAnimator;
+    public float gunMaxRotationRange;
+    public float gunMovingDegreePerSec;
+    public string bulletTag;
+    public float bulletDamage;
+    public float bulletSpeed;
+    public float fireRate;
+    public Transform bulletPool;
+}
+
+[System.Serializable]
 public struct ShipData
 {
     public int id;

@@ -90,8 +90,13 @@ public class Ship : MonoBehaviour
         shipData.wrenchNumber += number;
     }
 
-    public void RefreshWrenchUI(){
+    public void RefreshWrenchUI()
+    {
         wrenchText.SetText($"{shipData.wrenchNumber}/{15 + shipData.upgradeTimes * 5}");
+        if (shipData.wrenchNumber >= 15 + shipData.upgradeTimes * 5 && !shipUpgradeAnimator.GetBool("isOpen")){
+            shipUpgradeAnimator.SetBool("isOpen", true);
+            shipUpgradeAnimator.transform.position = transform.position;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)

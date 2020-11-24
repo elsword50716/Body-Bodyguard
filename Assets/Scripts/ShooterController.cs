@@ -5,20 +5,21 @@ using UnityEngine.InputSystem;
 
 public class ShooterController : MonoBehaviour
 {
-    public Transform gunPivotPoint;
-    public float gunMaxRotationRange = 60f;
-    public float gunMovingDegree = 40f;
-    public Animator gunAnimator;
-    public bool isGunHorizontal;
+    // public Transform shooterData.gunPivotPoint;
+    // public float shooterData.gunMaxRotationRange = 60f;
+    // public float shooterData.gunMovingDegreePerSec = 40f;
+    // public Animator shooterData.gunAnimator;
+    // public bool shooterData.isGunHorizontal;
     public bool isShootting = false;
     public bool isOnControl = false;
-    public GameObject bulletPrefab;
-    public float bulletDamage;
-    public float bulletSpeed = 1f;
-    public float fireRate = 0.2f;
-    public string bulletPoolTag;
-    public Transform bulletPool;
+    // public float bulletDamage;
+    // public float bulletSpeed = 1f;
+    // public float shooterData.fireRate = 0.2f;
+    // public string shooterData.bulletPoolTag;
+    // public Transform bulletPool;
+    public ShooterData shooterData;
     public bool isLaser = false;
+    public GameObject laserPrefab;
     public float laserChargeSpeedMulti = 1f;
     public float laserConsumeSpeedMulti = 1f;
     public Transform laserBatterySprite;
@@ -37,16 +38,8 @@ public class ShooterController : MonoBehaviour
 
     private void Start()
     {
-        var childCount = gunPivotPoint.childCount;
-        firePoint = new Transform[childCount];
-
-        for (int i = 0; i < firePoint.Length; i++)
-        {
-            firePoint[i] = gunPivotPoint.GetChild(i).GetChild(0);
-        }
-
-        if (gunPivotPoint.GetComponentInChildren<Animator>() != null)
-            gunAnimator = gunPivotPoint.GetComponentInChildren<Animator>();
+        if(!isLaser)
+            UpdateFirePoints();
 
         laserCurrentAmount = 100f;
         objectPooler = ObjectPooler.Instance;
@@ -86,16 +79,16 @@ public class ShooterController : MonoBehaviour
                 if (laserCurrentAmount > 0)
                 {
                     SoundManager.Instance.PlaySound(SoundManager.SoundType.laserFire);
-                    gunAnimator.SetBool("isShootting", true);
-                    bulletPrefab.SetActive(true);
+                    shooterData.gunAnimator.SetBool("isShootting", true);
+                    laserPrefab.SetActive(true);
                     laserCurrentAmount -= laserConsumeSpeedMulti * Time.deltaTime;
                     laserBatteryThunderAnimator.SetBool("isCharging", false);
                 }
                 else
                 {
                     SoundManager.Instance.StopPlaySound(SoundManager.SoundType.laserFire);
-                    gunAnimator.SetBool("isShootting", false);
-                    bulletPrefab.SetActive(false);
+                    shooterData.gunAnimator.SetBool("isShootting", false);
+                    laserPrefab.SetActive(false);
                     laserCurrentAmount = 0;
                     laserBatteryThunderAnimator.SetBool("isCharging", false);
                 }
@@ -103,8 +96,8 @@ public class ShooterController : MonoBehaviour
             else
             {
                 SoundManager.Instance.StopPlaySound(SoundManager.SoundType.laserFire);
-                gunAnimator.SetBool("isShootting", false);
-                bulletPrefab.SetActive(false);
+                shooterData.gunAnimator.SetBool("isShootting", false);
+                laserPrefab.SetActive(false);
                 if (laserCurrentAmount < 100f)
                 {
                     laserCurrentAmount += laserChargeSpeedMulti * Time.deltaTime;
@@ -121,8 +114,8 @@ public class ShooterController : MonoBehaviour
         {
             if (isShootting)
             {
-                if (gunAnimator != null)
-                    gunAnimator.SetFloat("ShootRate", 1 / (fireRate * 10));
+                if (shooterData.gunAnimator != null)
+                    shooterData.gunAnimator.SetFloat("ShootRate", 1 / (shooterData.fireRate * 10));
                 if (Time.time > timer)
                 {
                     counter++;
@@ -132,15 +125,15 @@ public class ShooterController : MonoBehaviour
 
                     FireBullet(counter % firePoint.Length);
 
-                    timer = Time.time + fireRate;
+                    timer = Time.time + shooterData.fireRate;
 
                 }
 
             }
             else
             {
-                if (gunAnimator != null)
-                    gunAnimator.SetFloat("ShootRate", 0);
+                if (shooterData.gunAnimator != null)
+                    shooterData.gunAnimator.SetFloat("ShootRate", 0);
             }
 
 
@@ -164,35 +157,46 @@ public class ShooterController : MonoBehaviour
 
         moveInput = context.ReadValue<Vector2>();
 
-        gunRotationZ = gunPivotPoint.localEulerAngles.z;
+        gunRotationZ = shooterData.gunPivotPoint.localEulerAngles.z;
         gunRotationZ = gunRotationZ > 180f ? gunRotationZ - 360f : gunRotationZ;
 
-        var moveDegree = isGunHorizontal ? -moveInput.x * gunMovingDegree * Time.deltaTime : -moveInput.y * gunMovingDegree * Time.deltaTime;
+        var moveDegree = shooterData.isGunHorizontal ? -moveInput.x * shooterData.gunMovingDegreePerSec * Time.deltaTime : -moveInput.y * shooterData.gunMovingDegreePerSec * Time.deltaTime;
 
-        if (Mathf.Abs(gunRotationZ + moveDegree) < gunMaxRotationRange)
-            gunPivotPoint.Rotate(new Vector3(0f, 0f, moveDegree));
+        if (Mathf.Abs(gunRotationZ + moveDegree) < shooterData.gunMaxRotationRange)
+            shooterData.gunPivotPoint.Rotate(new Vector3(0f, 0f, moveDegree));
         else
         {
-            if (Mathf.Abs(gunRotationZ) != gunMaxRotationRange)
-                gunPivotPoint.localEulerAngles = new Vector3(0f, 0f, gunRotationZ > 0 ? gunMaxRotationRange : -gunMaxRotationRange);
+            if (Mathf.Abs(gunRotationZ) != shooterData.gunMaxRotationRange)
+                shooterData.gunPivotPoint.localEulerAngles = new Vector3(0f, 0f, gunRotationZ > 0 ? shooterData.gunMaxRotationRange : -shooterData.gunMaxRotationRange);
         }
 
     }
 
     private void FireBullet(int index)
     {
+        var bullet = objectPooler.SpawnFromPool(shooterData.bulletTag, firePoint[index].position, shooterData.bulletPool);
         var particle = firePoint[index].GetComponentInChildren<ParticleSystem>();
         var particleMain = particle.main;
-        var color = bulletPrefab.GetComponentInChildren<SpriteRenderer>().color;
+        var color = bullet.GetComponentInChildren<SpriteRenderer>().color;
         ParticleSystem.MinMaxGradient grad = new ParticleSystem.MinMaxGradient(color, Color.white);
         particleMain.startColor = grad;
         particle.Play();
         SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.shoooterFire);
-        var bullet = objectPooler.SpawnFromPool(bulletPoolTag, firePoint[index].position, bulletPool);
         bullet.GetComponent<BasicBullet>().bulletData.targetTag = "Enemy";
-        bullet.GetComponent<BasicBullet>().bulletData.damage = bulletDamage;
+        bullet.GetComponent<BasicBullet>().bulletData.damage = shooterData.bulletDamage;
         var bulletRbody2D = bullet.GetComponent<Rigidbody2D>();
-        bulletRbody2D.velocity = firePoint[index].up * bulletSpeed;
+        bulletRbody2D.velocity = firePoint[index].up * shooterData.bulletSpeed;
         bullet.transform.up = firePoint[index].up;
+    }
+
+    public void UpdateFirePoints()
+    {
+        var childCount = shooterData.gunPivotPoint.childCount;
+        firePoint = new Transform[childCount];
+
+        for (int i = 0; i < firePoint.Length; i++)
+        {
+            firePoint[i] = shooterData.gunPivotPoint.GetChild(i).GetChild(0);
+        }
     }
 }
