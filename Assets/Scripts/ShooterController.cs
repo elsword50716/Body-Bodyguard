@@ -5,18 +5,8 @@ using UnityEngine.InputSystem;
 
 public class ShooterController : MonoBehaviour
 {
-    // public Transform shooterData.gunPivotPoint;
-    // public float shooterData.gunMaxRotationRange = 60f;
-    // public float shooterData.gunMovingDegreePerSec = 40f;
-    // public Animator shooterData.gunAnimator;
-    // public bool shooterData.isGunHorizontal;
     public bool isShootting = false;
     public bool isOnControl = false;
-    // public float bulletDamage;
-    // public float bulletSpeed = 1f;
-    // public float shooterData.fireRate = 0.2f;
-    // public string shooterData.bulletPoolTag;
-    // public Transform bulletPool;
     public ShooterData shooterData;
     public bool isLaser = false;
     public GameObject laserPrefab;
