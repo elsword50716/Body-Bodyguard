@@ -35,19 +35,19 @@ public class BasicBullet : MonoBehaviour
         if (!other.CompareTag(bulletData.targetTag))
             return;
 
-        if (other.GetComponent<EnemyAI>() != null)
+        if (other.TryGetComponent<EnemyAI>(out var enemy))
         {
-            other.GetComponent<EnemyAI>().GetDamaged(bulletData.damage);
+            enemy.GetDamaged(bulletData.damage);
 
         }
-        if (other.GetComponent<Ship>() != null)
+        if (other.TryGetComponent<Ship>(out var ship))
         {
-            other.GetComponent<Ship>().GetDamaged(bulletData.damage);
+            ship.GetDamaged(bulletData.damage);
 
         }
-        if (other.GetComponent<EnemyLairAI>() != null)
+        if (other.TryGetComponent<EnemyLairAI>(out var lair))
         {
-            other.GetComponent<EnemyLairAI>().GetDamaged(bulletData.damage);
+            lair.GetDamaged(bulletData.damage);
         }
 
         ExplosionHandler();

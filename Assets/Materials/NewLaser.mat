@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Laser 1
+  m_Name: NewLaser
   m_Shader: {fileID: -6465566751694194690, guid: 78fef1fb2eb164f4fbb1b1b3cb56ce4e,
     type: 3}
   m_ShaderKeywords: 
@@ -25,7 +25,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_175186A: 30
-    - Vector1_BDFE3E0B: 10
+    - Vector1_175186A: 5
+    - Vector1_4DE13CBA: 1
+    - Vector1_535023E7: 5
+    - Vector1_BDFE3E0B: 20
     m_Colors:
-    - _Color: {r: 1, g: 0.6891297, b: 0, a: 0}
+    - Vector2_98B26B94: {r: -1, g: 0, b: 0, a: 0}
+    - _Color: {r: 11.313708, g: 11.047503, b: 11.047503, a: 1}
