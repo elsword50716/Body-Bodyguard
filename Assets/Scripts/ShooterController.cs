@@ -7,13 +7,11 @@ public class ShooterController : MonoBehaviour
 {
     public bool isShootting = false;
     public bool isOnControl = false;
-    public ShooterData shooterData;
     public bool isLaser = false;
-    public GameObject laserPrefab;
-    public float laserChargeSpeedMulti = 1f;
-    public float laserConsumeSpeedMulti = 1f;
     public Transform laserBatterySprite;
     public Animator laserBatteryThunderAnimator;
+    public ShooterData shooterData;
+    public LaserData laserData;
 
     private float timer = 0f;
     private float gunRotationZ = 0f;
@@ -28,7 +26,7 @@ public class ShooterController : MonoBehaviour
 
     private void Start()
     {
-        if(!isLaser)
+        if (!isLaser)
             UpdateFirePoints();
 
         laserCurrentAmount = 100f;
@@ -69,16 +67,16 @@ public class ShooterController : MonoBehaviour
                 if (laserCurrentAmount > 0)
                 {
                     SoundManager.Instance.PlaySound(SoundManager.SoundType.laserFire);
-                    shooterData.gunAnimator.SetBool("isShootting", true);
-                    laserPrefab.SetActive(true);
-                    laserCurrentAmount -= laserConsumeSpeedMulti * Time.deltaTime;
+                    laserData.gunAnimator.SetBool("isShootting", true);
+                    laserData.laserPrefab.SetActive(true);
+                    laserCurrentAmount -= laserData.laserConsumeSpeedMulti * Time.deltaTime;
                     laserBatteryThunderAnimator.SetBool("isCharging", false);
                 }
                 else
                 {
                     SoundManager.Instance.StopPlaySound(SoundManager.SoundType.laserFire);
-                    shooterData.gunAnimator.SetBool("isShootting", false);
-                    laserPrefab.SetActive(false);
+                    laserData.gunAnimator.SetBool("isShootting", false);
+                    laserData.laserPrefab.SetActive(false);
                     laserCurrentAmount = 0;
                     laserBatteryThunderAnimator.SetBool("isCharging", false);
                 }
@@ -86,11 +84,11 @@ public class ShooterController : MonoBehaviour
             else
             {
                 SoundManager.Instance.StopPlaySound(SoundManager.SoundType.laserFire);
-                shooterData.gunAnimator.SetBool("isShootting", false);
-                laserPrefab.SetActive(false);
+                laserData.gunAnimator.SetBool("isShootting", false);
+                laserData.laserPrefab.SetActive(false);
                 if (laserCurrentAmount < 100f)
                 {
-                    laserCurrentAmount += laserChargeSpeedMulti * Time.deltaTime;
+                    laserCurrentAmount += laserData.laserChargeSpeedMulti * Time.deltaTime;
                     laserBatteryThunderAnimator.SetBool("isCharging", true);
                 }
                 else
@@ -147,17 +145,35 @@ public class ShooterController : MonoBehaviour
 
         moveInput = context.ReadValue<Vector2>();
 
-        gunRotationZ = shooterData.gunPivotPoint.localEulerAngles.z;
-        gunRotationZ = gunRotationZ > 180f ? gunRotationZ - 360f : gunRotationZ;
+        if (isLaser)
+        {
+            gunRotationZ = laserData.gunPivotPoint.localEulerAngles.z;
+            gunRotationZ = gunRotationZ > 180f ? gunRotationZ - 360f : gunRotationZ;
 
-        var moveDegree = shooterData.isGunHorizontal ? -moveInput.x * shooterData.gunMovingDegreePerSec * Time.deltaTime : -moveInput.y * shooterData.gunMovingDegreePerSec * Time.deltaTime;
+            var moveDegree = laserData.isGunHorizontal ? -moveInput.x * laserData.gunMovingDegreePerSec * Time.deltaTime : -moveInput.y * laserData.gunMovingDegreePerSec * Time.deltaTime;
 
-        if (Mathf.Abs(gunRotationZ + moveDegree) < shooterData.gunMaxRotationRange)
-            shooterData.gunPivotPoint.Rotate(new Vector3(0f, 0f, moveDegree));
+            if (Mathf.Abs(gunRotationZ + moveDegree) < laserData.gunMaxRotationRange)
+                laserData.gunPivotPoint.Rotate(new Vector3(0f, 0f, moveDegree));
+            else
+            {
+                if (Mathf.Abs(gunRotationZ) != laserData.gunMaxRotationRange)
+                    laserData.gunPivotPoint.localEulerAngles = new Vector3(0f, 0f, gunRotationZ > 0 ? laserData.gunMaxRotationRange : -laserData.gunMaxRotationRange);
+            }
+        }
         else
         {
-            if (Mathf.Abs(gunRotationZ) != shooterData.gunMaxRotationRange)
-                shooterData.gunPivotPoint.localEulerAngles = new Vector3(0f, 0f, gunRotationZ > 0 ? shooterData.gunMaxRotationRange : -shooterData.gunMaxRotationRange);
+            gunRotationZ = shooterData.gunPivotPoint.localEulerAngles.z;
+            gunRotationZ = gunRotationZ > 180f ? gunRotationZ - 360f : gunRotationZ;
+
+            var moveDegree = shooterData.isGunHorizontal ? -moveInput.x * shooterData.gunMovingDegreePerSec * Time.deltaTime : -moveInput.y * shooterData.gunMovingDegreePerSec * Time.deltaTime;
+
+            if (Mathf.Abs(gunRotationZ + moveDegree) < shooterData.gunMaxRotationRange)
+                shooterData.gunPivotPoint.Rotate(new Vector3(0f, 0f, moveDegree));
+            else
+            {
+                if (Mathf.Abs(gunRotationZ) != shooterData.gunMaxRotationRange)
+                    shooterData.gunPivotPoint.localEulerAngles = new Vector3(0f, 0f, gunRotationZ > 0 ? shooterData.gunMaxRotationRange : -shooterData.gunMaxRotationRange);
+            }
         }
 
     }

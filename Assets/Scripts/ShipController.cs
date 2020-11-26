@@ -5,16 +5,14 @@ using UnityEngine.InputSystem;
 
 public class ShipController : MonoBehaviour
 {
+    public bool isOnControl = false;
     public bool isMapUnlocked;
+    public bool addForce = false;
     public Rigidbody2D shipRbody;
     public Transform ship;
-    public ShipData shipData;
-    public bool isOnControl = false, addForce = false;
-    public float shipSpeed = 100f;
-    public float boostersRotateSpeed = 1f;
-    public float boostersAvoidShacking = 1.5f;
-    public Transform[] boosters;
     public Animator mapAnimator;
+    public float boostersAvoidShacking = 1.5f;
+    public BoosterData boosterData;
 
     private Vector2 moveInput = Vector2.zero;
     private PlayerInput playerInput;
@@ -25,20 +23,11 @@ public class ShipController : MonoBehaviour
 
     private void Awake()
     {
-        shipData = ship.GetComponent<Ship>().shipData;
-        shipSpeed = shipData.NormalSpeed;
         shipRbody = ship.GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
-        shipData = ship.GetComponent<Ship>().shipData;
-
-        if (shipSpeed != shipData.NormalSpeed)
-        {
-            shipSpeed = shipData.NormalSpeed;
-        }
-
         if (isOnControl)
         {
             if (playerInput == null)
@@ -65,13 +54,14 @@ public class ShipController : MonoBehaviour
             m_ShipMove = null;
             m_AddForce = null;
 
-            if(mapAnimator.GetBool("isOpen")){
+            if (mapAnimator.GetBool("isOpen"))
+            {
                 mapAnimator.SetBool("isOpen", false);
             }
 
             for (int i = 0; i < 4; i++)
             {
-                boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();
+                boosterData.boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();
             }
         }
 
@@ -89,7 +79,7 @@ public class ShipController : MonoBehaviour
             SoundManager.Instance.StopPlaySound(SoundManager.SoundType.booster);
             for (int i = 0; i < 4; i++)
             {
-                boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();
+                boosterData.boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();
             }
             return;
         }
@@ -130,23 +120,23 @@ public class ShipController : MonoBehaviour
 
     private void BoostersControl(int theUsingOne)
     {
-        for (int i = 0; i < boosters.Length; i++)
+        for (int i = 0; i < boosterData.boosters.Length; i++)
         {
             if (i == theUsingOne)
                 continue;
 
-            boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();
+            boosterData.boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();
         }
 
-        float inputAngleDelta = Mathf.Acos(Vector2.Dot(boosters[theUsingOne].up, moveInput.normalized)) * Mathf.Rad2Deg;
+        float inputAngleDelta = Mathf.Acos(Vector2.Dot(boosterData.boosters[theUsingOne].up, moveInput.normalized)) * Mathf.Rad2Deg;
 
         Debug.Log($"{theUsingOne} inputAngleDelta : " + inputAngleDelta);
 
-        Vector2 boosterUp_temp = boosters[theUsingOne].up;
+        Vector2 boosterUp_temp = boosterData.boosters[theUsingOne].up;
 
         if (inputAngleDelta > boostersAvoidShacking)
         {
-            var degree = boostersRotateSpeed * Time.deltaTime;
+            var degree = boosterData.boostersRotateSpeed * Time.deltaTime;
             var RotatedX_N = (boosterUp_temp.x * Mathf.Cos(-degree * Mathf.Deg2Rad) - boosterUp_temp.y * Mathf.Sin(-degree * Mathf.Deg2Rad));
             var RotatedY_N = (boosterUp_temp.x * Mathf.Sin(-degree * Mathf.Deg2Rad) + boosterUp_temp.y * Mathf.Cos(-degree * Mathf.Deg2Rad));
             boosterUp_temp = new Vector2(RotatedX_N, RotatedY_N);
@@ -155,33 +145,34 @@ public class ShipController : MonoBehaviour
 
             if (inputAngleDelta_temp > inputAngleDelta)
             {
-                boosters[theUsingOne].Rotate(new Vector3(0f, 0f, degree));
+                boosterData.boosters[theUsingOne].Rotate(new Vector3(0f, 0f, degree));
                 Debug.Log("加角度");
             }
             else
             {
-                boosters[theUsingOne].Rotate(new Vector3(0f, 0f, -degree));
+                boosterData.boosters[theUsingOne].Rotate(new Vector3(0f, 0f, -degree));
                 Debug.Log("減角度");
             }
 
         }
         else
         {
-            boosters[theUsingOne].up = moveInput.normalized;
+            boosterData.boosters[theUsingOne].up = moveInput.normalized;
             if (theUsingOne == 0)
-                boosters[theUsingOne].eulerAngles = new Vector3(0f, 0f, boosters[theUsingOne].eulerAngles.z);
+                boosterData.boosters[theUsingOne].eulerAngles = new Vector3(0f, 0f, boosterData.boosters[theUsingOne].eulerAngles.z);
             Debug.Log("貼其");
         }
 
         if (addForce)
         {
             SoundManager.Instance.PlaySoundLoop(SoundManager.SoundType.booster);
-            boosters[theUsingOne].GetChild(0).GetComponent<ParticleSystem>().Play();
-            shipRbody.velocity += ((Vector2)boosters[theUsingOne].up * shipSpeed * Time.deltaTime);
+            boosterData.boosters[theUsingOne].GetChild(0).GetComponent<ParticleSystem>().Play();
+            shipRbody.velocity += ((Vector2)boosterData.boosters[theUsingOne].up * boosterData.shipSpeed * Time.deltaTime);
         }
-        else{
+        else
+        {
             SoundManager.Instance.StopPlaySound(SoundManager.SoundType.booster);
-            boosters[theUsingOne].GetChild(0).GetComponent<ParticleSystem>().Stop();
+            boosterData.boosters[theUsingOne].GetChild(0).GetComponent<ParticleSystem>().Stop();
         }
     }
 

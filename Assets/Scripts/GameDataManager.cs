@@ -55,7 +55,8 @@ public struct BulletData
 }
 
 [System.Serializable]
-public struct ShooterData{
+public struct ShooterData
+{
     public bool isGunHorizontal;
     public Transform gunPivotPoint;
     public Animator gunAnimator;
@@ -66,6 +67,29 @@ public struct ShooterData{
     public float bulletSpeed;
     public float fireRate;
     public Transform bulletPool;
+}
+
+[System.Serializable]
+public struct BoosterData
+{
+    public float shipSpeed;
+    public float shipBoostSpeed;
+    public float boostersRotateSpeed;
+    public Transform[] boosters;
+}
+
+[System.Serializable]
+public struct LaserData
+{
+    public bool isGunHorizontal;
+    public GameObject laserPrefab;
+    public Transform gunPivotPoint;
+    public Animator gunAnimator;
+    public float gunMaxRotationRange;
+    public float gunMovingDegreePerSec;
+    public float laserChargeSpeedMulti;
+    public float laserConsumeSpeedMulti;
+
 }
 
 [System.Serializable]
