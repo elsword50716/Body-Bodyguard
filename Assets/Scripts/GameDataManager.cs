@@ -100,9 +100,6 @@ public struct ShipData
     public int wrenchNumber;
     public int upgradeTimes;
     public float maxHealth;
-    public float NormalSpeed;
-    public float BoostSpeed;
-    public float ShootterRotateAngle;
     [HideInInspector] public Vector3 shipPosition;
     public int[] ShipPartLevel;
 }

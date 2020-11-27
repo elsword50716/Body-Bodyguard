@@ -9,10 +9,17 @@ public class Laser : MonoBehaviour
     public float damagePerSec;
     public float maxLenth;
     public LineRenderer lineRenderer;
+    public ParticleSystem hitParticle;
 
     private BoxCollider2D boxCollider2D;
     private List<Collider2D> enemyInLaser;
 
+    private void OnValidate() {
+        if(isNewLaser){
+            lineRenderer = GetComponent<LineRenderer>();
+            lineRenderer.SetPosition(1, transform.InverseTransformPoint(transform.position + transform.right * maxLenth));
+        }
+    }
     private void Start()
     {
         boxCollider2D = GetComponent<BoxCollider2D>();
@@ -26,6 +33,7 @@ public class Laser : MonoBehaviour
             lineRenderer.SetPosition(1, transform.InverseTransformPoint(transform.position + transform.right * maxLenth));
         }
     }
+
 
     private void Update()
     {
@@ -53,18 +61,30 @@ public class Laser : MonoBehaviour
             if (hit.collider != null)
             {
                 lineRenderer.SetPosition(1, transform.InverseTransformPoint(hit.point));
+                hitParticle.transform.position = hit.point;
+                hitParticle.gameObject.SetActive(true);
                 if (hit.collider.TryGetComponent<EnemyAI>(out var enemyAI))
                 {
                     enemyAI.GetDamaged(damagePerSec * Time.deltaTime);
+                    return;
                 }
                 if (hit.collider.TryGetComponent<EnemyLairAI>(out var enemyLair))
                 {
                     enemyLair.GetDamaged(damagePerSec * Time.deltaTime);
+                    return;
                 }
+                if (hit.collider.TryGetComponent<BasicBullet>(out var bullet))
+                {
+                    bullet.ExplosionHandler();
+                    bullet.gameObject.SetActive(false);
+                    return;
+                }
+
             }
             else
             {
                 lineRenderer.SetPosition(1, transform.InverseTransformPoint(transform.position + transform.right * maxLenth));
+                hitParticle.gameObject.SetActive(false);
             }
         }
 

@@ -55,7 +55,7 @@ public class BasicBullet : MonoBehaviour
 
     }
 
-    private void ExplosionHandler()
+    public void ExplosionHandler()
     {
         if (!string.IsNullOrEmpty(explosionParicleTag))
         {

@@ -41,9 +41,13 @@ public class ShipPartUpgradeController : MonoBehaviour
 
         SetPartData();
 
-        partPrefabs[0].gameObject.SetActive(true);
-        for (int i = 1; i < partPrefabs.Length; i++)
+        for (int i = 0; i < partPrefabs.Length; i++)
         {
+            if(i == level_temp){
+                partPrefabs[i].gameObject.SetActive(true);
+                continue;
+            }
+            
             partPrefabs[i].gameObject.SetActive(false);
         }
     }

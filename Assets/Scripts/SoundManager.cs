@@ -21,6 +21,7 @@ public class SoundManager : MonoBehaviour
         MapOpen,
         MapClose,
         booster,
+        laserFireLv2
     }
 
     [System.Serializable]
