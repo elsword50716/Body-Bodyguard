@@ -121,7 +121,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2676904096372276175}
   serializedVersion: 6
-  lengthInSec: 0.5
+  lengthInSec: 0.25
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -196,7 +196,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.25
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4967,15 +4967,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba1e63712b411f4397688cc42b532c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMissle: 1
   explosionParicleTag: DutchBomb_Explosion
   bulletData:
     id: 0
     name: DutchBomb
     startSpeed: 10
     damage: 0
-    chasingDelay: 0.5
+    chasingDelay: 0.1
     chasingSpeed: 20
     targetTag: 
+    targetLayer:
+      serializedVersion: 2
+      m_Bits: 0
 --- !u!114 &2676904097314542692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4990,15 +4994,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layerMask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 0
   target: {fileID: 0}
+  missleHP: 100
   rotateSpeed: 200
   ExplosionRange: 8
   DetectRange: 50
   aimSprite: {fileID: 2676904096144639958}
   aimAnimation: {fileID: 2676904097314542695}
-  aimStart: {fileID: 7400000, guid: 1ec9ec02c409ed54daeca9f9a7a89b12, type: 2}
-  aimLoop: {fileID: 7400000, guid: 1c4479ae0c5c0d147899e75f6cfdf940, type: 2}
+  aimLoop: {fileID: 0}
 --- !u!111 &2676904097314542695
 Animation:
   m_ObjectHideFlags: 0

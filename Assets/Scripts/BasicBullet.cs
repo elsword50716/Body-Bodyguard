@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BasicBullet : MonoBehaviour
 {
+    public bool isMissle;
     public string explosionParicleTag;
     public BulletData bulletData;
 
@@ -24,10 +25,17 @@ public class BasicBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (isMissle)
+            return;
+
         if (other.gameObject.layer == 13 || other.gameObject.layer == 12 || other.CompareTag("Laser"))
         {
             if (other.CompareTag(gameObject.tag))
                 return;
+
+            if (other.TryGetComponent<Missle>(out var missle))
+                missle.GetDamaged(bulletData.damage);
+
             ExplosionHandler();
             gameObject.SetActive(false);
         }

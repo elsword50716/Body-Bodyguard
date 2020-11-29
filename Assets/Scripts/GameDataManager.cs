@@ -52,6 +52,7 @@ public struct BulletData
     public float chasingDelay;
     public float chasingSpeed;
     public string targetTag;
+    public LayerMask targetLayer;
 }
 
 [System.Serializable]

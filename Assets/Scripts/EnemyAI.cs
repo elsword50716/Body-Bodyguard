@@ -294,13 +294,7 @@ public class EnemyAI : MonoBehaviour
     {
         Rbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
 
-        var deadExplosion = objectPooler.SpawnFromPool(deadExplosionTag, transform.position, null).GetComponent<ParticleSystem>();
-
-        if (isVirus)
-        {
-            SetDeadExplotionParticleColor(deadExplosion);
-        }
-        else
+        if (!isVirus)
         {
             foreach (Transform bullet in bulletPool)
             {
@@ -310,17 +304,23 @@ public class EnemyAI : MonoBehaviour
             }
             if (bulletPool.childCount > 0)
                 return;
+        }
 
-            if (isTurret)
-                SetDeadExplotionParticleColor(deadExplosion);
+        var deadExplosion = objectPooler.SpawnFromPool(deadExplosionTag, transform.position, null).GetComponent<ParticleSystem>();
+
+        if (isVirus || isTurret)
+        {
+            SetDeadExplotionParticleColor(deadExplosion);
         }
 
         deadExplosion.Play();
         CameraController.Instance.ShakeCamera(10f, .1f, false);
-        if(DropingPoolTag.Length != 0){
-            if(Random.Range(0f, 1f) <= enemyData.dropProbability){
+        if (DropingPoolTag.Length != 0)
+        {
+            if (Random.Range(0f, 1f) <= enemyData.dropProbability)
+            {
                 var index = Random.Range(0, DropingPoolTag.Length);
-                if(!string.IsNullOrEmpty(DropingPoolTag[index]))
+                if (!string.IsNullOrEmpty(DropingPoolTag[index]))
                     objectPooler.SpawnFromPool(DropingPoolTag[index], transform.position, null);
             }
         }
@@ -347,7 +347,7 @@ public class EnemyAI : MonoBehaviour
     public void GetDamaged(float damage)
     {
         currentHealth -= damage;
-        if(currentHealth <= 0f)
+        if (currentHealth <= 0f)
             Dead();
     }
 

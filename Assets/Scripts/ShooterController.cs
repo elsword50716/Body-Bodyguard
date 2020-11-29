@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class ShooterController : MonoBehaviour
 {
+    public LayerMask enemyLayer;
     public bool isShootting = false;
     public bool isOnControl = false;
     public bool isLaser = false;
@@ -188,8 +189,10 @@ public class ShooterController : MonoBehaviour
         particleMain.startColor = grad;
         particle.Play();
         SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.shoooterFire);
-        bullet.GetComponent<BasicBullet>().bulletData.targetTag = "Enemy";
-        bullet.GetComponent<BasicBullet>().bulletData.damage = shooterData.bulletDamage;
+        var basicBullet = bullet.GetComponent<BasicBullet>();
+        basicBullet.bulletData.targetTag = "Enemy";
+        basicBullet.bulletData.targetLayer = enemyLayer;
+        basicBullet.bulletData.damage = shooterData.bulletDamage;
         var bulletRbody2D = bullet.GetComponent<Rigidbody2D>();
         bulletRbody2D.velocity = firePoint[index].up * shooterData.bulletSpeed;
         bullet.transform.up = firePoint[index].up;
