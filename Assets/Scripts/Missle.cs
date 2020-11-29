@@ -82,7 +82,7 @@ public class Missle : MonoBehaviour
         currentHP -= damage;
         if (currentHP <= 0f)
         {
-            AreaExplosion();
+            AreaExplosion(transform.position);
         }
     }
 
@@ -147,11 +147,11 @@ public class Missle : MonoBehaviour
         if (other.transform != target)
             return;
 
-        AreaExplosion();
+        AreaExplosion(other.ClosestPoint(transform.position));
 
     }
 
-    private void AreaExplosion()
+    private void AreaExplosion(Vector3 Position)
     {
         var targets = Physics2D.OverlapCircleAll(transform.position, ExplosionRange, layerMask);
         foreach (var target in targets)
@@ -165,7 +165,7 @@ public class Missle : MonoBehaviour
             if (target.TryGetComponent<EnemyLairAI>(out var lair))
                 lair.GetDamaged(bulletData.damage);
         }
-        basicBullet.ExplosionHandler();
+        basicBullet.ExplosionHandler(Position);
         gameObject.SetActive(false);
     }
 }

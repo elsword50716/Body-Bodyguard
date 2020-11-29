@@ -6,7 +6,6 @@ using System.IO;
 
 public class GameSaveLoadManager : MonoBehaviour
 {
-    public bool isInMainMenu;
     public Transform ship;
     public Transform enemyLairs;
     public Transform enemySpawnPoints;
@@ -19,9 +18,6 @@ public class GameSaveLoadManager : MonoBehaviour
 
     private void Awake()
     {
-        if (isInMainMenu)
-            return;
-
         Instance = this;
 
         if (ship == null)
@@ -79,8 +75,21 @@ public class GameSaveLoadManager : MonoBehaviour
             Debug.Log("GameSave doesn't exist!!!");
             return;
         }
+
+        foreach (var enemySpawnController in enemySpawnControllers)
+        {
+            enemySpawnController.ClearAllEnemy();
+            enemySpawnController.SpawnEnemies();
+            enemySpawnController.GetComponent<GameObjectsActiveController>().SetGameObjectsList();
+        }
+
+        foreach (Transform obj in ObjectPooler.Instance.transform)
+        {
+            obj.gameObject.SetActive(false);
+        }
         var saveData = new GameSaveData();
         saveData = JsonUtility.FromJson<GameSaveData>(File.ReadAllText(Application.persistentDataPath + "/Save.json"));
+        shipScript.shipDeadParticle.gameObject.SetActive(false);
         shipScript.shipData = saveData.shipData;
         shipScript.SetCurrentHP(saveData.shipData.maxHealth);
         ship.position = saveData.shipData.shipPosition;
@@ -90,26 +99,5 @@ public class GameSaveLoadManager : MonoBehaviour
             enemyLairAIs[i].isDead = saveData.LairIsDead[i];
         }
 
-        foreach (var enemySpawnController in enemySpawnControllers)
-        {
-            enemySpawnController.ClearAllEnemy();
-            enemySpawnController.SpawnEnemies();
-            enemySpawnController.GetComponent<GameObjectsActiveController>().SetGameObjectsList();
-        }
-    }
-
-    public void RemoveSaveFile()
-    {
-        File.Delete(Application.persistentDataPath + "/Save.json");
-    }
-
-    public void SetSceneName()
-    {
-        if (GetComponent<StateChange>() == null)
-            return;
-
-        var stateChange = GetComponent<StateChange>();
-        stateChange.nextSceneName = JsonUtility.FromJson<GameSaveData>(File.ReadAllText(Application.persistentDataPath + "/Save.json")).LevelName;
-        stateChange.CrossScene();
     }
 }

@@ -564,12 +564,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 296373851}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 8423476919404622261}
-  m_RootOrder: 0
+  m_Father: {fileID: 8423476919596640384}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &296373853
 ParticleSystem:
@@ -12718,7 +12718,6 @@ MonoBehaviour:
   - {fileID: 1938992064}
   - {fileID: 2021512512}
   - {fileID: 1181443237}
-  P1_EventSystem: {fileID: 2765377082437989693}
 --- !u!95 &1260681977
 Animator:
   serializedVersion: 3
@@ -13216,6 +13215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e53804cb276b34e9c9b21eeff31ed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isNewLaser: 0
   enemy:
     useTriggers: 1
     useLayerMask: 1
@@ -13231,6 +13231,9 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   damagePerSec: 150
+  maxLenth: 0
+  lineRenderer: {fileID: 0}
+  hitParticle: {fileID: 0}
 --- !u!61 &1459419316
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -42435,7 +42438,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8423476919404622261}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8423476917798728744
 SpriteRenderer:
@@ -42864,7 +42867,7 @@ Transform:
   - {fileID: 8423476917957996927}
   - {fileID: 8423476918427711028}
   m_Father: {fileID: 8423476919404622261}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8423476917894486243
 GameObject:
@@ -43003,6 +43006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e53804cb276b34e9c9b21eeff31ed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isNewLaser: 0
   enemy:
     useTriggers: 1
     useLayerMask: 1
@@ -43018,6 +43022,9 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   damagePerSec: 150
+  maxLenth: 0
+  lineRenderer: {fileID: 0}
+  hitParticle: {fileID: 0}
 --- !u!61 &8423476917901559106
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -61962,6 +61969,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2103f46bb9aefc944a88e61fc17593a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   isShootting: 0
   isOnControl: 0
   isLaser: 0
@@ -62715,6 +62725,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2103f46bb9aefc944a88e61fc17593a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   isShootting: 0
   isOnControl: 0
   isLaser: 1
@@ -62812,6 +62825,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2103f46bb9aefc944a88e61fc17593a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   isShootting: 0
   isOnControl: 0
   isLaser: 0
@@ -65206,7 +65222,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8423476919404622261}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8423476918742325591
 MonoBehaviour:
@@ -65324,7 +65340,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8423476919404622261}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8423476918752097683
 MonoBehaviour:
@@ -85162,7 +85178,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
-  - {fileID: 296373854}
   - {fileID: 8423476919596640384}
   - {fileID: 8423476919562411661}
   - {fileID: 8423476917798728747}
@@ -85217,9 +85232,6 @@ MonoBehaviour:
     wrenchNumber: 0
     upgradeTimes: 0
     maxHealth: 1000
-    NormalSpeed: 10
-    BoostSpeed: 0
-    ShootterRotateAngle: 0
     shipPosition: {x: 0, y: 0, z: 0}
     ShipPartLevel: 0000000000000000000000000000000000000000
   currentHealth: 0
@@ -85338,7 +85350,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 8423476919404622261}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8423476919407721540
 SpriteRenderer:
@@ -85604,6 +85616,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2103f46bb9aefc944a88e61fc17593a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   isShootting: 0
   isOnControl: 0
   isLaser: 0
@@ -85856,7 +85871,7 @@ Transform:
   - {fileID: 2613599642572231394}
   - {fileID: 5440612636526754938}
   m_Father: {fileID: 8423476919404622261}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8423476919462967632
 GameObject:
@@ -86878,7 +86893,7 @@ Transform:
   m_Children:
   - {fileID: 8423476918565941512}
   m_Father: {fileID: 8423476919404622261}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8423476919562411666
 SpriteRenderer:
@@ -87252,8 +87267,9 @@ Transform:
   m_Children:
   - {fileID: 8423476918151104985}
   - {fileID: 7745417717213954509}
+  - {fileID: 296373854}
   m_Father: {fileID: 8423476919404622261}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8423476919608496540
 GameObject:

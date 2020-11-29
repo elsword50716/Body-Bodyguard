@@ -294,17 +294,17 @@ public class EnemyAI : MonoBehaviour
     {
         Rbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
 
-        if (!isVirus)
-        {
-            foreach (Transform bullet in bulletPool)
-            {
-                bullet.transform.parent = objectPooler.transform;
-                Debug.Log("Bullet BAck");
-                //bullet.gameObject.SetActive(false);
-            }
-            if (bulletPool.childCount > 0)
-                return;
-        }
+        // if (!isVirus)
+        // {
+        //     foreach (Transform bullet in bulletPool)
+        //     {
+        //         bullet.transform.parent = objectPooler.transform;
+        //         Debug.Log("Bullet BAck");
+        //         //bullet.gameObject.SetActive(false);
+        //     }
+        //     if (bulletPool.childCount > 0)
+        //         return;
+        // }
 
         var deadExplosion = objectPooler.SpawnFromPool(deadExplosionTag, transform.position, null).GetComponent<ParticleSystem>();
 
@@ -358,7 +358,7 @@ public class EnemyAI : MonoBehaviour
 
     private void FireBullet()
     {
-        var bullet = objectPooler.SpawnFromPool(bulletPoolTag, transform.position, bulletPool);
+        var bullet = objectPooler.SpawnFromPool(bulletPoolTag, transform.position, null);
         var bulletRbody = bullet.GetComponent<Rigidbody2D>();
         bulletRbody.velocity = (Ship.position - transform.position).normalized * enemyData.BulletSpeed;
         bullet.transform.up = bulletRbody.velocity.normalized;

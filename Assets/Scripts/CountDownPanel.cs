@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.IO;
 using UnityEngine;
 using TMPro;
 
@@ -25,7 +24,15 @@ public class CountDownPanel : MonoBehaviour
             {
                 counter = 0f;
                 Debug.Log("Game Start!!!");
-                stateChange.CrossScene();
+                if (File.Exists(Application.persistentDataPath + "/Save.json"))
+                {
+                    var load = new LoadAndNewGameBT();
+                    load.LoadScene();
+                }
+                else
+                {
+                    stateChange.CrossScene();
+                }
             }
         }
     }

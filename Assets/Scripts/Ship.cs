@@ -14,8 +14,11 @@ public class Ship : MonoBehaviour
     public Animator wrenchAnimator;
     public Animator shipDamageEffectAnimator;
     public Animator shipUpgradeAnimator;
+    public Animator shipDeadAnimator;
     public ParticleSystem shipHealParticle;
+    public ParticleSystem shipDeadParticle;
     public MultiplayerEventSystem P1_EventSystem;
+    public SpawnPlayers spawnPlayers;
     public ShipData shipData;
 
     [SerializeField] private float currentHealth;
@@ -62,7 +65,16 @@ public class Ship : MonoBehaviour
     public void Dead()
     {
         //Debug.Log("Ship Dead!!!!!!!");
-        GameSaveLoadManager.Instance.LoadData();
+        if (!shipDeadParticle.isPlaying)
+        {
+            shipDeadParticle.gameObject.SetActive(true);
+            shipDeadParticle.Play();
+            shipDeadAnimator.SetBool("isDead", true);
+            if (GameDataManager.playerDatas.Count > 0)
+            {
+                spawnPlayers.ResetPlayersPosition();
+            }
+        }
     }
 
     public void Heal(float healPoint)
@@ -93,7 +105,8 @@ public class Ship : MonoBehaviour
     public void RefreshWrenchUI()
     {
         wrenchText.SetText($"{shipData.wrenchNumber}/{15 + shipData.upgradeTimes * 5}");
-        if (shipData.wrenchNumber >= 15 + shipData.upgradeTimes * 5 && !shipUpgradeAnimator.GetBool("isOpen")){
+        if (shipData.wrenchNumber >= 15 + shipData.upgradeTimes * 5 && !shipUpgradeAnimator.GetBool("isOpen"))
+        {
             shipUpgradeAnimator.SetBool("isOpen", true);
             shipUpgradeAnimator.transform.position = transform.position;
         }

@@ -10,7 +10,7 @@ public class SpawnPlayers : MonoBehaviour
     public Transform[] playerPositions;
 
     private bool isFound;
-    private GameObject[] players;
+    private List<GameObject> players;
     private Ship ship;
 
     private void Awake()
@@ -21,27 +21,29 @@ public class SpawnPlayers : MonoBehaviour
 
     }
 
-    public void Spawn(){
+    public void Spawn()
+    {
         if (GameDataManager.playerDatas.Count == 0)
             return;
 
-        players = new GameObject[playerPositions.Length];
+        players = new List<GameObject>();
 
         Debug.Log(GameDataManager.playerDatas.Count);
 
-        for (int i = 0; i < players.Length; i++)
+        for (int i = 0; i < GameDataManager.playerDatas.Count; i++)
         {
             GameObject player = Instantiate(playerPrefab, transform);
-            players[i] = player;
+            players.Add(player);
 
         }
 
-        for (int i = 0; i < players.Length; i++)
+        for (int i = 0; i < players.Count; i++)
         {
             if (players[i].GetComponent<PlayerInput>().devices.Count == 0)
             {
                 Debug.Log("destroy player with no user");
                 Destroy(players[i]);
+                players.Remove(players[i]);
                 continue;
             }
             var playerDeviceId = players[i].GetComponent<PlayerInput>().devices[0].deviceId;
@@ -51,7 +53,7 @@ public class SpawnPlayers : MonoBehaviour
                 var id_temp = GameDataManager.playerDatas[j].deviceId;
                 if (playerDeviceId == id_temp)
                 {
-                    if(j == 0)
+                    if (j == 0)
                         ship.P1_EventSystem = players[i].GetComponentInChildren<MultiplayerEventSystem>();
                     players[i].GetComponent<PlayerController>().playerIndex = j;
                     players[i].transform.position = playerPositions[j].position;
@@ -60,17 +62,21 @@ public class SpawnPlayers : MonoBehaviour
                 }
             }
             Debug.Log(isFound, players[i]);
-            if (!isFound){
+            if (!isFound)
+            {
                 Debug.Log("destroy player with no user/2");
                 Destroy(players[i]);
+                players.Remove(players[i]);
             }
 
         }
 
     }
 
-    public void ResetPlayersPosition(){
-        foreach(var player in players){
+    public void ResetPlayersPosition()
+    {
+        foreach (var player in players)
+        {
             var playerController = player.GetComponent<PlayerController>();
             switch (playerController.OnWhichController)
             {
@@ -85,7 +91,7 @@ public class SpawnPlayers : MonoBehaviour
                     playerController.ExitShooterController();
                     player.transform.position = playerPositions[playerController.playerIndex].position;
                     break;
-                
+
             }
         }
     }

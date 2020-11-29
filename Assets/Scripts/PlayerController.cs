@@ -226,7 +226,7 @@ public class PlayerController : MonoBehaviour
 
     public void ExitShooterController()
     {
-        OnWhichController = 1;
+        OnWhichController = 0;
         animator.SetBool("isOnControl", false);
         freezePosition = false;
         transform.parent = originalParent;
@@ -238,7 +238,7 @@ public class PlayerController : MonoBehaviour
 
     private void EnterShooterController()
     {
-        OnWhichController = 0;
+        OnWhichController = 2;
         animator.SetBool("isOnControl", true);
         Controller_temp.GetComponent<ShooterController>().isOnControl = true;
         freezePosition = true;
@@ -251,7 +251,7 @@ public class PlayerController : MonoBehaviour
 
     public void ExitShipMoveController()
     {
-        OnWhichController = 2;
+        OnWhichController = 0;
         animator.SetBool("isOnControl", false);
         freezePosition = false;
         transform.parent = originalParent;
@@ -263,7 +263,7 @@ public class PlayerController : MonoBehaviour
 
     private void EnterShipMoveController()
     {
-        OnWhichController = 0;
+        OnWhichController = 1;
         animator.SetBool("isOnControl", true);
         Controller_temp.GetComponent<ShipController>().isOnControl = true;
         freezePosition = true;
@@ -281,7 +281,7 @@ public class PlayerController : MonoBehaviour
 
     public void PlayTeleportSound()
     {
-        SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.TeleportPipelineSound);
+        SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.TeleportPipelineSound, false);
     }
 
     public void SetTeleport()

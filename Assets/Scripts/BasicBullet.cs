@@ -10,6 +10,7 @@ public class BasicBullet : MonoBehaviour
 
     private ObjectPooler objectPooler;
     private Rigidbody2D Rbody2D;
+    private Vector2 explosionPosition;
 
     private void Start()
     {
@@ -36,7 +37,7 @@ public class BasicBullet : MonoBehaviour
             if (other.TryGetComponent<Missle>(out var missle))
                 missle.GetDamaged(bulletData.damage);
 
-            ExplosionHandler();
+            ExplosionHandler(other.ClosestPoint(transform.position));
             gameObject.SetActive(false);
         }
 
@@ -58,12 +59,12 @@ public class BasicBullet : MonoBehaviour
             lair.GetDamaged(bulletData.damage);
         }
 
-        ExplosionHandler();
+        ExplosionHandler(other.ClosestPoint(transform.position));
         gameObject.SetActive(false);
 
     }
 
-    public void ExplosionHandler()
+    public void ExplosionHandler(Vector3 position)
     {
         if (!string.IsNullOrEmpty(explosionParicleTag))
         {

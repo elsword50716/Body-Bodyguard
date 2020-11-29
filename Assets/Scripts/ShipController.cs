@@ -165,7 +165,7 @@ public class ShipController : MonoBehaviour
 
         if (addForce)
         {
-            SoundManager.Instance.PlaySoundLoop(SoundManager.SoundType.booster);
+            SoundManager.Instance.PlaySoundLoop(SoundManager.SoundType.booster, false);
             boosterData.boosters[theUsingOne].GetChild(0).GetComponent<ParticleSystem>().Play();
             shipRbody.velocity += ((Vector2)boosterData.boosters[theUsingOne].up * boosterData.shipSpeed * Time.deltaTime);
         }

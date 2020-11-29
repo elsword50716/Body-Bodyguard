@@ -14,8 +14,10 @@ public class Laser : MonoBehaviour
     private BoxCollider2D boxCollider2D;
     private List<Collider2D> enemyInLaser;
 
-    private void OnValidate() {
-        if(isNewLaser){
+    private void OnValidate()
+    {
+        if (isNewLaser)
+        {
             lineRenderer = GetComponent<LineRenderer>();
             lineRenderer.SetPosition(1, transform.InverseTransformPoint(transform.position + transform.right * maxLenth));
         }
@@ -75,7 +77,7 @@ public class Laser : MonoBehaviour
                 }
                 if (hit.collider.TryGetComponent<BasicBullet>(out var bullet))
                 {
-                    bullet.ExplosionHandler();
+                    bullet.ExplosionHandler(hit.point);
                     bullet.gameObject.SetActive(false);
                     return;
                 }

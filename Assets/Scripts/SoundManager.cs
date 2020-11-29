@@ -64,21 +64,33 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlaySoundOneShot(SoundType sound)
+    public void PlaySoundOneShot(SoundType sound, bool isIgnoreTime)
     {
+        if (Time.timeScale == 0 && !isIgnoreTime)
+            return;
         AudioSource audioSource = GetAudioSource(sound);
         audioSource.PlayOneShot(audioSource.clip);
     }
 
-    public void PlaySoundLoop(SoundType sound)
+    public void PlaySoundLoop(SoundType sound, bool isIgnoreTime)
     {
+        if (Time.timeScale == 0 && !isIgnoreTime)
+        {
+            StopPlaySound(sound);
+            return;
+        }
         AudioSource audioSource = GetAudioSource(sound);
         if (!audioSource.isPlaying)
             audioSource.Play();
     }
 
-    public void PlaySound(SoundType sound)
+    public void PlaySound(SoundType sound, bool isIgnoreTime)
     {
+        if (Time.timeScale == 0 && !isIgnoreTime)
+        {
+            StopPlaySound(sound);
+            return;
+        }
         AudioSource audioSource = GetAudioSource(sound);
         if (!audioSource.isPlaying)
             audioSource.Play();

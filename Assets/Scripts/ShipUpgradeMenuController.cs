@@ -10,13 +10,13 @@ public class ShipUpgradeMenuController : MonoBehaviour
     public Animator animator;
     public Button[] buttons;//上左中右下
 
-    [SerializeField]private MultiplayerEventSystem P1_EventSystem;
+    private MultiplayerEventSystem P1_EventSystem;
 
     private void Awake()
     {
         if (ship == null)
             ship = GameObject.FindGameObjectWithTag("Ship").GetComponent<Ship>();
-        
+
         // for (int i = 0; i < buttons.Length; i++)
         // {
         //     buttons[i].onClick.AddListener(delegate { OnUpgradeButtonClick(i); });
@@ -32,7 +32,7 @@ public class ShipUpgradeMenuController : MonoBehaviour
 
     private void Start()
     {
-        //P1_EventSystem = ship.P1_EventSystem;
+        P1_EventSystem = ship.P1_EventSystem;
     }
 
     public void SetSelectButtons()
