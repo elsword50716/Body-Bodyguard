@@ -10,6 +10,7 @@ public class ShipDeadController : MonoBehaviour
     public MultiplayerEventSystem P1_EventSystem;
     public Animator animator;
     public Button restartBT;
+    public GameObject UI_Hint_Panel;
 
     private void Awake()
     {
@@ -25,6 +26,8 @@ public class ShipDeadController : MonoBehaviour
     public void SetTimeScale(int scale)
     {
         Time.timeScale = scale;
+        if (UI_Hint_Panel != null)
+            UI_Hint_Panel.SetActive(scale == 0 ? false : true);
     }
 
     public void RestartToSavePoint()

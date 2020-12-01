@@ -18,7 +18,7 @@ public class CountDownPanel : MonoBehaviour
     {
         if (counter > 0f)
         {
-            countDownText.SetText($"Game Start in {(int)counter + 1}...");
+            countDownText.SetText($"Starting in {(int)counter + 1}...");
             counter -= Time.deltaTime;
             if (counter <= 0f)
             {

@@ -33,10 +33,12 @@ public class GameSaveLoadManager : MonoBehaviour
 
         enemyLairAIs = new List<EnemyLairAI>();
         enemySpawnControllers = new List<EnemySpawnController>();
+
         foreach (Transform enemyLair in enemyLairs)
         {
             enemyLairAIs.Add(enemyLair.GetComponentInChildren<EnemyLairAI>());
         }
+
         foreach (Transform enemySpawnPoint in enemySpawnPoints)
         {
             var enemySpawnController = enemySpawnPoint.GetComponent<EnemySpawnController>();
@@ -87,10 +89,16 @@ public class GameSaveLoadManager : MonoBehaviour
         {
             obj.gameObject.SetActive(false);
         }
+
         var saveData = new GameSaveData();
         saveData = JsonUtility.FromJson<GameSaveData>(File.ReadAllText(Application.persistentDataPath + "/Save.json"));
         shipScript.shipDeadParticle.gameObject.SetActive(false);
         shipScript.shipData = saveData.shipData;
+        if(SceneManager.GetActiveScene().name != saveData.LevelName){
+            GameDataManager.lairCurrentNumber = GameDataManager.lairTotalNumber = 0;
+            SaveData();
+            return;
+        }
         shipScript.SetCurrentHP(saveData.shipData.maxHealth);
         ship.position = saveData.shipData.shipPosition;
 

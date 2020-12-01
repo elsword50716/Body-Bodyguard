@@ -13,9 +13,18 @@ public class ColorPartPickerPanel : MonoBehaviour
     public Toggle isReady;
 
     private Image[] partBTImages;
+    private ChooseColorPlayerController chooseColorPlayerControllers;
 
     private void Awake()
     {
+        List<GameObject> players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+
+        foreach (var player in players)
+        {
+            if (player.activeSelf && player.GetComponent<ChooseColorPlayerController>().GetPlayerIndex() == playerIndex)
+                chooseColorPlayerControllers = player.GetComponent<ChooseColorPlayerController>();
+        }
+
         if (partBTs.Length == 0)
             return;
 
@@ -60,6 +69,7 @@ public class ColorPartPickerPanel : MonoBehaviour
 
     public void OnPartBTClicked(int partIndex)
     {
+        chooseColorPlayerControllers.lastPartIndex = partIndex;
         colorPickerPanel.partColorIndex = partIndex;
         colorPickerPanel.gameObject.SetActive(true);
         gameObject.SetActive(false);
@@ -70,9 +80,9 @@ public class ColorPartPickerPanel : MonoBehaviour
         for (int i = 0; i < partBTImages.Length; i++)
         {
             Color color = new Color(
-            Random.Range(0f, 1f),
-            Random.Range(0f, 1f),
-            Random.Range(0f, 1f)
+            Random.Range(0, 51) * 0.02f,
+            Random.Range(0, 51) * 0.02f,
+            Random.Range(0, 51) * 0.02f
             );
 
             GameDataManager.playerDatas[playerIndex].colors[i] = color;

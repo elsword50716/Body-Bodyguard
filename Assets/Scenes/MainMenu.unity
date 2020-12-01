@@ -5324,7 +5324,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: -80
   m_MaxValue: 0
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8407,7 +8407,8 @@ MonoBehaviour:
     type: 3}
   m_SubmitAction: {fileID: -2079424354478604278, guid: 277c0fe1f8d337a4c8d09ce7a0875535,
     type: 3}
-  m_CancelAction: {fileID: 0}
+  m_CancelAction: {fileID: 5031779628057235623, guid: 277c0fe1f8d337a4c8d09ce7a0875535,
+    type: 3}
   m_LeftClickAction: {fileID: -2844611219228358392, guid: 277c0fe1f8d337a4c8d09ce7a0875535,
     type: 3}
   m_MiddleClickAction: {fileID: 6407188814291219001, guid: 277c0fe1f8d337a4c8d09ce7a0875535,

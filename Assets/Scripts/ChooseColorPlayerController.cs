@@ -6,6 +6,7 @@ using UnityEngine.InputSystem.UI;
 
 public class ChooseColorPlayerController : MonoBehaviour
 {
+    public PauseMenuController pauseMenuController;
     public MultiplayerEventSystem multiplayerEventSystem;
     public PlayerInput playerInput;
     public GameObject[] pressToJoinPanels;
@@ -13,9 +14,12 @@ public class ChooseColorPlayerController : MonoBehaviour
     public GameObject[] colorPickerPanels;
     public float startPosition;
     public float positionMultiDelta;
+    public int lastPartIndex;
 
     private int playerIndex;
     private bool isColorPickerPanelOpened_temp;
+    private bool isActived;
+    private bool pauseMenuOpenTemp;
 
     private void Awake()
     {
@@ -39,12 +43,16 @@ public class ChooseColorPlayerController : MonoBehaviour
 
     private void Update()
     {
-        bool isActived = colorPickerPanels[playerIndex].activeInHierarchy;
+        isActived = colorPickerPanels[playerIndex].activeInHierarchy; 
         if (isActived == isColorPickerPanelOpened_temp)
             return;
 
         isColorPickerPanelOpened_temp = isActived;
 
+        CheckWhichPanelActive(isActived);
+    }
+
+    private void CheckWhichPanelActive(bool isActived){
         if (isActived)
         {
             multiplayerEventSystem.playerRoot = colorPickerPanels[playerIndex];
@@ -55,9 +63,26 @@ public class ChooseColorPlayerController : MonoBehaviour
         else
         {
             multiplayerEventSystem.playerRoot = partPickerPanels[playerIndex];
-            multiplayerEventSystem.firstSelectedGameObject = partPickerPanels[playerIndex].transform.GetChild(0).GetChild(0).GetChild(1).gameObject;
-            multiplayerEventSystem.SetSelectedGameObject(partPickerPanels[playerIndex].transform.GetChild(0).GetChild(0).GetChild(1).gameObject);
+            multiplayerEventSystem.firstSelectedGameObject = partPickerPanels[playerIndex].transform.GetChild(0).GetChild(lastPartIndex).GetChild(1).gameObject;
+            multiplayerEventSystem.SetSelectedGameObject(partPickerPanels[playerIndex].transform.GetChild(0).GetChild(lastPartIndex).GetChild(1).gameObject);
             multiplayerEventSystem.UpdateModules();
+        }
+    }
+
+    public int GetPlayerIndex(){
+        return playerIndex;
+    }
+
+    public void Pause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            bool isPaused = pauseMenuController.isPaused;
+            if (isPaused){
+                pauseMenuController.Resume(playerIndex + 1);
+            }
+            else
+                pauseMenuController.Pause(playerIndex + 1, multiplayerEventSystem);
         }
     }
 }

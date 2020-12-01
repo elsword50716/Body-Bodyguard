@@ -212,6 +212,11 @@ public class EnemyAI : MonoBehaviour
                 return;
 
             Rbody2D.velocity = Vector2.zero;
+            if (alreadySetStartPosition)
+            {
+                enemyData.moveSpeed /= 3f;
+                alreadySetStartPosition = false;
+            }
             if (isTurret)
                 state = State.Attacking;
             else
@@ -219,7 +224,6 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-
             state = State.Roaming;
         }
     }
@@ -233,6 +237,11 @@ public class EnemyAI : MonoBehaviour
         {
             if (nextMoveTimer > NextRoamingPositionDelay)
             {
+                if (alreadySetStartPosition)
+                {
+                    enemyData.moveSpeed /= 3f;
+                    alreadySetStartPosition = false;
+                }
                 roamPosotion = GetRoamingPostion();
                 aIPath.endReachedDistance = 0;
                 nextMoveTimer = 0;
@@ -373,6 +382,7 @@ public class EnemyAI : MonoBehaviour
     public void SetStartPosition(Vector3 position)
     {
         startingPosotion = position;
+        enemyData.moveSpeed *= 3f;
         alreadySetStartPosition = true;
     }
 

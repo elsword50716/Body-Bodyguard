@@ -30,7 +30,6 @@ public class EnemyLairAI : MonoBehaviour
         if (enemyPrefabs.Count == 0)
             return;
 
-        GameDataManager.lairTotalNumber++;
         enemyList = new List<GameObject>();
 
         Random.InitState(Random.Range(0, 50));
@@ -56,6 +55,7 @@ public class EnemyLairAI : MonoBehaviour
             gameObject.SetActive(false);
         }
         currentHealth = enemyLairData.maxHealth;
+        GameDataManager.lairTotalNumber++;
     }
 
     private void Update()

@@ -15,6 +15,7 @@ public class PauseMenuController : MonoBehaviour
 
     private MultiplayerEventSystem multiplayerEvent;
     private int index;
+    private GameObject originalSelected;
 
     private void Start()
     {
@@ -38,6 +39,7 @@ public class PauseMenuController : MonoBehaviour
         // multiplayerEvent.SetSelectedGameObject(mainFirstSelected);
         // main.SetActive(true);
         // Time.timeScale = 0f;
+        originalSelected = multiplayerEvent.currentSelectedGameObject;
         isPaused = true;
         animator.SetBool("isPaused", isPaused);
     }
@@ -46,19 +48,16 @@ public class PauseMenuController : MonoBehaviour
     {
         if (playerIndex != index)
             return;
-        multiplayerEvent.playerRoot = null;
-        multiplayerEvent.firstSelectedGameObject = null;
-        // main.SetActive(false);
-        // Time.timeScale = 1f;
+        
+        multiplayerEvent.SetSelectedGameObject(originalSelected);
+
         isPaused = false;
         animator.SetBool("isPaused", isPaused);
     }
     public void ResumeBT()
     {
-        multiplayerEvent.playerRoot = null;
-        multiplayerEvent.firstSelectedGameObject = null;
-        // main.SetActive(false);
-        // Time.timeScale = 1f;
+        multiplayerEvent.SetSelectedGameObject(originalSelected);
+
         isPaused = false;
         animator.SetBool("isPaused", isPaused);
     }
