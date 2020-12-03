@@ -10,26 +10,39 @@ public class Ship : MonoBehaviour
     public Transform MinimapCamera;
     public Transform shipInside;
     public Slider healthBar;
+    public Slider ShieldBar;
+    public GameObject Shield;
     public TextMeshProUGUI wrenchText;
     public Animator wrenchAnimator;
     public Animator shipDamageEffectAnimator;
+    public Animator shipShieldDamageEffectAnimator;
     public Animator shipUpgradeAnimator;
     public Animator shipDeadAnimator;
     public ParticleSystem shipHealParticle;
+    public ParticleSystem shipShieldHealParticle;
     public ParticleSystem shipDeadParticle;
     public MultiplayerEventSystem P1_EventSystem;
     public SpawnPlayers spawnPlayers;
     public ShipData shipData;
+    public static Ship Instance;
 
     [SerializeField] private float currentHealth;
+    [SerializeField] private float currentShieldHP;
     private Rigidbody2D rbody2D;
     private float maxHealth_temp;
+    private float maxShieldHP_temp;
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
         rbody2D = GetComponent<Rigidbody2D>();
         currentHealth = shipData.maxHealth;
+        currentShieldHP = shipData.maxShieldHP;
         healthBar.maxValue = shipData.maxHealth;
+        ShieldBar.maxValue = shipData.maxShieldHP;
         maxHealth_temp = shipData.maxHealth;
         RefreshWrenchUI();
     }
@@ -39,6 +52,7 @@ public class Ship : MonoBehaviour
         MinimapCamera.position = new Vector3(transform.position.x, transform.position.y, -10);
         shipInside.position = transform.position;
         healthBar.value = currentHealth;
+        ShieldBar.value = currentShieldHP;
         RefreshWrenchUI();
 
         if (maxHealth_temp != shipData.maxHealth)
@@ -47,6 +61,15 @@ public class Ship : MonoBehaviour
             maxHealth_temp = shipData.maxHealth;
             currentHealth = maxHealth_temp;
         }
+
+        if (maxShieldHP_temp != shipData.maxShieldHP)
+        {
+            ShieldBar.maxValue = shipData.maxShieldHP;
+            maxShieldHP_temp = shipData.maxShieldHP;
+            currentShieldHP = maxShieldHP_temp;
+        }
+
+        Shield.SetActive(currentShieldHP > 0 ? true : false);
 
         if (currentHealth <= 0)
         {
@@ -57,9 +80,22 @@ public class Ship : MonoBehaviour
 
     public void GetDamaged(float damage)
     {
-        shipDamageEffectAnimator.SetTrigger("isShipHit");
         //CameraController.Instance.ShakeCamera(damage, .1f);
-        currentHealth -= damage;
+        if (currentShieldHP > 0f)
+        {
+            shipShieldDamageEffectAnimator.SetTrigger("isShipHit");
+            currentShieldHP -= damage;
+            if (currentShieldHP < 0f)
+            {
+                currentShieldHP = 0f;
+                Shield.SetActive(false);
+            }
+        }
+        else
+        {
+            shipDamageEffectAnimator.SetTrigger("isShipHit");
+            currentHealth -= damage;
+        }
     }
 
     public void Dead()
@@ -84,6 +120,14 @@ public class Ship : MonoBehaviour
             currentHealth = maxHealth_temp;
         else
             currentHealth += healPoint;
+    }
+    public void ShieldHeal(float healPoint)
+    {
+        shipShieldHealParticle.Play();
+        if (currentShieldHP + healPoint >= maxShieldHP_temp)
+            currentShieldHP = maxShieldHP_temp;
+        else
+            currentShieldHP += healPoint;
     }
 
     public float GetCurrentHP()
@@ -116,13 +160,14 @@ public class Ship : MonoBehaviour
     {
         Debug.Log("ship Hit!!");
 
+        if (other.transform.TryGetComponent<UnderwaterBomb>(out var bomb))
+            bomb.GetDamaged(other.relativeVelocity.magnitude);
+
         if (other.gameObject.layer != 13)
             return;
 
         Debug.Log("ship Damage: " + other.relativeVelocity.magnitude);
 
-        if (other.transform.TryGetComponent<UnderwaterBomb>(out var bomb))
-            bomb.GetDamaged(other.relativeVelocity.magnitude);
 
         if (other.relativeVelocity.magnitude > 5f)
             GetDamaged(other.relativeVelocity.magnitude * (shipData.maxHealth / 500f));

@@ -5,51 +5,100 @@ using UnityEngine;
 public class UnderwaterBomb : MonoBehaviour
 {
     public LayerMask effectLayer;
+    public Ship ship;
+    public Animator animator;
+    public float animationMaxSpeed;
+    public float explosionCountDown;
     public float explosionRange;
+    public float explosionShakeIntensity;
+    public float explosionDuration;
+    public float explosionForce;
     public string explosionParticleTag;
     public float damage;
     public float MaxHP;
 
     private float currentHP;
+    private bool isDead;
+    private float timer;
+
+    private void OnEnable()
+    {
+        timer = explosionCountDown;
+        isDead = false;
+        currentHP = MaxHP;
+    }
 
     private void Start()
     {
+        ship = Ship.Instance;
         currentHP = MaxHP;
     }
 
     private void Update()
     {
-        if (currentHP <= 0f)
-            Explode();
+        if (isDead)
+        {
+            animator.SetBool("isDead", isDead);
+            if (timer > 0)
+            {
+                timer -= Time.deltaTime;
+                var speed_temp = animator.GetFloat("Speed");
+                animator.SetFloat("Speed", speed_temp + (animationMaxSpeed / explosionCountDown * Time.deltaTime));
+            }
+            else
+                Explode();
+        }
     }
 
     public void Explode()
     {
+        ObjectPooler.Instance.SpawnFromPool(explosionParticleTag, transform.position, null);
+        CameraController.Instance.ShakeCamera(explosionShakeIntensity, explosionDuration, true);
+
+        var distance = (ship.transform.position - transform.position);
+        if (distance.sqrMagnitude < explosionRange * explosionRange)
+        {
+            var rbody = ship.GetComponent<Rigidbody2D>();
+            rbody.AddForce(distance.normalized * explosionForce * rbody.mass * (explosionForce / distance.magnitude));
+            ship.GetDamaged(damage);
+        }
+
         var targets = Physics2D.OverlapCircleAll(transform.position, explosionRange, effectLayer);
 
-        foreach (var target in targets)
+        for (int i = 0; i < targets.Length; i++)
         {
-            if (target.TryGetComponent<Ship>(out var ship))
+            if (targets[i].TryGetComponent<EnemyAI>(out var enemyAI))
             {
-                ship.GetDamaged(damage);
+                enemyAI.GetDamagedByBomb(damage);
             }
-            if (target.TryGetComponent<EnemyAI>(out var enemyAI))
-            {
-                enemyAI.GetDamaged(damage);
-            }
-            if (target.TryGetComponent<EnemyLairAI>(out var enemyLairAI))
+            if (targets[i].TryGetComponent<EnemyLairAI>(out var enemyLairAI))
             {
                 enemyLairAI.GetDamaged(damage);
             }
-            if (target.TryGetComponent<UnderwaterBomb>(out var bomb))
+            if (targets[i].TryGetComponent<BasicBullet>(out var bullet))
             {
-                bomb.Explode();
+                bullet.ExplosionHandler(bullet.transform.position);
+            }
+            if (targets[i].TryGetComponent<UnderwaterBomb>(out var bomb))
+            {
+                if (bomb.transform == transform)
+                    continue;
+
+                Debug.Log("炸到其他水雷", bomb);
+                // bomb.StartCoroutine(bomb.ExplodeDelay(0.05f));
+                bomb.GetDamaged(damage);
+                Debug.Log("start coroutine", bomb);
             }
 
         }
 
-        ObjectPooler.Instance.SpawnFromPool(explosionParticleTag, transform.position, null);
-        gameObject.SetActive(false);
+        Destroy(gameObject);
+    }
+
+    public IEnumerator ExplodeDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Explode();
     }
 
     public void GetDamaged(float damage)
@@ -57,7 +106,12 @@ public class UnderwaterBomb : MonoBehaviour
         currentHP -= damage;
         if (currentHP <= 0)
         {
-            Explode();
+            isDead = true;
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, explosionRange);
     }
 }

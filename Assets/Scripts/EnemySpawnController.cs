@@ -30,7 +30,8 @@ public class EnemySpawnController : MonoBehaviour
         Gizmos.DrawWireCube(transform.position, new Vector3(spawnAreaWeight * 2, spawnAreaHeight * 2, 0f));
     }
 
-    public void SpawnEnemies(){
+    public void SpawnEnemies()
+    {
         if (enemyPrefabs.Count == 0)
             return;
 
@@ -38,7 +39,7 @@ public class EnemySpawnController : MonoBehaviour
 
         for (int i = 0; i < maxEnemyNumber; i++)
         {
-            var randomIndex = Random.Range(0, enemyPrefabs.Count - 1);
+            var randomIndex = Random.Range(0, enemyPrefabs.Count);
             var randomPosition = GetRandomPostion();
             GameObject enemy = Instantiate(enemyPrefabs[randomIndex], randomPosition, Quaternion.identity, transform);
             if (isContainTurret)
@@ -55,7 +56,8 @@ public class EnemySpawnController : MonoBehaviour
         }
     }
 
-    public void ClearAllEnemy(){
+    public void ClearAllEnemy()
+    {
         foreach (Transform enemy in transform)
         {
             Destroy(enemy.gameObject);

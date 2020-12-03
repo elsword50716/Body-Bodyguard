@@ -118832,12 +118832,16 @@ MonoBehaviour:
   MinimapCamera: {fileID: 8423476919052398471}
   shipInside: {fileID: 8423476917735263131}
   healthBar: {fileID: 8423476918003865342}
+  ShieldBar: {fileID: 0}
+  Shield: {fileID: 0}
   wrenchText: {fileID: 1285417551}
   wrenchAnimator: {fileID: 193981193}
   shipDamageEffectAnimator: {fileID: 8423476918925934214}
+  shipShieldDamageEffectAnimator: {fileID: 0}
   shipUpgradeAnimator: {fileID: 1260681977}
   shipDeadAnimator: {fileID: 1308448791}
   shipHealParticle: {fileID: 8423476918151104991}
+  shipShieldHealParticle: {fileID: 0}
   shipDeadParticle: {fileID: 296373853}
   P1_EventSystem: {fileID: 2765377082437989693}
   spawnPlayers: {fileID: 8423476918822427072}
@@ -118847,9 +118851,11 @@ MonoBehaviour:
     wrenchNumber: 0
     upgradeTimes: 0
     maxHealth: 1000
+    maxShieldHP: 0
     shipPosition: {x: 0, y: 0, z: 0}
     ShipPartLevel: 0000000000000000000000000000000000000000
   currentHealth: 0
+  currentShieldHP: 0
 --- !u!50 &8423476919404622270
 Rigidbody2D:
   serializedVersion: 4

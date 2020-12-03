@@ -81,6 +81,10 @@ public class Laser : MonoBehaviour
                     bullet.gameObject.SetActive(false);
                     return;
                 }
+                if (hit.collider.TryGetComponent<UnderwaterBomb>(out var bomb))
+                {
+                    bomb.GetDamaged(damagePerSec * Time.deltaTime);
+                }
 
             }
             else

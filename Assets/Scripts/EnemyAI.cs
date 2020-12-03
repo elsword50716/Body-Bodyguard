@@ -49,6 +49,7 @@ public class EnemyAI : MonoBehaviour
     private ObjectPooler objectPooler;
     private Transform enemySprite;
     private bool alreadySetStartPosition = false;
+    private bool isKillByBomb;
 
     private void OnValidate()
     {
@@ -323,7 +324,10 @@ public class EnemyAI : MonoBehaviour
         }
 
         deadExplosion.Play();
-        CameraController.Instance.ShakeCamera(10f, .1f, false);
+        if (!isKillByBomb)
+        {
+            CameraController.Instance.ShakeCamera(10f, .1f, false);
+        }
         if (DropingPoolTag.Length != 0)
         {
             if (Random.Range(0f, 1f) <= enemyData.dropProbability)
@@ -357,7 +361,10 @@ public class EnemyAI : MonoBehaviour
     {
         currentHealth -= damage;
         if (currentHealth <= 0f)
+        {
+            isKillByBomb = false;
             Dead();
+        }
     }
 
     private void DamageShip(Collider2D collider)
@@ -386,6 +393,15 @@ public class EnemyAI : MonoBehaviour
         alreadySetStartPosition = true;
     }
 
+    public void GetDamagedByBomb(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0f)
+        {
+            isKillByBomb = true;
+            Dead();
+        }
+    }
 
     private void OnDrawGizmosSelected()
     {

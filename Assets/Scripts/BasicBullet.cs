@@ -29,6 +29,13 @@ public class BasicBullet : MonoBehaviour
         if (isMissle)
             return;
 
+        if (other.TryGetComponent<UnderwaterBomb>(out var bomb))
+        {
+            bomb.GetDamaged(bulletData.damage);
+            ExplosionHandler(other.ClosestPoint(transform.position));
+            return;
+        }
+
         if (other.gameObject.layer == 13 || other.gameObject.layer == 12 || other.CompareTag("Laser"))
         {
             if (other.CompareTag(gameObject.tag))
@@ -38,7 +45,6 @@ public class BasicBullet : MonoBehaviour
                 missle.GetDamaged(bulletData.damage);
 
             ExplosionHandler(other.ClosestPoint(transform.position));
-            gameObject.SetActive(false);
         }
 
         if (!other.CompareTag(bulletData.targetTag))
@@ -58,14 +64,8 @@ public class BasicBullet : MonoBehaviour
         {
             lair.GetDamaged(bulletData.damage);
         }
-        if (other.TryGetComponent<UnderwaterBomb>(out var bomb))
-        {
-            bomb.GetDamaged(bulletData.damage);
-        }
 
         ExplosionHandler(other.ClosestPoint(transform.position));
-        gameObject.SetActive(false);
-
     }
 
     public void ExplosionHandler(Vector3 position)
@@ -76,7 +76,7 @@ public class BasicBullet : MonoBehaviour
             var particleMain = particle.main;
             particleMain.startColor = GetComponentInChildren<SpriteRenderer>().color;
             particle.Play();
-
         }
+        gameObject.SetActive(false);
     }
 }
