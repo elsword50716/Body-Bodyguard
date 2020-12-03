@@ -58,6 +58,10 @@ public class BasicBullet : MonoBehaviour
         {
             lair.GetDamaged(bulletData.damage);
         }
+        if (other.TryGetComponent<UnderwaterBomb>(out var bomb))
+        {
+            bomb.GetDamaged(bulletData.damage);
+        }
 
         ExplosionHandler(other.ClosestPoint(transform.position));
         gameObject.SetActive(false);

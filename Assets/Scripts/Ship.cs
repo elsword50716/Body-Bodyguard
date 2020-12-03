@@ -121,6 +121,9 @@ public class Ship : MonoBehaviour
 
         Debug.Log("ship Damage: " + other.relativeVelocity.magnitude);
 
+        if (other.transform.TryGetComponent<UnderwaterBomb>(out var bomb))
+            bomb.GetDamaged(other.relativeVelocity.magnitude);
+
         if (other.relativeVelocity.magnitude > 5f)
             GetDamaged(other.relativeVelocity.magnitude * (shipData.maxHealth / 500f));
 
