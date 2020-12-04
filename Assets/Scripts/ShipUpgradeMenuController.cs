@@ -22,11 +22,17 @@ public class ShipUpgradeMenuController : MonoBehaviour
         //     buttons[i].onClick.AddListener(delegate { OnUpgradeButtonClick(i); });
         // }
 
-        buttons[0].onClick.AddListener(delegate { OnUpgradeButtonClick(0); });
-        buttons[1].onClick.AddListener(delegate { OnUpgradeButtonClick(1); });
-        buttons[2].onClick.AddListener(delegate { OnUpgradeButtonClick(2); });
-        buttons[3].onClick.AddListener(delegate { OnUpgradeButtonClick(3); });
-        buttons[4].onClick.AddListener(delegate { OnUpgradeButtonClick(4); });
+        // buttons[0].onClick.AddListener(delegate { OnUpgradeButtonClick(0); });
+        // buttons[1].onClick.AddListener(delegate { OnUpgradeButtonClick(1); });
+        // buttons[2].onClick.AddListener(delegate { OnUpgradeButtonClick(2); });
+        // buttons[3].onClick.AddListener(delegate { OnUpgradeButtonClick(3); });
+        // buttons[4].onClick.AddListener(delegate { OnUpgradeButtonClick(4); });
+
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            int i2 = i;
+            buttons[i].onClick.AddListener(delegate { OnUpgradeButtonClick(i2); });
+        }
 
     }
 

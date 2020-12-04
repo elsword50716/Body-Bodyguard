@@ -42,7 +42,8 @@ public class ShipPartUpgradeController : MonoBehaviour
         shipData = ship.shipData;
         level_temp = shipData.ShipPartLevel[partIndex];
 
-        if(partType == PartType.shipHealth){
+        if (partType == PartType.shipHealth)
+        {
             ship.shipData.maxHealth = shipBaseHP;
             return;
         }
@@ -71,7 +72,8 @@ public class ShipPartUpgradeController : MonoBehaviour
         shipData = ship.shipData;
         if (level_temp != shipData.ShipPartLevel[partIndex])
         {
-            if(partType == PartType.shipHealth){
+            if (partType == PartType.shipHealth)
+            {
                 level_temp = shipData.ShipPartLevel[partIndex];
                 ship.shipData.maxHealth = shipBaseHP + level_temp * shipHealthIncreasePerLevel;
                 ship.shipHealParticle.Play();
@@ -85,7 +87,10 @@ public class ShipPartUpgradeController : MonoBehaviour
     {
         partPrefabs[level_temp].gameObject.SetActive(false);
         level_temp = shipData.ShipPartLevel[partIndex];
-        PlayUpgradeParticles();
+        if (partType == PartType.shield)
+            ship.shipShieldHealParticle.Play();
+        else
+            PlayUpgradeParticles();
         partPrefabs[level_temp].gameObject.SetActive(true);
         SetPartData();
         if (partType == PartType.shooter)

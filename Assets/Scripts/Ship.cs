@@ -11,6 +11,8 @@ public class Ship : MonoBehaviour
     public Transform shipInside;
     public Slider healthBar;
     public Slider ShieldBar;
+    public TextMeshProUGUI healthText;
+    public TextMeshProUGUI shieldText;
     public TextMeshProUGUI wrenchText;
     public Animator wrenchAnimator;
     public Animator shipDamageEffectAnimator;
@@ -53,6 +55,8 @@ public class Ship : MonoBehaviour
         shipInside.position = transform.position;
         healthBar.value = currentHealth;
         ShieldBar.value = currentShieldHP;
+        healthText.SetText($"{(int)currentHealth}/{(int)shipData.maxHealth}");
+        shieldText.SetText($"{(int)currentShieldHP}/{(int)sheildData.maxShieldHP}");
         RefreshWrenchUI();
 
         if (maxHealth_temp != shipData.maxHealth)
