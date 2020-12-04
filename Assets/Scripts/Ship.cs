@@ -11,7 +11,6 @@ public class Ship : MonoBehaviour
     public Transform shipInside;
     public Slider healthBar;
     public Slider ShieldBar;
-    public GameObject Shield;
     public TextMeshProUGUI wrenchText;
     public Animator wrenchAnimator;
     public Animator shipDamageEffectAnimator;
@@ -24,6 +23,7 @@ public class Ship : MonoBehaviour
     public MultiplayerEventSystem P1_EventSystem;
     public SpawnPlayers spawnPlayers;
     public ShipData shipData;
+    public SheildData sheildData;
     public static Ship Instance;
 
     [SerializeField] private float currentHealth;
@@ -40,9 +40,9 @@ public class Ship : MonoBehaviour
     {
         rbody2D = GetComponent<Rigidbody2D>();
         currentHealth = shipData.maxHealth;
-        currentShieldHP = shipData.maxShieldHP;
+        currentShieldHP = sheildData.maxShieldHP;
         healthBar.maxValue = shipData.maxHealth;
-        ShieldBar.maxValue = shipData.maxShieldHP;
+        ShieldBar.maxValue = sheildData.maxShieldHP;
         maxHealth_temp = shipData.maxHealth;
         RefreshWrenchUI();
     }
@@ -62,14 +62,14 @@ public class Ship : MonoBehaviour
             currentHealth = maxHealth_temp;
         }
 
-        if (maxShieldHP_temp != shipData.maxShieldHP)
+        if (maxShieldHP_temp != sheildData.maxShieldHP)
         {
-            ShieldBar.maxValue = shipData.maxShieldHP;
-            maxShieldHP_temp = shipData.maxShieldHP;
+            ShieldBar.maxValue = sheildData.maxShieldHP;
+            maxShieldHP_temp = sheildData.maxShieldHP;
             currentShieldHP = maxShieldHP_temp;
         }
 
-        Shield.SetActive(currentShieldHP > 0 ? true : false);
+        sheildData.shieldSprite.SetActive(currentShieldHP > 0 ? true : false);
 
         if (currentHealth <= 0)
         {
@@ -88,7 +88,7 @@ public class Ship : MonoBehaviour
             if (currentShieldHP < 0f)
             {
                 currentShieldHP = 0f;
-                Shield.SetActive(false);
+                sheildData.shieldSprite.SetActive(false);
             }
         }
         else

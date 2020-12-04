@@ -45,6 +45,13 @@ public class BasicBullet : MonoBehaviour
                 missle.GetDamaged(bulletData.damage);
 
             ExplosionHandler(other.ClosestPoint(transform.position));
+            return;
+        }
+
+        if(other.CompareTag("ShipShield") && bulletData.targetTag == "Ship"){
+            other.GetComponentInParent<Ship>().GetDamaged(bulletData.damage);
+            ExplosionHandler(other.ClosestPoint(transform.position));
+            return;
         }
 
         if (!other.CompareTag(bulletData.targetTag))

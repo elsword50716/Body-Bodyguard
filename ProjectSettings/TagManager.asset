@@ -18,6 +18,7 @@ TagManager:
   - EnemySpawnPoints
   - EnemyLairs
   - PickUps
+  - ShipShield
   layers:
   - Default
   - TransparentFX

@@ -110,6 +110,12 @@ public class UnderwaterBomb : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D other) {
+        if(other.gameObject.CompareTag("ShipShield")){
+            GetDamaged(other.relativeVelocity.magnitude);
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, explosionRange);

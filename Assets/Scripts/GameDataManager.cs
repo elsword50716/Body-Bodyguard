@@ -94,6 +94,12 @@ public struct LaserData
 }
 
 [System.Serializable]
+public struct SheildData{
+    public GameObject shieldSprite;
+    public float maxShieldHP;
+}
+
+[System.Serializable]
 public struct ShipData
 {
     public int id;
@@ -101,7 +107,6 @@ public struct ShipData
     public int wrenchNumber;
     public int upgradeTimes;
     public float maxHealth;
-    public float maxShieldHP;
     [HideInInspector] public Vector3 shipPosition;
     public int[] ShipPartLevel;
 }

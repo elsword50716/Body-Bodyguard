@@ -7,4 +7,5 @@ public class ShipPartInfo : MonoBehaviour
     public ShooterData shooterData;
     public LaserData laserData;
     public BoosterData boosterData;
+    public SheildData shieldData;
 }

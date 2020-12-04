@@ -8,6 +8,8 @@ public class ShipPartUpgradeController : MonoBehaviour
     public int partIndex;
     public PartType partType;
     public Ship ship;
+    public float shipHealthIncreasePerLevel;
+    public float shipBaseHP;
     public ShooterController shooterController;
     public ShipController shipController;
     public ParticleSystem[] upgradeParticles;
@@ -17,7 +19,9 @@ public class ShipPartUpgradeController : MonoBehaviour
     {
         shooter,
         laser,
-        booster
+        booster,
+        shield,
+        shipHealth
     }
 
 
@@ -34,20 +38,25 @@ public class ShipPartUpgradeController : MonoBehaviour
 
     private void Awake()
     {
-        shooterController = GetComponent<ShooterController>();
         ship = GameObject.FindGameObjectWithTag("Ship").GetComponent<Ship>();
         shipData = ship.shipData;
         level_temp = shipData.ShipPartLevel[partIndex];
+
+        if(partType == PartType.shipHealth){
+            ship.shipData.maxHealth = shipBaseHP;
+            return;
+        }
 
         SetPartData();
 
         for (int i = 0; i < partPrefabs.Length; i++)
         {
-            if(i == level_temp){
+            if (i == level_temp)
+            {
                 partPrefabs[i].gameObject.SetActive(true);
                 continue;
             }
-            
+
             partPrefabs[i].gameObject.SetActive(false);
         }
     }
@@ -62,6 +71,12 @@ public class ShipPartUpgradeController : MonoBehaviour
         shipData = ship.shipData;
         if (level_temp != shipData.ShipPartLevel[partIndex])
         {
+            if(partType == PartType.shipHealth){
+                level_temp = shipData.ShipPartLevel[partIndex];
+                ship.shipData.maxHealth = shipBaseHP + level_temp * shipHealthIncreasePerLevel;
+                ship.shipHealParticle.Play();
+                return;
+            }
             UpdatePart();
         }
     }
@@ -89,6 +104,9 @@ public class ShipPartUpgradeController : MonoBehaviour
                 break;
             case PartType.booster:
                 shipController.boosterData = partPrefabs[level_temp].boosterData;
+                break;
+            case PartType.shield:
+                ship.sheildData = partPrefabs[level_temp].shieldData;
                 break;
         }
     }
