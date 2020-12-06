@@ -21,6 +21,7 @@ public class Ship : MonoBehaviour
     public Animator shipDeadAnimator;
     public ParticleSystem shipHealParticle;
     public ParticleSystem shipShieldHealParticle;
+    public ParticleSystem shipShieldBrokeParticle;
     public ParticleSystem shipDeadParticle;
     public MultiplayerEventSystem P1_EventSystem;
     public SpawnPlayers spawnPlayers;
@@ -33,6 +34,7 @@ public class Ship : MonoBehaviour
     private Rigidbody2D rbody2D;
     private float maxHealth_temp;
     private float maxShieldHP_temp;
+    private bool canPlayShieldBrokeParticle;
     private void Awake()
     {
         Instance = this;
@@ -46,18 +48,16 @@ public class Ship : MonoBehaviour
         healthBar.maxValue = shipData.maxHealth;
         ShieldBar.maxValue = sheildData.maxShieldHP;
         maxHealth_temp = shipData.maxHealth;
-        RefreshWrenchUI();
+        canPlayShieldBrokeParticle = true;
+        RefreshUI();
     }
 
     private void Update()
     {
         MinimapCamera.position = new Vector3(transform.position.x, transform.position.y, -10);
         shipInside.position = transform.position;
-        healthBar.value = currentHealth;
-        ShieldBar.value = currentShieldHP;
-        healthText.SetText($"{(int)currentHealth}/{(int)shipData.maxHealth}");
-        shieldText.SetText($"{(int)currentShieldHP}/{(int)sheildData.maxShieldHP}");
-        RefreshWrenchUI();
+
+        RefreshUI();
 
         if (maxHealth_temp != shipData.maxHealth)
         {
@@ -73,7 +73,18 @@ public class Ship : MonoBehaviour
             currentShieldHP = maxShieldHP_temp;
         }
 
+        if (currentShieldHP <= 0)
+        {
+            if (canPlayShieldBrokeParticle)
+            {
+                var main = shipShieldBrokeParticle.main;
+                main.startColor = sheildData.shieldSprite.GetComponentInParent<ShieldController>().particleColor;
+                shipShieldBrokeParticle.Play();
+                canPlayShieldBrokeParticle = false;
+            }
+        }
         sheildData.shieldSprite.SetActive(currentShieldHP > 0 ? true : false);
+        canPlayShieldBrokeParticle = currentShieldHP > 0 ? true : false;
 
         if (currentHealth <= 0)
         {
@@ -92,6 +103,10 @@ public class Ship : MonoBehaviour
             if (currentShieldHP < 0f)
             {
                 currentShieldHP = 0f;
+                var main = shipShieldBrokeParticle.main;
+                main.startColor = sheildData.shieldSprite.GetComponentInParent<ShieldController>().particleColor;
+                shipShieldBrokeParticle.Play();
+                canPlayShieldBrokeParticle = false;
                 sheildData.shieldSprite.SetActive(false);
             }
         }
@@ -150,7 +165,7 @@ public class Ship : MonoBehaviour
         shipData.wrenchNumber += number;
     }
 
-    public void RefreshWrenchUI()
+    public void RefreshUI()
     {
         wrenchText.SetText($"{shipData.wrenchNumber}/{15 + shipData.upgradeTimes * 5}");
         if (shipData.wrenchNumber >= 15 + shipData.upgradeTimes * 5 && !shipUpgradeAnimator.GetBool("isOpen"))
@@ -158,6 +173,10 @@ public class Ship : MonoBehaviour
             shipUpgradeAnimator.SetBool("isOpen", true);
             shipUpgradeAnimator.transform.position = transform.position;
         }
+        healthBar.value = currentHealth;
+        ShieldBar.value = currentShieldHP;
+        healthText.SetText($"{(int)currentHealth}/{(int)shipData.maxHealth}");
+        shieldText.SetText($"{(int)currentShieldHP}/{(int)sheildData.maxShieldHP}");
     }
 
     private void OnCollisionEnter2D(Collision2D other)

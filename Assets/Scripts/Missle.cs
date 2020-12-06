@@ -34,6 +34,11 @@ public class Missle : MonoBehaviour
         basicBullet.isMissle = true;
     }
 
+    private void OnValidate()
+    {
+        ship = GameObject.FindGameObjectWithTag("Ship").transform;
+    }
+
     private void OnEnable()
     {
         ResetMissle();
@@ -48,8 +53,12 @@ public class Missle : MonoBehaviour
     {
         if (target == null)
         {
-            aimSprite.gameObject.SetActive(false);
-            return;
+            FindTarget();
+            if (target == null)
+            {
+                aimSprite.gameObject.SetActive(false);
+                return;
+            }
         }
 
         aimSprite.transform.position = target.position;
@@ -66,14 +75,11 @@ public class Missle : MonoBehaviour
             return;
         }
 
-        if (target != null)
-        {
-            Vector2 dir = (Vector2)(target.position - transform.position).normalized;
-            float rotateAmount = Vector3.Cross(dir, transform.up).z;
-            missleRbody.angularVelocity = -rotateAmount * rotateSpeed;
-            missleRbody.velocity = transform.up * bulletData.chasingSpeed;
+        Vector2 dir = (Vector2)(target.position - transform.position).normalized;
+        float rotateAmount = Vector3.Cross(dir, transform.up).z;
+        missleRbody.angularVelocity = -rotateAmount * rotateSpeed;
+        missleRbody.velocity = transform.up * bulletData.chasingSpeed;
 
-        }
 
     }
 
@@ -93,43 +99,7 @@ public class Missle : MonoBehaviour
         layerMask = basicBullet.bulletData.targetLayer;
         currentHP = missleHP;
 
-        if (!string.IsNullOrEmpty(bulletData.targetTag))
-        {
-            var targets = Physics2D.OverlapCircleAll(transform.position, DetectRange, layerMask);
-
-            if (targets.Length == 0)
-                return;
-            target = targets[Random.Range(0, targets.Length)].transform;
-
-            if (bulletData.targetTag != "Ship")
-            {
-                if (target.TryGetComponent<EnemyAI>(out var enemy))
-                {
-                    scale = enemy.enemyData.aiRadius / 1.45f;
-                    aimSprite.transform.localScale = new Vector3(scale, scale, 1f);
-                }
-                if (target.TryGetComponent<EnemyLairAI>(out var lair))
-                {
-                    scale = 20f / 1.45f;
-                    aimSprite.transform.localScale = new Vector3(scale, scale, 1f);
-                }
-            }
-
-            aimLoop = new AnimationClip();
-            aimLoop.legacy = true;
-            keyframes = new Keyframe[3];
-            keyframes[0] = new Keyframe(0f, scale * 1.2f);
-            keyframes[1] = new Keyframe(0.5f, scale * 1f);
-            keyframes[2] = new Keyframe(1f, scale * 1.2f);
-            var curve = new AnimationCurve(keyframes);
-            aimLoop.SetCurve("Aim_Sprite", typeof(Transform), "localScale.x", curve);
-            aimLoop.SetCurve("Aim_Sprite", typeof(Transform), "localScale.y", curve);
-
-            aimAnimation.AddClip(aimLoop, aimLoop.name);
-            aimSprite.transform.position = target.position;
-            aimSprite.gameObject.SetActive(true);
-
-        }
+        FindTarget();
     }
 
     private void OnDrawGizmosSelected()
@@ -167,5 +137,46 @@ public class Missle : MonoBehaviour
         }
         basicBullet.ExplosionHandler(Position);
         gameObject.SetActive(false);
+    }
+
+    private void FindTarget()
+    {
+        if (!string.IsNullOrEmpty(bulletData.targetTag))
+        {
+            var targets = Physics2D.OverlapCircleAll(ship.position, DetectRange, layerMask);
+
+            if (targets.Length == 0)
+                return;
+            target = targets[Random.Range(0, targets.Length)].transform;
+
+            if (bulletData.targetTag != "Ship")
+            {
+                if (target.TryGetComponent<EnemyAI>(out var enemy))
+                {
+                    scale = enemy.enemyData.aiRadius / 1.45f;
+                    aimSprite.transform.localScale = new Vector3(scale, scale, 1f);
+                }
+                if (target.TryGetComponent<EnemyLairAI>(out var lair))
+                {
+                    scale = 20f / 1.45f;
+                    aimSprite.transform.localScale = new Vector3(scale, scale, 1f);
+                }
+            }
+
+            aimLoop = new AnimationClip();
+            aimLoop.legacy = true;
+            keyframes = new Keyframe[3];
+            keyframes[0] = new Keyframe(0f, scale * 1.2f);
+            keyframes[1] = new Keyframe(0.5f, scale * 1f);
+            keyframes[2] = new Keyframe(1f, scale * 1.2f);
+            var curve = new AnimationCurve(keyframes);
+            aimLoop.SetCurve("Aim_Sprite", typeof(Transform), "localScale.x", curve);
+            aimLoop.SetCurve("Aim_Sprite", typeof(Transform), "localScale.y", curve);
+
+            aimAnimation.AddClip(aimLoop, aimLoop.name);
+            aimSprite.transform.position = target.position;
+            aimSprite.gameObject.SetActive(true);
+
+        }
     }
 }

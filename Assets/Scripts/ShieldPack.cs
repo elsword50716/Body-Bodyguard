@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShieldPack : MonoBehaviour
 {
+    public bool isPhoenix;
     [Range(0f, 1f)]
     public float healPercent;
 
@@ -13,6 +14,14 @@ public class ShieldPack : MonoBehaviour
         {
             var ship = other.GetComponentInParent<Ship>();
             ship.ShieldHeal(healPercent * ship.sheildData.maxShieldHP);
+            if (isPhoenix)
+            {
+                if (other.TryGetComponent<ShieldController>(out var shield))
+                {
+                    shield.isInvincible = true;
+                    shield.invincibleParicleUI.Play();
+                }
+            }
             gameObject.SetActive(false);
         }
     }

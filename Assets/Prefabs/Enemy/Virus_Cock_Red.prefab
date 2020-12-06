@@ -395,7 +395,8 @@ MonoBehaviour:
     m_Bits: 8192
   DropingPoolTag:
   - HealKit_Medium
-  - Wrench
+  - Wrench_Medium
+  - ShieldPack_Medium
   bulletPoolTag: 
   bulletPool: {fileID: 0}
   currentHealth: 0
@@ -403,8 +404,8 @@ MonoBehaviour:
   enemyData:
     id: 6
     name: Cock
-    dropProbability: 0.25
-    maxHealth: 100
+    dropProbability: 0.3
+    maxHealth: 150
     FireRate: 0.5
     BulletSpeed: 10
     attackDamage: 20

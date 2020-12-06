@@ -11,6 +11,7 @@ public class BasicBullet : MonoBehaviour
     private ObjectPooler objectPooler;
     private Rigidbody2D Rbody2D;
     private Vector2 explosionPosition;
+    private List<ContactPoint2D> contactPoint2Ds;
 
     private void Start()
     {
@@ -48,9 +49,22 @@ public class BasicBullet : MonoBehaviour
             return;
         }
 
-        if(other.CompareTag("ShipShield") && bulletData.targetTag == "Ship"){
-            other.GetComponentInParent<Ship>().GetDamaged(bulletData.damage);
-            ExplosionHandler(other.ClosestPoint(transform.position));
+        if (other.TryGetComponent<ShieldController>(out var shield) && bulletData.targetTag == "Ship")
+        {
+            if (shield.isInvincible)
+            {
+                var hit = Physics2D.Raycast(transform.position, transform.up);
+                var newDir = Vector2.Reflect(Rbody2D.velocity, hit.normal);
+                Rbody2D.velocity = newDir * 1.5f;
+                transform.up = newDir;
+                bulletData.targetTag = "Enemy";
+
+            }
+            else
+            {
+                other.GetComponentInParent<Ship>().GetDamaged(bulletData.damage);
+                ExplosionHandler(other.ClosestPoint(transform.position));
+            }
             return;
         }
 

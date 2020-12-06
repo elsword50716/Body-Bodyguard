@@ -231,7 +231,8 @@ MonoBehaviour:
     m_Bits: 8192
   DropingPoolTag:
   - HealKit_Medium_2
-  - Wrench
+  - Wrench_Big
+  - ShieldPack_Big
   bulletPoolTag: BooleanAgbra_Bullet
   bulletPool: {fileID: 5307865851089599201}
   currentHealth: 0
@@ -239,8 +240,8 @@ MonoBehaviour:
   enemyData:
     id: 0
     name: BooleanAgbra
-    dropProbability: 0.4
-    maxHealth: 150
+    dropProbability: 0.45
+    maxHealth: 200
     FireRate: 0.5
     BulletSpeed: 10
     attackDamage: 10

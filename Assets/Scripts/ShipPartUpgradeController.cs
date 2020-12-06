@@ -76,7 +76,7 @@ public class ShipPartUpgradeController : MonoBehaviour
             {
                 level_temp = shipData.ShipPartLevel[partIndex];
                 ship.shipData.maxHealth = shipBaseHP + level_temp * shipHealthIncreasePerLevel;
-                ship.shipHealParticle.Play();
+                PlayUpgradeParticles();
                 return;
             }
             UpdatePart();
@@ -87,10 +87,7 @@ public class ShipPartUpgradeController : MonoBehaviour
     {
         partPrefabs[level_temp].gameObject.SetActive(false);
         level_temp = shipData.ShipPartLevel[partIndex];
-        if (partType == PartType.shield)
-            ship.shipShieldHealParticle.Play();
-        else
-            PlayUpgradeParticles();
+        PlayUpgradeParticles();
         partPrefabs[level_temp].gameObject.SetActive(true);
         SetPartData();
         if (partType == PartType.shooter)
@@ -118,18 +115,40 @@ public class ShipPartUpgradeController : MonoBehaviour
 
     private void PlayUpgradeParticles()
     {
-        if (partType == PartType.booster)
+        switch (partType)
         {
-            for (int i = 0; i < upgradeParticles.Length; i++)
-            {
-                upgradeParticles[i].transform.position = partPrefabs[level_temp].transform.GetChild(i).GetChild(1).position;
-                upgradeParticles[i].Play();
-            }
+            case PartType.booster:
+                for (int i = 0; i < upgradeParticles.Length; i++)
+                {
+                    upgradeParticles[i].transform.position = partPrefabs[level_temp].transform.GetChild(i).GetChild(1).position;
+                    upgradeParticles[i].Play();
+                }
+                break;
+            case PartType.shipHealth:
+                upgradeParticles[0].transform.position = ship.healthBar.transform.GetChild(2).position;
+                upgradeParticles[0].Play();
+                break;
+            case PartType.shield:
+                upgradeParticles[0].transform.position = ship.ShieldBar.transform.GetChild(2).position;
+                upgradeParticles[0].Play();
+                break;
+            default:
+                upgradeParticles[0].transform.position = partPrefabs[level_temp].transform.position;
+                upgradeParticles[0].Play();
+                break;
         }
-        else
-        {
-            upgradeParticles[0].transform.position = partPrefabs[level_temp].transform.position;
-            upgradeParticles[0].Play();
-        }
+        // if (partType == PartType.booster)
+        // {
+        //     for (int i = 0; i < upgradeParticles.Length; i++)
+        //     {
+        //         upgradeParticles[i].transform.position = partPrefabs[level_temp].transform.GetChild(i).GetChild(1).position;
+        //         upgradeParticles[i].Play();
+        //     }
+        // }
+        // else
+        // {
+        //     upgradeParticles[0].transform.position = partPrefabs[level_temp].transform.position;
+        //     upgradeParticles[0].Play();
+        // }
     }
 }

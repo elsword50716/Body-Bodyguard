@@ -369,7 +369,13 @@ public class EnemyAI : MonoBehaviour
 
     private void DamageShip(Collider2D collider)
     {
-        collider.GetComponentInParent<Ship>().GetDamaged(enemyData.attackDamage);
+        if (collider.TryGetComponent<ShieldController>(out var shield))
+        {
+            if (!shield.isInvincible)
+                collider.GetComponentInParent<Ship>().GetDamaged(enemyData.attackDamage);
+        }
+        else
+            collider.GetComponentInParent<Ship>().GetDamaged(enemyData.attackDamage);
     }
 
     private void FireBullet()

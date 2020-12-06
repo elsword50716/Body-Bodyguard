@@ -8,6 +8,7 @@ public class ShipController : MonoBehaviour
     public bool isOnControl = false;
     public bool isMapUnlocked;
     public bool addForce = false;
+    public bool isBoostMode = false;
     public Rigidbody2D shipRbody;
     public Transform ship;
     public Animator mapAnimator;
@@ -20,6 +21,7 @@ public class ShipController : MonoBehaviour
     private InputAction m_AddForce;
     private InputAction m_OpenMap;
     private bool isMapOpen = false;
+    private float shipSpeed;
 
     private void Awake()
     {
@@ -45,6 +47,14 @@ public class ShipController : MonoBehaviour
                 mapAnimator.SetBool("isOpen", isMapOpen ? false : true);
             }
 
+            if (isBoostMode)
+            {
+                shipSpeed = boosterData.shipBoostSpeed;
+            }
+            else
+            {
+                shipSpeed = boosterData.shipSpeed;
+            }
 
             ShipMove(m_ShipMove);
         }
@@ -109,8 +119,6 @@ public class ShipController : MonoBehaviour
                 BoostersControl(2);
             }
         }
-
-        //shipRbody.velocity += (moveInput * shipSpeed * Time.deltaTime);
     }
 
     public Vector2 GetMoveInput()
@@ -167,7 +175,7 @@ public class ShipController : MonoBehaviour
         {
             SoundManager.Instance.PlaySoundLoop(SoundManager.SoundType.booster, false);
             boosterData.boosters[theUsingOne].GetChild(0).GetComponent<ParticleSystem>().Play();
-            shipRbody.velocity += ((Vector2)boosterData.boosters[theUsingOne].up * boosterData.shipSpeed * Time.deltaTime);
+            shipRbody.velocity += ((Vector2)boosterData.boosters[theUsingOne].up * shipSpeed * Time.deltaTime);
         }
         else
         {

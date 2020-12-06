@@ -41,6 +41,6 @@ Material:
     - _GradientTileY: 4
     - _ShieldSpeed: 0.6
     m_Colors:
-    - _EmissonColor: {r: 0, g: 5.4588237, b: 5.992157, a: 1}
+    - _EmissonColor: {r: 8, g: 8, b: 8, a: 1}
     - _ExtraGradientColor: {r: 8.47419, g: 8.47419, b: 8.47419, a: 1}
     - _ShieldTexTilling: {r: 6, g: 5, b: 0, a: 0}

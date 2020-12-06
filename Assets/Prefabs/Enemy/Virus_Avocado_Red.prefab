@@ -396,7 +396,8 @@ MonoBehaviour:
     m_Bits: 8192
   DropingPoolTag:
   - HealKit_Medium
-  - Wrench
+  - Wrench_Medium
+  - ShieldPack_Medium
   bulletPoolTag: 
   bulletPool: {fileID: 0}
   currentHealth: 0
@@ -404,8 +405,8 @@ MonoBehaviour:
   enemyData:
     id: 6
     name: Avocado
-    dropProbability: 0.25
-    maxHealth: 75
+    dropProbability: 0.3
+    maxHealth: 125
     FireRate: 0.5
     BulletSpeed: 10
     attackDamage: 15

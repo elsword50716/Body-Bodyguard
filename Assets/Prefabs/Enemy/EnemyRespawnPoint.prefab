@@ -526,7 +526,7 @@ MonoBehaviour:
   enemyLairData:
     id: 0
     name: 
-    maxHealth: 1500
+    maxHealth: 2000
     SpawnRate: 1
     detectShipRange: 60
   virusPool: {fileID: 2016299285124420393}

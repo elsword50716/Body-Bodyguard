@@ -205,7 +205,8 @@ MonoBehaviour:
     m_Bits: 8192
   DropingPoolTag:
   - HealKit_Medium
-  - Wrench
+  - Wrench_Medium
+  - ShieldPack_Medium
   bulletPoolTag: Virus_Spider_Bullet_Green
   bulletPool: {fileID: 5917313194993055056}
   currentHealth: 0
@@ -213,8 +214,8 @@ MonoBehaviour:
   enemyData:
     id: 9
     name: Spider
-    dropProbability: 0.2
-    maxHealth: 75
+    dropProbability: 0.25
+    maxHealth: 100
     FireRate: 1
     BulletSpeed: 10
     attackDamage: 5
