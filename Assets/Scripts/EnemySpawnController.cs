@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemySpawnController : MonoBehaviour
 {
     public bool isContainTurret;
-    public int turretId;
     public float rotateAngle;
     [Range(0f, 1000f)]
     public float spawnAreaHeight;
@@ -14,12 +13,14 @@ public class EnemySpawnController : MonoBehaviour
     public int maxEnemyNumber;
     public List<GameObject> enemyPrefabs = new List<GameObject>();
 
+    private List<GameObject> enemyList;
+
     private void Awake()
     {
         //SpawnEnemies();
     }
 
-    private Vector3 GetRandomPostion()
+    public Vector3 GetRandomPostion()
     {
         return transform.position + new Vector3(Random.Range(-1f, 1f) * spawnAreaWeight, Random.Range(-1f, 1f) * spawnAreaHeight);
     }
@@ -35,6 +36,7 @@ public class EnemySpawnController : MonoBehaviour
         if (enemyPrefabs.Count == 0)
             return;
 
+        enemyList = new List<GameObject>();
         Random.InitState(Random.Range(0, 50));
 
         for (int i = 0; i < maxEnemyNumber; i++)
@@ -44,23 +46,26 @@ public class EnemySpawnController : MonoBehaviour
             GameObject enemy = Instantiate(enemyPrefabs[randomIndex], randomPosition, Quaternion.identity, transform);
             if (isContainTurret)
             {
-                if (randomIndex == turretId)
-                {
-                    var turretEnemyAi = enemy.GetComponent<EnemyAI>();
-                    enemy.transform.GetChild(0).rotation = Quaternion.Euler(0, 0, rotateAngle);
-                    turretEnemyAi.SetStartPosition(transform.position);
-                    turretEnemyAi.enemyData.roamRange = spawnAreaHeight == 0 ? spawnAreaWeight : spawnAreaHeight;
-                }
+                var turretEnemyAi = enemy.GetComponent<EnemyAI>();
+                enemy.transform.GetChild(0).rotation = Quaternion.Euler(0, 0, rotateAngle);
+                turretEnemyAi.SetStartPosition(transform.position);
+                turretEnemyAi.enemyData.roamRange = spawnAreaHeight == 0 ? spawnAreaWeight : spawnAreaHeight;
             }
+            enemyList.Add(enemy);
             enemy.SetActive(false);
         }
     }
 
     public void ClearAllEnemy()
     {
-        foreach (Transform enemy in transform)
+        foreach (GameObject enemy in enemyList)
         {
-            Destroy(enemy.gameObject);
+            Destroy(enemy);
         }
+    }
+
+    public List<GameObject> GetEnemyList()
+    {
+        return enemyList;
     }
 }
