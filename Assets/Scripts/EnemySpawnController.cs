@@ -58,9 +58,9 @@ public class EnemySpawnController : MonoBehaviour
 
     public void ClearAllEnemy()
     {
-        foreach (GameObject enemy in enemyList)
+        foreach (Transform enemy in transform)
         {
-            Destroy(enemy);
+            Destroy(enemy.gameObject);
         }
     }
 

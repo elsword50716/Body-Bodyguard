@@ -9,11 +9,7 @@ public class EnemyLairAI : MonoBehaviour
     public EnemyLairData enemyLairData;
     public Transform virusPool;
     public int maxEnemyNumber;
-    public List<GameObject> enemyPrefabs;
-    [Range(0f, 1000f)]
-    public float spawnAreaHeight;
-    [Range(0f, 1000f)]
-    public float spawnAreaWeight;
+    public EnemySpawnController enemySpawnController;
     public CinemachineVirtualCamera virtualCamera;
     public Animator CameraAnimator;
     public string DropingPoolTag;
@@ -27,24 +23,18 @@ public class EnemyLairAI : MonoBehaviour
 
     private void Awake()
     {
-        if (enemyPrefabs.Count == 0)
-            return;
-
+        ship = GameObject.FindGameObjectWithTag("Ship").transform;
         enemyList = new List<GameObject>();
-
-        Random.InitState(Random.Range(0, 50));
-
-        for (int i = 0; i < maxEnemyNumber; i++)
+        enemySpawnController.maxEnemyNumber = maxEnemyNumber;
+        enemySpawnController.SpawnEnemies();
+        enemyList = enemySpawnController.GetEnemyList();
+        for (int i = 0; i < enemyList.Count; i++)
         {
-            var randomIndex = Random.Range(0, enemyPrefabs.Count - 1);
-            var randomPosition = GetRandomPostion();
-            GameObject enemy = Instantiate(enemyPrefabs[randomIndex], transform.position, Quaternion.identity, virusPool);
-            enemy.GetComponent<EnemyAI>().SetStartPosition(randomPosition);
-            enemy.SetActive(false);
-            enemyList.Add(enemy);
+            if (enemyList[i] == null)
+                enemyList.RemoveAt(i);
+            enemyList[i].GetComponent<EnemyAI>().SetStartPosition(enemySpawnController.GetRandomPostion());
         }
 
-        ship = GameObject.FindGameObjectWithTag("Ship").transform;
     }
 
     private void Start()
@@ -89,11 +79,6 @@ public class EnemyLairAI : MonoBehaviour
         }
     }
 
-    private Vector3 GetRandomPostion()
-    {
-        return virusPool.position + new Vector3(Random.Range(-1f, 1f) * spawnAreaWeight, Random.Range(-1f, 1f) * spawnAreaHeight);
-    }
-
     public void GetDamaged(float damage)
     {
         currentHealth -= damage;
@@ -106,6 +91,7 @@ public class EnemyLairAI : MonoBehaviour
         if (virusIndex > enemyList.Count - 1)
             return;
 
+        enemyList[virusIndex].transform.position = transform.position;
         enemyList[virusIndex].SetActive(true);
         virusIndex++;
     }
@@ -128,8 +114,6 @@ public class EnemyLairAI : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, enemyLairData.detectShipRange);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(virusPool.position, new Vector3(spawnAreaWeight * 2, spawnAreaHeight * 2, 0f));
     }
 
     IEnumerator AddLairCurrentNumber()
@@ -141,7 +125,8 @@ public class EnemyLairAI : MonoBehaviour
         }
         yield return new WaitForSeconds((202f - 110f) / 60f);
         GameDataManager.lairCurrentNumber++;
-        if(!string.IsNullOrEmpty(DropingPoolTag)){
+        if (!string.IsNullOrEmpty(DropingPoolTag))
+        {
             ObjectPooler.Instance.SpawnFromPool(DropingPoolTag, transform.position, null);
         }
         GameSaveLoadManager.Instance.SaveData();

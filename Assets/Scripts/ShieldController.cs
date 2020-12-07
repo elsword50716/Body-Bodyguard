@@ -102,7 +102,7 @@ public class ShieldController : MonoBehaviour
                 var dir = (Vector2)other.transform.position - other.GetContact(0).point;
                 particle.transform.up = dir.normalized;
             }
-            enemy.GetDamaged(damage);
+            enemyLair.GetDamaged(damage);
         }
     }
 }

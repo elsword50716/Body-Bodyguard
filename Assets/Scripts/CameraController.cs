@@ -60,7 +60,9 @@ public class CameraController : MonoBehaviour
             {
                 if (shakeTimer <= 0f)
                     cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0f;
-            }else{
+            }
+            else
+            {
                 cinemachineBasicMultiChannelPerlin.m_AmplitudeGain =
                     Mathf.Lerp(startShakeIntensity, 0f, (1 - (shakeTimer / shakeTimerTotal)));
             }
@@ -68,5 +70,10 @@ public class CameraController : MonoBehaviour
 
 
 
+    }
+
+    public CinemachineVirtualCamera GetMainCamera()
+    {
+        return cinemachineVirtualCamera;
     }
 }

@@ -36,6 +36,7 @@ public class ShipDeadController : MonoBehaviour
         if (GameDataManager.playerDatas.Count == 0)
             return;
 
+        CameraController.Instance.GetMainCamera().Priority = 10;
         GameSaveLoadManager.Instance.LoadData();
         animator.SetBool("isDead", false);
 

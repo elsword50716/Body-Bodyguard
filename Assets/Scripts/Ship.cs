@@ -122,6 +122,7 @@ public class Ship : MonoBehaviour
         //Debug.Log("Ship Dead!!!!!!!");
         if (!shipDeadParticle.isPlaying)
         {
+            CameraController.Instance.GetMainCamera().Priority = 30;
             shipDeadParticle.gameObject.SetActive(true);
             shipDeadParticle.Play();
             shipDeadAnimator.SetBool("isDead", true);

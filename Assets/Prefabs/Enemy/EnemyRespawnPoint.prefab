@@ -531,14 +531,7 @@ MonoBehaviour:
     detectShipRange: 60
   virusPool: {fileID: 2016299285124420393}
   maxEnemyNumber: 300
-  enemyPrefabs:
-  - {fileID: 9057076417354735390, guid: 60c6041213a3bd143ba73e346c2859b5, type: 3}
-  - {fileID: 5975282735365857607, guid: 24042903e787b5c4685e63918a22ae89, type: 3}
-  - {fileID: 2730475947537053723, guid: 5bfb080f712ea254ea823de950110328, type: 3}
-  - {fileID: 4996416793335614204, guid: bd5a2c6208680174297a8d3459a62ee1, type: 3}
-  - {fileID: 4097657001897349195, guid: 75765b87c6c75d440b900b63ace7f602, type: 3}
-  spawnAreaHeight: 41
-  spawnAreaWeight: 34
+  enemySpawnController: {fileID: 1583672091}
   virtualCamera: {fileID: 2016299284586947228}
   CameraAnimator: {fileID: 2016299284586947230}
   DropingPoolTag: 
@@ -1651,7 +1644,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016299284886607980}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1021.4, y: 443.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2244,6 +2237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2016299285124420393}
+  - component: {fileID: 1583672091}
   m_Layer: 11
   m_Name: VirusPool
   m_TagString: Untagged
@@ -2259,12 +2253,35 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016299285124420392}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.9, y: -67, z: 0}
+  m_LocalPosition: {x: -5.8, y: -73.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2016299284886607982}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1583672091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016299285124420392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f6303b15736b64aad147f0f36e5107, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isContainTurret: 0
+  rotateAngle: 0
+  spawnAreaHeight: 40
+  spawnAreaWeight: 35
+  maxEnemyNumber: 0
+  enemyPrefabs:
+  - {fileID: 9057076417354735390, guid: 60c6041213a3bd143ba73e346c2859b5, type: 3}
+  - {fileID: 5975282735365857607, guid: 24042903e787b5c4685e63918a22ae89, type: 3}
+  - {fileID: 2730475947537053723, guid: 5bfb080f712ea254ea823de950110328, type: 3}
+  - {fileID: 4996416793335614204, guid: bd5a2c6208680174297a8d3459a62ee1, type: 3}
+  - {fileID: 4097657001897349195, guid: 75765b87c6c75d440b900b63ace7f602, type: 3}
 --- !u!1 &2016299285172422210
 GameObject:
   m_ObjectHideFlags: 0

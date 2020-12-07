@@ -60,6 +60,7 @@ public class BossEgg : MonoBehaviour
             enemyList[i].transform.position = transform.position;
             enemyList[i].SetActive(true);
         }
+        rbody.velocity = Vector2.zero;
         rbody.isKinematic = true;
         this.enabled = false;
     }
