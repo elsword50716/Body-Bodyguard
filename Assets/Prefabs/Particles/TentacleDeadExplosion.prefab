@@ -732,7 +732,8 @@ ParticleSystem:
     m_SkinnedMeshRenderer: {fileID: 0}
     m_Sprite: {fileID: 3077880666072390925, guid: 3affe88768001e54483ad0f980af6c64,
       type: 3}
-    m_SpriteRenderer: {fileID: 0}
+    m_SpriteRenderer: {fileID: 3459550051861670019, guid: 3fe0f7cba90d5f749ae2f7144411356c,
+      type: 3}
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
     alignToDirection: 0
@@ -4863,7 +4864,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 1
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -5547,7 +5548,8 @@ ParticleSystem:
     m_SkinnedMeshRenderer: {fileID: 0}
     m_Sprite: {fileID: 3077880666072390925, guid: 3affe88768001e54483ad0f980af6c64,
       type: 3}
-    m_SpriteRenderer: {fileID: 0}
+    m_SpriteRenderer: {fileID: 3459550051861670019, guid: 3fe0f7cba90d5f749ae2f7144411356c,
+      type: 3}
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
     alignToDirection: 0
@@ -10360,7 +10362,8 @@ ParticleSystem:
     m_SkinnedMeshRenderer: {fileID: 0}
     m_Sprite: {fileID: 3077880666072390925, guid: 3affe88768001e54483ad0f980af6c64,
       type: 3}
-    m_SpriteRenderer: {fileID: 0}
+    m_SpriteRenderer: {fileID: 3459550051861670019, guid: 3fe0f7cba90d5f749ae2f7144411356c,
+      type: 3}
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
     alignToDirection: 0

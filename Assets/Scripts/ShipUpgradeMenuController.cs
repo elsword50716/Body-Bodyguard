@@ -71,6 +71,7 @@ public class ShipUpgradeMenuController : MonoBehaviour
         ship.shipData.upgradeTimes++;
         ship.shipData.wrenchNumber = 0;
         GameSaveLoadManager.Instance.SaveData();
+        CameraController.Instance.GetMainCamera().Priority = 10;
         animator.SetBool("isOpen", false);
     }
 

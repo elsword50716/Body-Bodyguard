@@ -171,6 +171,7 @@ public class Ship : MonoBehaviour
         wrenchText.SetText($"{shipData.wrenchNumber}/{15 + shipData.upgradeTimes * 5}");
         if (shipData.wrenchNumber >= 15 + shipData.upgradeTimes * 5 && !shipUpgradeAnimator.GetBool("isOpen"))
         {
+            CameraController.Instance.GetMainCamera().Priority = 30;
             shipUpgradeAnimator.SetBool("isOpen", true);
             shipUpgradeAnimator.transform.position = transform.position;
         }

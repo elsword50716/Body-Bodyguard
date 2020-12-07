@@ -85,6 +85,11 @@ public class Laser : MonoBehaviour
                 {
                     bomb.GetDamaged(damagePerSec * Time.deltaTime);
                 }
+                if (hit.collider.GetComponentInParent<Ship>() != null)
+                {
+                    var ship = hit.collider.GetComponentInParent<Ship>();
+                    ship.GetDamaged(damagePerSec * Time.deltaTime);
+                }
 
             }
             else

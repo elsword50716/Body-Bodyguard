@@ -27,9 +27,9 @@ public struct EnemyData
     public float moveSpeed;
     public float inAttackRangeMoveSpeed;
     public float aiRadius;
-    [Tooltip("Yellow Sphere")] [Range(0f, 50f)] public float roamRange;
-    [Tooltip("White Sphere")] [Range(0f, 50f)] public float detectShipRange;
-    [Tooltip("Blue Sphere")] [Range(0f, 100f)] public float ClosestDistanceToShip;
+    [Tooltip("Yellow Sphere")] [Range(0f, 500f)] public float roamRange;
+    [Tooltip("White Sphere")] [Range(0f, 500f)] public float detectShipRange;
+    [Tooltip("Blue Sphere")] [Range(0f, 500f)] public float ClosestDistanceToShip;
 }
 
 [System.Serializable]
@@ -94,7 +94,8 @@ public struct LaserData
 }
 
 [System.Serializable]
-public struct SheildData{
+public struct SheildData
+{
     public GameObject shieldSprite;
     public float maxShieldHP;
 }
