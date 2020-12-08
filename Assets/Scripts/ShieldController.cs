@@ -104,5 +104,18 @@ public class ShieldController : MonoBehaviour
             }
             enemyLair.GetDamaged(damage);
         }
+
+        if (other.transform.parent.GetComponent<BossEgg>() != null)
+        {
+            if (!isInvincible)
+            {
+                var particle = ObjectPooler.Instance.SpawnFromPool(damageParticleTag, other.GetContact(0).point, null);
+                var main = particle.GetComponent<ParticleSystem>().main;
+                main.startColor = particleColor;
+                var dir = (Vector2)other.transform.position - other.GetContact(0).point;
+                particle.transform.up = dir.normalized;
+            }
+            other.transform.parent.GetComponent<BossEgg>().GetDamaged(damage);
+        }
     }
 }

@@ -9,20 +9,49 @@ public class BossEgg : MonoBehaviour
     public Animator eggAnimator;
     public float animationMaxSpeed;
     public EnemySpawnController enemySpawnController;
+    public GameObjectsActiveController gameObjectsActiveController;
     public Rigidbody2D rbody;
     public GameObject explosionParticle;
+    public float maxHealth;
+    public Material hitEffectMaterial;
+    public Color deadParticleColor;
+    public string deadParticleTag;
+    public int maxEnemyNumber;
+    public Transform enemyPool;
 
     private float explodeTimer;
+    private float currentHealth;
     private List<GameObject> enemyList;
+    private Material originalMaterial;
+    private SpriteRenderer spriteRenderer;
+    private bool isExploded;
 
     private void Awake()
     {
+        isExploded = false;
+        enemySpawnController.maxEnemyNumber = maxEnemyNumber;
         enemySpawnController.SpawnEnemies();
         enemyList = enemySpawnController.GetEnemyList();
+        spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        originalMaterial = spriteRenderer.material;
     }
 
     private void OnEnable()
     {
+        isExploded = false;
+        gameObjectsActiveController.enabled = false;
+        if (enemyPool.childCount < maxEnemyNumber)
+        {
+            enemySpawnController.ClearAllEnemy();
+            enemySpawnController.SpawnEnemies();
+            enemyList = enemySpawnController.GetEnemyList();
+            gameObjectsActiveController.SetGameObjectsList();
+        }
+        for (int i = 0; i < enemyList.Count; i++)
+        {
+            enemyList[i].SetActive(false);
+        }
+        currentHealth = maxHealth;
         explodeTimer = explodeDelay;
         rbody.isKinematic = false;
         eggAnimator.SetFloat("Speed", 1f);
@@ -32,6 +61,13 @@ public class BossEgg : MonoBehaviour
 
     private void Update()
     {
+        if(isExploded)
+            return;
+        if (currentHealth <= 0)
+        {
+            Dead();
+            return;
+        }
         if (explodeTimer < explodeDelay / 3)
         {
             eggAnimator.SetBool("startBirth", true);
@@ -55,13 +91,38 @@ public class BossEgg : MonoBehaviour
         for (int i = 0; i < enemyList.Count; i++)
         {
             if (enemyList[i] == null)
-                enemyList.RemoveAt(i);
+                continue;
             enemyList[i].GetComponent<EnemyAI>().SetStartPosition(enemySpawnController.GetRandomPostion());
             enemyList[i].transform.position = transform.position;
             enemyList[i].SetActive(true);
         }
         rbody.velocity = Vector2.zero;
         rbody.isKinematic = true;
-        this.enabled = false;
+        isExploded = true;
+        gameObjectsActiveController.enabled = true;
+    }
+
+    public void Dead()
+    {
+        var particle = ObjectPooler.Instance.SpawnFromPool(deadParticleTag, transform.position, null).GetComponent<ParticleSystem>().main;
+        particle.startColor = deadParticleColor;
+        gameObject.SetActive(false);
+    }
+
+    public void GetDamaged(float damage)
+    {
+        currentHealth -= damage;
+        spriteRenderer.material = hitEffectMaterial;
+        Invoke("ResetMaterial", 0.1f);
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            Dead();
+        }
+    }
+
+    public void ResetMaterial()
+    {
+        spriteRenderer.material = originalMaterial;
     }
 }

@@ -68,6 +68,13 @@ public class BasicBullet : MonoBehaviour
             return;
         }
 
+        if (other.transform.parent.GetComponent<BossEgg>() != null)
+        {
+            other.transform.parent.GetComponent<BossEgg>().GetDamaged(bulletData.damage);
+            ExplosionHandler(other.ClosestPoint(transform.position));
+            return;
+        }
+
         if (!other.CompareTag(bulletData.targetTag))
             return;
 

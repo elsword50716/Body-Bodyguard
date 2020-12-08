@@ -89,6 +89,10 @@ public class UnderwaterBomb : MonoBehaviour
                 bomb.GetDamaged(damage);
                 Debug.Log("start coroutine", bomb);
             }
+            if (targets[i].transform.parent.GetComponent<BossEgg>() != null)
+            {
+                targets[i].transform.parent.GetComponent<BossEgg>().GetDamaged(damage);
+            }
 
         }
 

@@ -7,6 +7,7 @@ using Pathfinding;
 [RequireComponent(typeof(AIDestinationSetter))]
 public class EnemyAI : MonoBehaviour
 {
+    public bool isBoss;
     public bool isTurret;
     public bool isVirus;
     public float virusAttackMoveSpeed;
@@ -21,13 +22,14 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float currentHealth;
     public string deadExplosionTag;
     public Material hitEffectMaterial;
+    public Rigidbody2D Rbody2D;
 
 
     [Header("敵人資料")]
     public EnemyData enemyData = new EnemyData();
 
 
-    private enum State
+    public enum State
     {
         Roaming,
         ChaseTarget,
@@ -41,8 +43,6 @@ public class EnemyAI : MonoBehaviour
     private float nextShootTimer = 0f;
     private float nextMoveTimer = 0f;
 
-    private Animator animator;
-    private Rigidbody2D Rbody2D;
     private AIPath aIPath;
     private AIDestinationSetter destinationSetter;
     private float originalEndReachedDistance;
@@ -52,6 +52,7 @@ public class EnemyAI : MonoBehaviour
     private bool isKillByBomb;
     private Material originalMaterial;
     private SpriteRenderer[] spriteRenderer;
+    private BossAI bossAI;
 
     private void OnValidate()
     {
@@ -63,21 +64,22 @@ public class EnemyAI : MonoBehaviour
     private void Awake()
     {
         Ship = GameObject.FindGameObjectWithTag("Ship").transform;
-
+        if(isBoss)
+            bossAI = GetComponent<BossAI>();
         destinationSetter = GetComponent<AIDestinationSetter>();
         aIPath = GetComponent<AIPath>();
-
-        animator = GetComponentInChildren<Animator>();
-
         Rbody2D = GetComponent<Rigidbody2D>();
         ChasingPoint = new GameObject("ChasingPoint");
         ChasingPoint.transform.parent = transform;
         targetPosition = ChasingPoint.transform;
-        //targetPosition = Instantiate(ChasingPoint.transform, Vector2.zero, Quaternion.identity, transform);
         state = State.Roaming;
         enemySprite = transform.GetChild(0);
         spriteRenderer = enemySprite.GetComponentsInChildren<SpriteRenderer>();
         originalMaterial = spriteRenderer[0].material;
+    }
+
+    private void OnEnable() {
+        state = State.Roaming;
     }
 
     private void Start()
@@ -99,7 +101,10 @@ public class EnemyAI : MonoBehaviour
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            Dead();
+            if(isBoss)
+                bossAI.Dead();
+            else
+                Dead();
         }
 
         aIPath.maxSpeed = enemyData.moveSpeed;
@@ -173,14 +178,17 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             case State.Attacking:
-                Attack();
+                if(isBoss){
+                    bossAI.Attack();
+                }else
+                    Attack();
                 break;
         }
 
 
     }
 
-    private Vector3 GetRoamingPostion()
+    public Vector3 GetRoamingPostion()
     {
         if (!isTurret)
             return startingPosotion + new Vector3(Random.Range(-1f, 1f) * enemyData.roamRange, Random.Range(-1f, 1f) * enemyData.roamRange);
@@ -188,7 +196,7 @@ public class EnemyAI : MonoBehaviour
             return startingPosotion + enemySprite.right * enemyData.roamRange * Random.Range(-1f, 1f);
     }
 
-    private void MoveTo(Vector3 targetPosition, bool isApproaching, bool isAttacking)
+    public void MoveTo(Vector3 targetPosition, bool isApproaching, bool isAttacking)
     {
         var speedMultiply = isAttacking ? virusAttackMoveSpeed : enemyData.moveSpeed;
 
@@ -386,7 +394,7 @@ public class EnemyAI : MonoBehaviour
 
     }
 
-    private void DamageShip(Collider2D collider)
+    public void DamageShip(Collider2D collider)
     {
         if (collider.TryGetComponent<ShieldController>(out var shield))
         {
@@ -403,8 +411,12 @@ public class EnemyAI : MonoBehaviour
         var bulletRbody = bullet.GetComponent<Rigidbody2D>();
         bulletRbody.velocity = (Ship.position - transform.position).normalized * enemyData.BulletSpeed;
         bullet.transform.up = bulletRbody.velocity.normalized;
-        bullet.GetComponent<BasicBullet>().bulletData.targetTag = "Ship";
-        bullet.GetComponent<BasicBullet>().bulletData.damage = enemyData.attackDamage;
+        if (bullet.TryGetComponent<BasicBullet>(out var basicBullet))
+        {
+            basicBullet.bulletData.targetTag = "Ship";
+            basicBullet.bulletData.damage = enemyData.attackDamage;
+        }
+
         if (isTurret)
             state = State.Roaming;
         else
@@ -426,6 +438,10 @@ public class EnemyAI : MonoBehaviour
             isKillByBomb = true;
             Dead();
         }
+    }
+
+    public void SetState(State nextState){
+        state = nextState;
     }
 
     private void OnDrawGizmosSelected()
