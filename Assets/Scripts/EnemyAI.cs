@@ -20,7 +20,7 @@ public class EnemyAI : MonoBehaviour
     public Transform bulletPool;
     [SerializeField] private float currentHealth;
     public string deadExplosionTag;
-    //public ParticleSystem deadExplosion;
+    public Material hitEffectMaterial;
 
 
     [Header("敵人資料")]
@@ -50,6 +50,8 @@ public class EnemyAI : MonoBehaviour
     private Transform enemySprite;
     private bool alreadySetStartPosition = false;
     private bool isKillByBomb;
+    private Material originalMaterial;
+    private SpriteRenderer[] spriteRenderer;
 
     private void OnValidate()
     {
@@ -74,6 +76,8 @@ public class EnemyAI : MonoBehaviour
         //targetPosition = Instantiate(ChasingPoint.transform, Vector2.zero, Quaternion.identity, transform);
         state = State.Roaming;
         enemySprite = transform.GetChild(0);
+        spriteRenderer = enemySprite.GetComponentsInChildren<SpriteRenderer>();
+        originalMaterial = spriteRenderer[0].material;
     }
 
     private void Start()
@@ -360,11 +364,26 @@ public class EnemyAI : MonoBehaviour
     public void GetDamaged(float damage)
     {
         currentHealth -= damage;
+        for (int i = 0; i < spriteRenderer.Length; i++)
+        {
+            spriteRenderer[i].material = hitEffectMaterial;
+        }
+        Invoke("ResetMaterial", 0.1f);
         if (currentHealth <= 0f)
         {
             isKillByBomb = false;
             Dead();
         }
+
+    }
+
+    private void ResetMaterial()
+    {
+        for (int i = 0; i < spriteRenderer.Length; i++)
+        {
+            spriteRenderer[i].material = originalMaterial;
+        }
+
     }
 
     private void DamageShip(Collider2D collider)

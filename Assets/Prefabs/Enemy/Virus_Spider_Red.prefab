@@ -434,6 +434,7 @@ MonoBehaviour:
   bulletPool: {fileID: 4769867287865049938}
   currentHealth: 0
   deadExplosionTag: Virus_DeadExplosion
+  hitEffectMaterial: {fileID: 2100000, guid: 46d1ebf0dd1aed94c8ba4c9b7a507934, type: 2}
   enemyData:
     id: 9
     name: Spider
