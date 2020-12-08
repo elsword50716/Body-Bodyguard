@@ -18,6 +18,8 @@ public class BossEgg : MonoBehaviour
     public string deadParticleTag;
     public int maxEnemyNumber;
     public Transform enemyPool;
+    public string[] dropPickupTag;
+    public float dropProbability;
 
     private float explodeTimer;
     private float currentHealth;
@@ -61,7 +63,7 @@ public class BossEgg : MonoBehaviour
 
     private void Update()
     {
-        if(isExploded)
+        if (isExploded)
             return;
         if (currentHealth <= 0)
         {
@@ -106,6 +108,15 @@ public class BossEgg : MonoBehaviour
     {
         var particle = ObjectPooler.Instance.SpawnFromPool(deadParticleTag, transform.position, null).GetComponent<ParticleSystem>().main;
         particle.startColor = deadParticleColor;
+        if (dropPickupTag.Length != 0)
+        {
+            if (Random.Range(0f, 1f) <= dropProbability)
+            {
+                var index = Random.Range(0, dropPickupTag.Length);
+                if (!string.IsNullOrEmpty(dropPickupTag[index]))
+                    ObjectPooler.Instance.SpawnFromPool(dropPickupTag[index], transform.position, null);
+            }
+        }
         gameObject.SetActive(false);
     }
 

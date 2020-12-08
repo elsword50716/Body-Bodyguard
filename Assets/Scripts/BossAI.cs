@@ -16,15 +16,24 @@ public class BossAI : MonoBehaviour
     public Transform eyeMask;
     public float eyeMoveLength;
     public CinemachineVirtualCamera bossCamera;
+    public TentacleBlockController tentacle;
     public Slider bossHealthBar;
     public Animator animator;
     public string bulletTag;
-    public string EggTag;
-    public string[] DropingPoolTag;
+    public string[] dropPickupTag;
     public string deadExplosionTag;
+    [Header("衝撞攻擊資料")]
     private float rushDamper;
     private GameObject rushParticle;
-    public float eggSpawnOnceNumber;
+    [Header("產卵攻擊資料")]
+    public string eggTag;
+    public int eggSpawnNumberPerTime;
+    public float eggSpawnRate;
+    public float eggSpawnTorque;
+    [Header("雷射攻擊資料")]
+    public GameObject laserPrefab;
+    public float laserRotateSpeed;
+    public float laserRotateLineLenght;
 
     private EnemyAI enemyAI;
     private BulletManager shipBulletManager;
@@ -34,8 +43,22 @@ public class BossAI : MonoBehaviour
     private bool isFinishAttck;
     private Vector3 targetPosion;
     private bool isFirstRush;
+    private bool isFirstLaser;
+    private float laserRotateLineY;
+    private Vector3 laserRotateLinePointA;
+    private Vector3 laserRotateLinePointB;
+    private Vector3 laserRotateLinePointC;
+    private Vector3 laserRotateDir;
+    private Vector3 laserRotateAddDir;
+    private bool islaserRotateFromPointA;
+    private int eggNumber;
+    private float timer;
 
-
+    private void OnValidate()
+    {
+        enemyAI = GetComponent<EnemyAI>();
+        enemyAI.isBoss = true;
+    }
     private void Awake()
     {
         ship = GameObject.FindGameObjectWithTag("Ship").transform;
@@ -47,6 +70,10 @@ public class BossAI : MonoBehaviour
     private void OnEnable()
     {
         isFinishAttck = true;
+        isFirstRush = true;
+        isFirstLaser = true;
+        eggNumber = 0;
+
     }
 
     private void Start()
@@ -110,7 +137,10 @@ public class BossAI : MonoBehaviour
     private void Rush()
     {
         if (isFirstRush)
+        {
             targetPosion = ship.position;
+            isFirstRush = false;
+        }
         if ((targetPosion - transform.position).sqrMagnitude > rushDamper * rushDamper)
         {
             rushParticle.SetActive(true);
@@ -119,8 +149,9 @@ public class BossAI : MonoBehaviour
             {
                 //damage the ship
                 enemyAI.DamageShip(collider2Ds[0]);
-                isFinishAttck = true;
                 rushParticle.SetActive(false);
+                isFirstRush = true;
+                isFinishAttck = true;
                 enemyAI.SetState(EnemyAI.State.ChaseTarget);
                 return;
             }
@@ -130,17 +161,84 @@ public class BossAI : MonoBehaviour
         else
         {
             rushParticle.SetActive(false);
+            isFirstRush = true;
             isFinishAttck = true;
             enemyAI.SetState(EnemyAI.State.ChaseTarget);
         }
     }
     private void ShootEgg()
     {
+        if (eggNumber == eggSpawnNumberPerTime)
+        {
+            isFinishAttck = true;
+            enemyAI.SetState(EnemyAI.State.ChaseTarget);
+            timer = 0;
+            eggNumber = 0;
+            return;
+        }
 
+        if (timer > eggSpawnRate)
+        {
+            BirthEgg();
+            timer = 0f;
+        }
+        else
+            timer += Time.deltaTime;
+    }
+
+    private void BirthEgg()
+    {
+        //play sound here
+        var egg = ObjectPooler.Instance.SpawnFromPool(eggTag, shootPoint.position, null);
+        egg.SetActive(false);
+        egg.SetActive(true);
+        var eggRbody = egg.GetComponent<Rigidbody2D>();
+        eggRbody.AddTorque(eggSpawnTorque);
+        eggRbody.velocity = (ship.position - shootPoint.position).normalized * enemyData.BulletSpeed;
+        eggNumber++;
     }
 
     private void MouthLaser()
     {
+        if (isFirstLaser)
+        {
+            //play sound here
+            isFirstLaser = false;
+            laserRotateLineY = ship.position.y;
+            islaserRotateFromPointA = (ship.position.x - shootPoint.position.x) > 0 ? true : false;
+            laserRotateLinePointA = new Vector2(shootPoint.position.x - laserRotateLineLenght / 2, laserRotateLineY);
+            laserRotateLinePointB = new Vector2(shootPoint.position.x + laserRotateLineLenght / 2, laserRotateLineY);
+            if (islaserRotateFromPointA)
+            {
+                laserRotateLinePointC = Vector2.Lerp(laserRotateLinePointA, laserRotateLinePointB, Time.deltaTime) * laserRotateSpeed;
+                laserRotateDir = laserRotateLinePointA - shootPoint.position;
+            }
+            else
+            {
+                laserRotateLinePointC = Vector2.Lerp(laserRotateLinePointB, laserRotateLinePointA, Time.deltaTime) * laserRotateSpeed;
+                laserRotateDir = laserRotateLinePointB - shootPoint.position;
+            }
+            laserPrefab.transform.up = laserRotateDir.normalized;
+            laserPrefab.SetActive(true);
+        }
+
+        if (laserRotateLinePointC.x > laserRotateLinePointB.x || laserRotateLinePointC.x < laserRotateLinePointA.x)
+        {
+            laserPrefab.SetActive(false);
+            isFirstLaser = true;
+            isFinishAttck = true;
+            enemyAI.SetState(EnemyAI.State.ChaseTarget);
+            return;
+        }
+
+        laserRotateDir = laserRotateLinePointC - shootPoint.position;
+        laserPrefab.transform.up = laserRotateDir.normalized;
+
+        if (islaserRotateFromPointA)
+            laserRotateLinePointC = Vector2.Lerp(laserRotateLinePointC, laserRotateLinePointB, Time.deltaTime) * laserRotateSpeed;
+        else
+            laserRotateLinePointC = Vector2.Lerp(laserRotateLinePointC, laserRotateLinePointA, Time.deltaTime) * laserRotateSpeed;
+
 
     }
 
