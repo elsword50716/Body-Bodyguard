@@ -96,7 +96,10 @@ public class BossAI : MonoBehaviour
             SetCameraFollowPoint();
         }
         else
+        {
             animator.SetBool("isFindShip", false);
+            SetCameraPriority(false);
+        }
     }
 
     private void EyeFollowShip()
@@ -121,7 +124,7 @@ public class BossAI : MonoBehaviour
         Debug.Log("Boss Attck");
         if (isFinishAttck)
         {
-            attackIndex = Random.Range(0, 2);
+            attackIndex = Random.Range(0, 3);
             isFinishAttck = false;
         }
         switch (attackIndex)
@@ -132,10 +135,10 @@ public class BossAI : MonoBehaviour
             case 1:
                 ShootEgg();
                 break;
-            case 3:
+            case 2:
                 MouthLaser();
                 break;
-            case 4:
+            case 3:
                 MouthLaserBall();
                 break;
 
@@ -217,12 +220,12 @@ public class BossAI : MonoBehaviour
             laserRotateLinePointB = new Vector2(shootPoint.position.x + laserRotateLineLenght / 2, laserRotateLineY);
             if (islaserRotateFromPointA)
             {
-                laserRotateLinePointC = Vector2.Lerp(laserRotateLinePointA, laserRotateLinePointB, Time.deltaTime) * laserRotateSpeed;
+                laserRotateLinePointC = laserRotateLinePointA;
                 laserRotateDir = laserRotateLinePointA - shootPoint.position;
             }
             else
             {
-                laserRotateLinePointC = Vector2.Lerp(laserRotateLinePointB, laserRotateLinePointA, Time.deltaTime) * laserRotateSpeed;
+                laserRotateLinePointC = laserRotateLinePointB;
                 laserRotateDir = laserRotateLinePointB - shootPoint.position;
             }
             laserPrefab.transform.right = laserRotateDir.normalized;
@@ -242,9 +245,9 @@ public class BossAI : MonoBehaviour
         laserPrefab.transform.right = laserRotateDir.normalized;
 
         if (islaserRotateFromPointA)
-            laserRotateLinePointC = Vector2.Lerp(laserRotateLinePointC, laserRotateLinePointB, Time.deltaTime) * laserRotateSpeed;
+            laserRotateLinePointC += (laserRotateLinePointB - laserRotateLinePointA) * Time.deltaTime * laserRotateSpeed;
         else
-            laserRotateLinePointC = Vector2.Lerp(laserRotateLinePointC, laserRotateLinePointA, Time.deltaTime) * laserRotateSpeed;
+            laserRotateLinePointC += (laserRotateLinePointA - laserRotateLinePointB) * Time.deltaTime * laserRotateSpeed;
 
 
     }

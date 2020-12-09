@@ -206,6 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63fbc28f82ca6944c8bba9cc0433c966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBoss: 0
   isTurret: 0
   isVirus: 0
   virusAttackMoveSpeed: 30
@@ -238,12 +239,13 @@ MonoBehaviour:
   currentHealth: 0
   deadExplosionTag: BooleanAgbra_DeadExplosion
   hitEffectMaterial: {fileID: 2100000, guid: 46d1ebf0dd1aed94c8ba4c9b7a507934, type: 2}
+  Rbody2D: {fileID: 0}
   enemyData:
     id: 0
     name: BooleanAgbra
     dropProbability: 0.45
     maxHealth: 200
-    FireRate: 0.5
+    FireRate: 1
     BulletSpeed: 10
     attackDamage: 10
     moveSpeed: 5

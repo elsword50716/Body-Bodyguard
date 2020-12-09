@@ -90,6 +90,10 @@ public class Laser : MonoBehaviour
                     var ship = hit.collider.GetComponentInParent<Ship>();
                     ship.GetDamaged(damagePerSec * Time.deltaTime);
                 }
+                if (hit.collider.transform.parent != null && hit.collider.transform.parent.TryGetComponent<BossEgg>(out var egg))
+                {
+                    egg.GetDamaged(damagePerSec * Time.deltaTime);
+                }
 
             }
             else

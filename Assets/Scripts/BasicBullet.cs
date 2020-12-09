@@ -68,9 +68,9 @@ public class BasicBullet : MonoBehaviour
             return;
         }
 
-        if (other.transform.parent.GetComponent<BossEgg>() != null)
+        if (other.transform.parent != null && other.transform.parent.TryGetComponent<BossEgg>(out var egg))
         {
-            other.transform.parent.GetComponent<BossEgg>().GetDamaged(bulletData.damage);
+            egg.GetDamaged(bulletData.damage);
             ExplosionHandler(other.ClosestPoint(transform.position));
             return;
         }

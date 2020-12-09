@@ -23,6 +23,8 @@ public class Ship : MonoBehaviour
     public ParticleSystem shipShieldHealParticle;
     public ParticleSystem shipShieldBrokeParticle;
     public ParticleSystem shipDeadParticle;
+    public Material hitEffectMaterial;
+    public SpriteRenderer shipSprite;
     public MultiplayerEventSystem P1_EventSystem;
     public SpawnPlayers spawnPlayers;
     public ShipData shipData;
@@ -35,6 +37,8 @@ public class Ship : MonoBehaviour
     private float maxHealth_temp;
     private float maxShieldHP_temp;
     private bool canPlayShieldBrokeParticle;
+    private Material originalMaterial;
+
     private void Awake()
     {
         Instance = this;
@@ -42,6 +46,7 @@ public class Ship : MonoBehaviour
 
     private void Start()
     {
+        originalMaterial = shipSprite.material;
         rbody2D = GetComponent<Rigidbody2D>();
         currentHealth = shipData.maxHealth;
         currentShieldHP = sheildData.maxShieldHP;
@@ -112,6 +117,8 @@ public class Ship : MonoBehaviour
         }
         else
         {
+            shipSprite.material = hitEffectMaterial;
+            Invoke("ResetMaterial", 0.1f);
             shipDamageEffectAnimator.SetTrigger("isShipHit");
             currentHealth -= damage;
         }
@@ -179,6 +186,11 @@ public class Ship : MonoBehaviour
         ShieldBar.value = currentShieldHP;
         healthText.SetText($"{(int)currentHealth}/{(int)shipData.maxHealth}");
         shieldText.SetText($"{(int)currentShieldHP}/{(int)sheildData.maxShieldHP}");
+    }
+
+    private void ResetMaterial()
+    {
+        shipSprite.material = originalMaterial;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
