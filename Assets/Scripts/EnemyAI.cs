@@ -64,7 +64,7 @@ public class EnemyAI : MonoBehaviour
     private void Awake()
     {
         Ship = GameObject.FindGameObjectWithTag("Ship").transform;
-        if(isBoss)
+        if (isBoss)
             bossAI = GetComponent<BossAI>();
         destinationSetter = GetComponent<AIDestinationSetter>();
         aIPath = GetComponent<AIPath>();
@@ -78,7 +78,8 @@ public class EnemyAI : MonoBehaviour
         originalMaterial = spriteRenderer[0].material;
     }
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         state = State.Roaming;
     }
 
@@ -101,7 +102,7 @@ public class EnemyAI : MonoBehaviour
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            if(isBoss)
+            if (isBoss)
                 bossAI.Dead();
             else
                 Dead();
@@ -167,7 +168,6 @@ public class EnemyAI : MonoBehaviour
 
                 if (nextShootTimer > enemyData.FireRate)
                 {
-                    //Attack();
                     state = State.Attacking;
                     nextShootTimer = 0;
                 }
@@ -178,9 +178,11 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             case State.Attacking:
-                if(isBoss){
+                if (isBoss)
+                {
                     bossAI.Attack();
-                }else
+                }
+                else
                     Attack();
                 break;
         }
@@ -440,7 +442,8 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    public void SetState(State nextState){
+    public void SetState(State nextState)
+    {
         state = nextState;
     }
 

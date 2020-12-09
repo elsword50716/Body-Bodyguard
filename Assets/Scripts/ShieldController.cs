@@ -105,7 +105,7 @@ public class ShieldController : MonoBehaviour
             enemyLair.GetDamaged(damage);
         }
 
-        if (other.transform.parent.GetComponent<BossEgg>() != null)
+        if (other.transform.parent != null && other.transform.parent.TryGetComponent<BossEgg>(out var egg))
         {
             if (!isInvincible)
             {
@@ -115,7 +115,7 @@ public class ShieldController : MonoBehaviour
                 var dir = (Vector2)other.transform.position - other.GetContact(0).point;
                 particle.transform.up = dir.normalized;
             }
-            other.transform.parent.GetComponent<BossEgg>().GetDamaged(damage);
+            egg.GetDamaged(damage);
         }
     }
 }

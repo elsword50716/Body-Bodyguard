@@ -20,11 +20,10 @@ public class BossAI : MonoBehaviour
     public Slider bossHealthBar;
     public Animator animator;
     public string bulletTag;
-    public string[] dropPickupTag;
     public string deadExplosionTag;
     [Header("衝撞攻擊資料")]
-    private float rushDamper;
-    private GameObject rushParticle;
+    public float rushDamper;
+    public GameObject rushParticle;
     [Header("產卵攻擊資料")]
     public string eggTag;
     public int eggSpawnNumberPerTime;
@@ -34,6 +33,10 @@ public class BossAI : MonoBehaviour
     public GameObject laserPrefab;
     public float laserRotateSpeed;
     public float laserRotateLineLenght;
+    [Header("尾獸玉攻擊資料")]
+    public string laserBallTag;
+    public int laserBallNumberPerTime;
+    public float laserBallSpawnRate;
 
     private EnemyAI enemyAI;
     private BulletManager shipBulletManager;
@@ -52,6 +55,7 @@ public class BossAI : MonoBehaviour
     private Vector3 laserRotateAddDir;
     private bool islaserRotateFromPointA;
     private int eggNumber;
+    private int laserBallNumber;
     private float timer;
 
     private void OnValidate()
@@ -86,10 +90,13 @@ public class BossAI : MonoBehaviour
         shipDistance = (ship.position - transform.position).sqrMagnitude;
         if (shipDistance < enemyData.detectShipRange * enemyData.detectShipRange)
         {
+            animator.SetBool("isFindShip", true);
             EyeFollowShip();
             SetCameraPriority(true);
             SetCameraFollowPoint();
         }
+        else
+            animator.SetBool("isFindShip", false);
     }
 
     private void EyeFollowShip()
@@ -114,7 +121,7 @@ public class BossAI : MonoBehaviour
         Debug.Log("Boss Attck");
         if (isFinishAttck)
         {
-            attackIndex = Random.Range(0, 4);
+            attackIndex = Random.Range(0, 2);
             isFinishAttck = false;
         }
         switch (attackIndex)
@@ -218,7 +225,7 @@ public class BossAI : MonoBehaviour
                 laserRotateLinePointC = Vector2.Lerp(laserRotateLinePointB, laserRotateLinePointA, Time.deltaTime) * laserRotateSpeed;
                 laserRotateDir = laserRotateLinePointB - shootPoint.position;
             }
-            laserPrefab.transform.up = laserRotateDir.normalized;
+            laserPrefab.transform.right = laserRotateDir.normalized;
             laserPrefab.SetActive(true);
         }
 
@@ -232,7 +239,7 @@ public class BossAI : MonoBehaviour
         }
 
         laserRotateDir = laserRotateLinePointC - shootPoint.position;
-        laserPrefab.transform.up = laserRotateDir.normalized;
+        laserPrefab.transform.right = laserRotateDir.normalized;
 
         if (islaserRotateFromPointA)
             laserRotateLinePointC = Vector2.Lerp(laserRotateLinePointC, laserRotateLinePointB, Time.deltaTime) * laserRotateSpeed;
