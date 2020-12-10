@@ -2,25 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class BasicBullet : MonoBehaviour
 {
+    public bool isLaserBall;
+    public bool isLaserBallChargeUp;
     public bool isMissle;
     public string explosionParicleTag;
     public BulletData bulletData;
 
-    private ObjectPooler objectPooler;
     private Rigidbody2D Rbody2D;
     private Vector2 explosionPosition;
     private List<ContactPoint2D> contactPoint2Ds;
 
     private void Start()
     {
-        objectPooler = ObjectPooler.Instance;
         Rbody2D = GetComponent<Rigidbody2D>();
     }
 
     private void LateUpdate()
     {
+        if (isLaserBallChargeUp)
+            return;
         if (Rbody2D.velocity == Vector2.zero)
             gameObject.SetActive(false);
     }
@@ -37,16 +40,33 @@ public class BasicBullet : MonoBehaviour
             return;
         }
 
-        if (other.gameObject.layer == 13 || other.gameObject.layer == 12 || other.CompareTag("Laser"))
+        if (other.gameObject.layer == 13 || other.CompareTag("Laser"))
+        {
+            ExplosionHandler(other.ClosestPoint(transform.position));
+            return;
+        }
+
+        if (other.gameObject.layer == 12)
         {
             if (other.CompareTag(gameObject.tag))
                 return;
 
-            if (other.TryGetComponent<Missle>(out var missle))
+            if (other.TryGetComponent<Missle>(out var missle)){
                 missle.GetDamaged(bulletData.damage);
+                ExplosionHandler(other.ClosestPoint(transform.position));
+                return;
+            }
 
-            ExplosionHandler(other.ClosestPoint(transform.position));
-            return;
+            if (other.TryGetComponent<BasicBullet>(out var laserBall) && laserBall.isLaserBall)
+            {
+                if(isLaserBall)
+                    laserBall.ExplosionHandler(laserBall.transform.position);
+                else
+                    ExplosionHandler(other.ClosestPoint(transform.position));
+
+                return;
+            }
+
         }
 
         if (other.TryGetComponent<ShieldController>(out var shield) && bulletData.targetTag == "Ship")
@@ -100,9 +120,14 @@ public class BasicBullet : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(explosionParicleTag))
         {
-            var particle = objectPooler.SpawnFromPool(explosionParicleTag, transform.position, null).GetComponent<ParticleSystem>();
+            var particle = ObjectPooler.Instance.SpawnFromPool(explosionParicleTag, transform.position, null).GetComponent<ParticleSystem>();
             var particleMain = particle.main;
-            particleMain.startColor = GetComponentInChildren<SpriteRenderer>().color;
+            if(isLaserBall)
+                particle.transform.localScale = transform.localScale;
+            if (GetComponentInChildren<SpriteRenderer>() != null)
+                particleMain.startColor = GetComponentInChildren<SpriteRenderer>().color;
+            if (GetComponentInChildren<ParticleSystem>() != null)
+                particleMain.startColor = GetComponentInChildren<ParticleSystem>().main.startColor;
             particle.Play();
         }
         gameObject.SetActive(false);

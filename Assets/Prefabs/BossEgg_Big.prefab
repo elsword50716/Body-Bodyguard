@@ -168,6 +168,11 @@ MonoBehaviour:
   deadParticleTag: BossEggDeadParticle
   maxEnemyNumber: 10
   enemyPool: {fileID: 3152266590320996046}
+  dropPickupTag:
+  - Wrench_Big
+  - HealKit_Big
+  - ShieldPack_Big
+  dropProbability: 1
 --- !u!1 &3152266590614236997
 GameObject:
   m_ObjectHideFlags: 0

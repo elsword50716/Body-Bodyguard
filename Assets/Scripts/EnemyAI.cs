@@ -416,6 +416,7 @@ public class EnemyAI : MonoBehaviour
         if (bullet.TryGetComponent<BasicBullet>(out var basicBullet))
         {
             basicBullet.bulletData.targetTag = "Ship";
+            basicBullet.bulletData.targetLayer = shipLayer.layerMask;
             basicBullet.bulletData.damage = enemyData.attackDamage;
         }
 

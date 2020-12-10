@@ -25,18 +25,25 @@ public class BossAI : MonoBehaviour
     public float rushDamper;
     public GameObject rushParticle;
     [Header("產卵攻擊資料")]
-    public string eggTag;
+    public string[] eggTag;
     public int eggSpawnNumberPerTime;
     public float eggSpawnRate;
     public float eggSpawnTorque;
     [Header("雷射攻擊資料")]
-    public GameObject laserPrefab;
+    public GameObject[] laserPrefab;
+    public ParticleSystem laserChargeParticle;
+    public float laserDelay;
     public float laserRotateSpeed;
     public float laserRotateLineLenght;
     [Header("尾獸玉攻擊資料")]
-    public string laserBallTag;
+    public string[] laserBallTag;
+    public float laserBallSpeed;
+    public float laserBallTorqueSpeed;
     public int laserBallNumberPerTime;
     public float laserBallSpawnRate;
+    public float laserBallMaxSize;
+    public float laserBallToMaxSizeSpeed;
+    public ParticleSystem laserBallChargeParicle;
 
     private EnemyAI enemyAI;
     private BulletManager shipBulletManager;
@@ -45,8 +52,7 @@ public class BossAI : MonoBehaviour
     private int attackIndex;
     private bool isFinishAttck;
     private Vector3 targetPosion;
-    private bool isFirstRush;
-    private bool isFirstLaser;
+    private bool isFirst;
     private float laserRotateLineY;
     private Vector3 laserRotateLinePointA;
     private Vector3 laserRotateLinePointB;
@@ -56,7 +62,10 @@ public class BossAI : MonoBehaviour
     private bool islaserRotateFromPointA;
     private int eggNumber;
     private int laserBallNumber;
+    private GameObject laserBall_Temp;
+    private Rigidbody2D laserBallRbody_Temp;
     private float timer;
+    private int randomIndex;
 
     private void OnValidate()
     {
@@ -74,14 +83,9 @@ public class BossAI : MonoBehaviour
     private void OnEnable()
     {
         isFinishAttck = true;
-        isFirstRush = true;
-        isFirstLaser = true;
+        isFirst = true;
         eggNumber = 0;
-
-    }
-
-    private void Start()
-    {
+        laserBallNumber = 0;
 
     }
 
@@ -121,10 +125,9 @@ public class BossAI : MonoBehaviour
 
     public void Attack()
     {
-        Debug.Log("Boss Attck");
         if (isFinishAttck)
         {
-            attackIndex = Random.Range(0, 3);
+            attackIndex = Random.Range(0, 4);
             isFinishAttck = false;
         }
         switch (attackIndex)
@@ -146,10 +149,10 @@ public class BossAI : MonoBehaviour
     }
     private void Rush()
     {
-        if (isFirstRush)
+        if (isFirst)
         {
             targetPosion = ship.position;
-            isFirstRush = false;
+            isFirst = false;
         }
         if ((targetPosion - transform.position).sqrMagnitude > rushDamper * rushDamper)
         {
@@ -160,7 +163,7 @@ public class BossAI : MonoBehaviour
                 //damage the ship
                 enemyAI.DamageShip(collider2Ds[0]);
                 rushParticle.SetActive(false);
-                isFirstRush = true;
+                isFirst = true;
                 isFinishAttck = true;
                 enemyAI.SetState(EnemyAI.State.ChaseTarget);
                 return;
@@ -171,7 +174,7 @@ public class BossAI : MonoBehaviour
         else
         {
             rushParticle.SetActive(false);
-            isFirstRush = true;
+            isFirst = true;
             isFinishAttck = true;
             enemyAI.SetState(EnemyAI.State.ChaseTarget);
         }
@@ -199,7 +202,8 @@ public class BossAI : MonoBehaviour
     private void BirthEgg()
     {
         //play sound here
-        var egg = ObjectPooler.Instance.SpawnFromPool(eggTag, shootPoint.position, null);
+        var randomIndex = Random.Range(0, eggTag.Length);
+        var egg = ObjectPooler.Instance.SpawnFromPool(eggTag[randomIndex], shootPoint.position, null);
         egg.SetActive(false);
         egg.SetActive(true);
         var eggRbody = egg.GetComponent<Rigidbody2D>();
@@ -210,10 +214,10 @@ public class BossAI : MonoBehaviour
 
     private void MouthLaser()
     {
-        if (isFirstLaser)
+        if (isFirst)
         {
             //play sound here
-            isFirstLaser = false;
+            isFirst = false;
             laserRotateLineY = ship.position.y;
             islaserRotateFromPointA = (ship.position.x - shootPoint.position.x) > 0 ? true : false;
             laserRotateLinePointA = new Vector2(shootPoint.position.x - laserRotateLineLenght / 2, laserRotateLineY);
@@ -228,21 +232,37 @@ public class BossAI : MonoBehaviour
                 laserRotateLinePointC = laserRotateLinePointB;
                 laserRotateDir = laserRotateLinePointB - shootPoint.position;
             }
-            laserPrefab.transform.right = laserRotateDir.normalized;
-            laserPrefab.SetActive(true);
+            randomIndex = Random.Range(0, laserPrefab.Length);
+            laserPrefab[randomIndex].transform.right = laserRotateDir.normalized;
+            var startColor = laserPrefab[randomIndex].GetComponentInChildren<ParticleSystem>().main.startColor;
+            var main = laserChargeParticle.main;
+            main.startColor = startColor;
+            laserChargeParticle.gameObject.SetActive(true);
+        }
+
+        if (timer > laserDelay)
+        {
+            laserChargeParticle.gameObject.SetActive(false);
+            laserPrefab[randomIndex].SetActive(true);
+        }
+        else
+        {
+            timer += Time.deltaTime;
+            return;
         }
 
         if (laserRotateLinePointC.x > laserRotateLinePointB.x || laserRotateLinePointC.x < laserRotateLinePointA.x)
         {
-            laserPrefab.SetActive(false);
-            isFirstLaser = true;
+            timer = 0;
+            laserPrefab[randomIndex].SetActive(false);
+            isFirst = true;
             isFinishAttck = true;
             enemyAI.SetState(EnemyAI.State.ChaseTarget);
             return;
         }
 
         laserRotateDir = laserRotateLinePointC - shootPoint.position;
-        laserPrefab.transform.right = laserRotateDir.normalized;
+        laserPrefab[randomIndex].transform.right = laserRotateDir.normalized;
 
         if (islaserRotateFromPointA)
             laserRotateLinePointC += (laserRotateLinePointB - laserRotateLinePointA) * Time.deltaTime * laserRotateSpeed;
@@ -254,6 +274,61 @@ public class BossAI : MonoBehaviour
 
     private void MouthLaserBall()
     {
+        if (laserBallNumber == laserBallNumberPerTime)
+        {
+            isFirst = true;
+            isFinishAttck = true;
+            enemyAI.SetState(EnemyAI.State.ChaseTarget);
+            timer = 0;
+            laserBallNumber = 0;
+            return;
+        }
+
+        if (timer > laserBallSpawnRate)
+        {
+            SpawnLaserBall();
+        }
+        else
+            timer += Time.deltaTime;
+    }
+
+    private void SpawnLaserBall()
+    {
+        if (isFirst)
+        {
+            isFirst = false;
+            randomIndex = Random.Range(0, laserBallTag.Length);
+            laserBall_Temp = ObjectPooler.Instance.SpawnFromPool(laserBallTag[randomIndex], shootPoint.position, null);
+            laserBall_Temp.GetComponent<BasicBullet>().isLaserBallChargeUp = true;
+            laserBall_Temp.transform.localScale = new Vector3(0f, 0f, 1f);
+            Debug.Log("<color=red>laserBall</color>", laserBall_Temp);
+            laserBallRbody_Temp = laserBall_Temp.GetComponent<Rigidbody2D>();
+            var particle = laserBall_Temp.GetComponentInChildren<ParticleSystem>();
+            var startColor = particle.main.startColor;
+            var main = laserBallChargeParicle.main;
+            main.startColor = startColor;
+            laserBallChargeParicle.gameObject.SetActive(true);
+        }
+
+        if (laserBall_Temp.transform.localScale.magnitude < new Vector3(laserBallMaxSize, laserBallMaxSize, 1).magnitude)
+        {
+            laserBallChargeParicle.gameObject.SetActive(true);
+            laserBall_Temp.transform.position = shootPoint.position;
+            laserBall_Temp.transform.localScale += new Vector3(Time.deltaTime * laserBallToMaxSizeSpeed, Time.deltaTime * laserBallToMaxSizeSpeed, 0);
+        }
+        else
+        {
+            isFirst = true;
+            timer = 0;
+            laserBallNumber++;
+            laserBallChargeParicle.gameObject.SetActive(false);
+            laserBall_Temp.transform.localScale = new Vector3(laserBallMaxSize, laserBallMaxSize, 1);
+            laserBallRbody_Temp.AddTorque(laserBallTorqueSpeed);
+            laserBallRbody_Temp.velocity = (ship.position - shootPoint.position).normalized * laserBallSpeed;
+            laserBall_Temp.GetComponent<BasicBullet>().isLaserBallChargeUp = false;
+        }
+
+
 
     }
 

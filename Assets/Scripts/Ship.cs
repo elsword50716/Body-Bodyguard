@@ -176,11 +176,11 @@ public class Ship : MonoBehaviour
     public void RefreshUI()
     {
         wrenchText.SetText($"{shipData.wrenchNumber}/{15 + shipData.upgradeTimes * 5}");
-        if (shipData.wrenchNumber >= 15 + shipData.upgradeTimes * 5 && !shipUpgradeAnimator.GetBool("isOpen"))
+        if (shipData.wrenchNumber >= 15 + shipData.upgradeTimes * 5 && !shipUpgradeAnimator.GetBool("isOpen") && shipData.upgradeTimes < 21)
         {
             CameraController.Instance.GetMainCamera().Priority = 30;
             shipUpgradeAnimator.SetBool("isOpen", true);
-            shipUpgradeAnimator.transform.position = transform.position;
+            //shipUpgradeAnimator.transform.position = transform.position;
         }
         healthBar.value = currentHealth;
         ShieldBar.value = currentShieldHP;

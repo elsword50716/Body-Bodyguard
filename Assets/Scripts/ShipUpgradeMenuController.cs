@@ -68,8 +68,8 @@ public class ShipUpgradeMenuController : MonoBehaviour
         Debug.Log("i = " + i);
         partLevelUpTimes[i]++;
         ship.shipData.ShipPartLevel[i]++;
+        ship.shipData.wrenchNumber -= (15 + ship.shipData.upgradeTimes * 5);
         ship.shipData.upgradeTimes++;
-        ship.shipData.wrenchNumber = 0;
         GameSaveLoadManager.Instance.SaveData();
         CameraController.Instance.GetMainCamera().Priority = 10;
         animator.SetBool("isOpen", false);
@@ -77,6 +77,7 @@ public class ShipUpgradeMenuController : MonoBehaviour
 
     public void SetTimeScale(float scale)
     {
+        transform.position = ship.transform.position;
         Time.timeScale = scale;
     }
 }

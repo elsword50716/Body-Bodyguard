@@ -102,6 +102,11 @@ MonoBehaviour:
   deadParticleTag: BossEggDeadParticle
   maxEnemyNumber: 30
   enemyPool: {fileID: 3593781147206084960}
+  dropPickupTag:
+  - Wrench_Medium
+  - HealKit_Medium_2
+  - ShieldPack_Big
+  dropProbability: 1
 --- !u!1 &3593781147078216306
 GameObject:
   m_ObjectHideFlags: 0
@@ -4972,11 +4977,6 @@ MonoBehaviour:
   - {fileID: 1285186385602182191, guid: 0781abca9dc797d4e8d3665b01794ed7, type: 3}
   - {fileID: 3981933488477669662, guid: c2117a7c263ae8e49ad8f7e38c7d9a38, type: 3}
   - {fileID: 3767088543377508300, guid: 96521f7e5d48e3342b8d61adda1c9215, type: 3}
-  - {fileID: 6903082155942715903, guid: 36f7bbcbdba179f4f9e7110d29aea163, type: 3}
-  - {fileID: 1441648473316375323, guid: bf00d0991a39d5d43993e5d2a2bd33d4, type: 3}
-  - {fileID: 9006692387320862931, guid: 3e41af61187ff934196541300d933d9e, type: 3}
-  - {fileID: 5756674944779196413, guid: 7b7a5f0a3c468f843b71c40ddb19dd3b, type: 3}
-  - {fileID: 8657621231848525925, guid: 5f98bb7bd85fce744b3e5db7b655ddff, type: 3}
 --- !u!114 &2105966058
 MonoBehaviour:
   m_ObjectHideFlags: 0
