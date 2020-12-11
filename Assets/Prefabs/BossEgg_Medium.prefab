@@ -88,19 +88,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71e737ae1aef4504093017b03041d291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explodeDelay: 5
-  explodeForce: 5
+  explodeDelay: 6
   eggAnimator: {fileID: 3593781146807815151}
   animationMaxSpeed: 2
   enemySpawnController: {fileID: 3593781147206084961}
   gameObjectsActiveController: {fileID: 2105966058}
   rbody: {fileID: 3593781146807815148}
   explosionParticle: {fileID: 3593781147078216306}
-  maxHealth: 175
+  maxHealth: 150
   hitEffectMaterial: {fileID: 2100000, guid: 46d1ebf0dd1aed94c8ba4c9b7a507934, type: 2}
   deadParticleColor: {r: 0, g: 0.8352941, b: 1, a: 1}
   deadParticleTag: BossEggDeadParticle
-  maxEnemyNumber: 30
+  maxEnemyNumber: 15
   enemyPool: {fileID: 3593781147206084960}
   dropPickupTag:
   - Wrench_Medium

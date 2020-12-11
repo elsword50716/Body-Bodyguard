@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.InputSystem;
 
 public class ShipController : MonoBehaviour
@@ -9,6 +10,8 @@ public class ShipController : MonoBehaviour
     public bool isMapUnlocked;
     public bool addForce = false;
     public bool isBoostMode = false;
+    public TextMeshProUGUI boostModeUIText;
+    public ParticleSystem boostModeParticle;
     public Rigidbody2D shipRbody;
     public Transform ship;
     public Animator mapAnimator;
@@ -22,10 +25,14 @@ public class ShipController : MonoBehaviour
     private InputAction m_OpenMap;
     private bool isMapOpen = false;
     private float shipSpeed;
+    private float boosterModeTimer;
+    private int boosterPaticleIndex;
+    private float[] boosterAngle_Temp;
 
     private void Awake()
     {
         shipRbody = ship.GetComponent<Rigidbody2D>();
+        boosterAngle_Temp = new float[4];
     }
 
     private void Update()
@@ -49,14 +56,36 @@ public class ShipController : MonoBehaviour
 
             if (isBoostMode)
             {
+                boosterPaticleIndex = 1;
+                for (int i = 0; i < 4; i++)
+                {
+                    boosterData.boosters[i].GetChild(0).gameObject.SetActive(false);
+                    boosterData.boosters[i].GetChild(1).gameObject.SetActive(true);
+                }
                 shipSpeed = boosterData.shipBoostSpeed;
+                boostModeUIText.transform.parent.gameObject.SetActive(true);
+                boostModeUIText.SetText((boosterData.shipBoostModeDuration - boosterModeTimer).ToString("0.00") + "s");
+                if (boosterModeTimer < boosterData.shipBoostModeDuration)
+                    boosterModeTimer += Time.deltaTime;
+                else
+                {
+                    boosterPaticleIndex = 0;
+                    for (int i = 0; i < 4; i++)
+                    {
+                        boosterData.boosters[i].GetChild(1).gameObject.SetActive(false);
+                        boosterData.boosters[i].GetChild(0).gameObject.SetActive(true);
+                    }
+                    boostModeUIText.transform.parent.gameObject.SetActive(false);
+                    shipSpeed = boosterData.shipSpeed;
+                    boosterModeTimer = 0f;
+                    isBoostMode = false;
+                }
             }
             else
-            {
                 shipSpeed = boosterData.shipSpeed;
-            }
 
             ShipMove(m_ShipMove);
+
         }
         else
         {
@@ -71,7 +100,7 @@ public class ShipController : MonoBehaviour
 
             for (int i = 0; i < 4; i++)
             {
-                boosterData.boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();
+                boosterData.boosters[i].GetChild(boosterPaticleIndex).GetComponent<ParticleSystem>().Stop();
             }
         }
 
@@ -89,7 +118,7 @@ public class ShipController : MonoBehaviour
             SoundManager.Instance.StopPlaySound(SoundManager.SoundType.booster);
             for (int i = 0; i < 4; i++)
             {
-                boosterData.boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();
+                boosterData.boosters[i].GetChild(boosterPaticleIndex).GetComponent<ParticleSystem>().Stop();
             }
             return;
         }
@@ -126,6 +155,15 @@ public class ShipController : MonoBehaviour
         return moveInput;
     }
 
+    public void SetBoosterAngle(){
+        for (int i = 0; i < boosterData.boosters.Length; i++)
+        {
+            if(boosterData.boosters[i] == null)
+                continue;
+            boosterData.boosters[i].eulerAngles = Vector3.forward * boosterAngle_Temp[i];
+        }
+    }
+
     private void BoostersControl(int theUsingOne)
     {
         for (int i = 0; i < boosterData.boosters.Length; i++)
@@ -133,7 +171,7 @@ public class ShipController : MonoBehaviour
             if (i == theUsingOne)
                 continue;
 
-            boosterData.boosters[i].GetChild(0).GetComponent<ParticleSystem>().Stop();
+            boosterData.boosters[i].GetChild(boosterPaticleIndex).GetComponent<ParticleSystem>().Stop();
         }
 
         float inputAngleDelta = Mathf.Acos(Vector2.Dot(boosterData.boosters[theUsingOne].up, moveInput.normalized)) * Mathf.Rad2Deg;
@@ -153,12 +191,12 @@ public class ShipController : MonoBehaviour
 
             if (inputAngleDelta_temp > inputAngleDelta)
             {
-                boosterData.boosters[theUsingOne].Rotate(new Vector3(0f, 0f, degree));
+                boosterData.boosters[theUsingOne].Rotate(Vector3.forward * degree);
                 Debug.Log("加角度");
             }
             else
             {
-                boosterData.boosters[theUsingOne].Rotate(new Vector3(0f, 0f, -degree));
+                boosterData.boosters[theUsingOne].Rotate(Vector3.forward * -degree);
                 Debug.Log("減角度");
             }
 
@@ -167,20 +205,22 @@ public class ShipController : MonoBehaviour
         {
             boosterData.boosters[theUsingOne].up = moveInput.normalized;
             if (theUsingOne == 0)
-                boosterData.boosters[theUsingOne].eulerAngles = new Vector3(0f, 0f, boosterData.boosters[theUsingOne].eulerAngles.z);
+                boosterData.boosters[theUsingOne].eulerAngles = Vector3.forward * boosterData.boosters[theUsingOne].eulerAngles.z;
             Debug.Log("貼其");
         }
+
+        boosterAngle_Temp[theUsingOne] = boosterData.boosters[theUsingOne].eulerAngles.z;
 
         if (addForce)
         {
             SoundManager.Instance.PlaySoundLoop(SoundManager.SoundType.booster, false);
-            boosterData.boosters[theUsingOne].GetChild(0).GetComponent<ParticleSystem>().Play();
+            boosterData.boosters[theUsingOne].GetChild(boosterPaticleIndex).GetComponent<ParticleSystem>().Play();
             shipRbody.velocity += ((Vector2)boosterData.boosters[theUsingOne].up * shipSpeed * Time.deltaTime);
         }
         else
         {
             SoundManager.Instance.StopPlaySound(SoundManager.SoundType.booster);
-            boosterData.boosters[theUsingOne].GetChild(0).GetComponent<ParticleSystem>().Stop();
+            boosterData.boosters[theUsingOne].GetChild(boosterPaticleIndex).GetComponent<ParticleSystem>().Stop();
         }
     }
 

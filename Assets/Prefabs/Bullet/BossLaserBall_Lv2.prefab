@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1861607368915535001}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9, y: 0, z: 0}
+  m_LocalPosition: {x: 8.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6572181459380931956}
@@ -61,7 +61,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  damagePerSec: 100
+  damagePerSec: 15
   maxLenth: 15
   lineRenderer: {fileID: 7654650533427498739}
   hitParticle: {fileID: 7016603849801004884}
@@ -278,7 +278,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -455,7 +455,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 6
+      scalar: 5
       minScalar: 3
       maxCurve:
         serializedVersion: 2
@@ -5210,8 +5210,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 15
-      minScalar: 10
+      scalar: 5
+      minScalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -19396,7 +19396,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -19573,7 +19573,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 6
+      scalar: 5
       minScalar: 3
       maxCurve:
         serializedVersion: 2
@@ -24328,8 +24328,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 15
-      minScalar: 10
+      scalar: 5
+      minScalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -33578,7 +33578,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6492877657808335642}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: -9, y: 0, z: 0}
+  m_LocalPosition: {x: -8.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8464656582730455079}
@@ -33613,7 +33613,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  damagePerSec: 200
+  damagePerSec: 15
   maxLenth: 15
   lineRenderer: {fileID: 3918197635745292022}
   hitParticle: {fileID: 807483849018762874}

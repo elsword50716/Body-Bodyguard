@@ -75,6 +75,7 @@ public struct BoosterData
 {
     public float shipSpeed;
     public float shipBoostSpeed;
+    public float shipBoostModeDuration;
     public float boostersRotateSpeed;
     public Transform[] boosters;
 }

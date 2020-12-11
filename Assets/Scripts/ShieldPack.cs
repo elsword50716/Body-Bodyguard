@@ -16,7 +16,7 @@ public class ShieldPack : MonoBehaviour
             ship.ShieldHeal(healPercent * ship.sheildData.maxShieldHP);
             if (isPhoenix)
             {
-                if (other.TryGetComponent<ShieldController>(out var shield))
+                if (ship.sheildData.shieldSprite.transform.parent.TryGetComponent<ShieldController>(out var shield))
                 {
                     shield.isInvincible = true;
                     shield.invincibleParicleUI.Play();

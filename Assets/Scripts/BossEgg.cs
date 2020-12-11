@@ -5,7 +5,6 @@ using UnityEngine;
 public class BossEgg : MonoBehaviour
 {
     public float explodeDelay;
-    public float explodeForce;
     public Animator eggAnimator;
     public float animationMaxSpeed;
     public EnemySpawnController enemySpawnController;
