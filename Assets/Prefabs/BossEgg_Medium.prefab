@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3593781146807815151}
   - component: {fileID: 3593781146807815148}
   - component: {fileID: 3593781146807815149}
-  m_Layer: 11
+  m_Layer: 22
   m_Name: BossEgg_Medium
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71e737ae1aef4504093017b03041d291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explodeDelay: 6
+  explodeDelay: 4
   eggAnimator: {fileID: 3593781146807815151}
   animationMaxSpeed: 2
   enemySpawnController: {fileID: 3593781147206084961}
@@ -105,7 +105,7 @@ MonoBehaviour:
   - Wrench_Medium
   - HealKit_Medium_2
   - ShieldPack_Big
-  dropProbability: 1
+  dropProbability: 0.4
 --- !u!1 &3593781147078216306
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 3593781147078216311}
   - component: {fileID: 3593781147078216308}
   - component: {fileID: 3593781147078216309}
-  m_Layer: 11
+  m_Layer: 22
   m_Name: EggExplodeParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4929,7 +4929,7 @@ GameObject:
   - component: {fileID: 3593781147206084960}
   - component: {fileID: 3593781147206084961}
   - component: {fileID: 2105966058}
-  m_Layer: 11
+  m_Layer: 22
   m_Name: EnemyPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4989,7 +4989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ship: {fileID: 0}
-  activeDistance: 120
+  activeDistance: 150
   gameObjects: []
 --- !u!1 &3593781147839889876
 GameObject:
@@ -5003,7 +5003,7 @@ GameObject:
   - component: {fileID: 3593781147839889896}
   - component: {fileID: 3593781147839889897}
   - component: {fileID: 3593781147839889878}
-  m_Layer: 11
+  m_Layer: 22
   m_Name: eggSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5063,7 +5063,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -876018437
   m_SortingLayer: 7
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -4432475281885840684, guid: 9309023df981e244aad520cebe57d40a,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

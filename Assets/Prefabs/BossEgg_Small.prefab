@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6050586031062014732}
   - component: {fileID: 6050586031062014733}
   - component: {fileID: 6050586031062014770}
-  m_Layer: 11
+  m_Layer: 22
   m_Name: eggSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -876018437
   m_SortingLayer: 7
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -4432475281885840684, guid: 9309023df981e244aad520cebe57d40a,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 6050586031298937312}
   - component: {fileID: 6050586031298937313}
   - component: {fileID: 1374533902}
-  m_Layer: 11
+  m_Layer: 22
   m_Name: EnemyPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ship: {fileID: 0}
-  activeDistance: 120
+  activeDistance: 150
   gameObjects: []
 --- !u!1 &6050586031321782081
 GameObject:
@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 6050586032005289411}
   - component: {fileID: 6050586032005289437}
   - component: {fileID: 6050586032005289410}
-  m_Layer: 11
+  m_Layer: 22
   m_Name: EggExplodeParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5138,7 +5138,7 @@ GameObject:
   - component: {fileID: 6050586032628543292}
   - component: {fileID: 6050586032628543293}
   - component: {fileID: 6050586032628543266}
-  m_Layer: 11
+  m_Layer: 22
   m_Name: BossEgg_Small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5214,7 +5214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71e737ae1aef4504093017b03041d291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explodeDelay: 5
+  explodeDelay: 3
   eggAnimator: {fileID: 6050586032628543292}
   animationMaxSpeed: 2
   enemySpawnController: {fileID: 6050586031298937313}
@@ -5231,4 +5231,4 @@ MonoBehaviour:
   - Wrench_Small
   - HealKit_Medium
   - ShieldPack_Medium
-  dropProbability: 1
+  dropProbability: 0.4

@@ -101,6 +101,7 @@ public class ShipController : MonoBehaviour
             for (int i = 0; i < 4; i++)
             {
                 boosterData.boosters[i].GetChild(boosterPaticleIndex).GetComponent<ParticleSystem>().Stop();
+                boosterAngle_Temp[i] = boosterData.boosters[i].eulerAngles.z;
             }
         }
 
@@ -155,11 +156,12 @@ public class ShipController : MonoBehaviour
         return moveInput;
     }
 
-    public void SetBoosterAngle(){
+    public void SetBoosterAngle()
+    {
+        if (boosterData.boosters.Length == 0)
+            return;
         for (int i = 0; i < boosterData.boosters.Length; i++)
         {
-            if(boosterData.boosters[i] == null)
-                continue;
             boosterData.boosters[i].eulerAngles = Vector3.forward * boosterAngle_Temp[i];
         }
     }

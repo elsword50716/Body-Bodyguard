@@ -234,12 +234,15 @@ MonoBehaviour:
   - HealKit_Medium_2
   - Wrench_Big
   - ShieldPack_Big
+  - BoostModePack_5sec
   bulletPoolTag: BooleanAgbra_Bullet
   bulletPool: {fileID: 5307865851089599201}
   currentHealth: 0
   deadExplosionTag: BooleanAgbra_DeadExplosion
   hitEffectMaterial: {fileID: 2100000, guid: 46d1ebf0dd1aed94c8ba4c9b7a507934, type: 2}
   Rbody2D: {fileID: 0}
+  spriteRenderer:
+  - {fileID: 5307865852950667254}
   enemyData:
     id: 0
     name: BooleanAgbra

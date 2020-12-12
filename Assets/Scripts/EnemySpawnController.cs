@@ -20,6 +20,11 @@ public class EnemySpawnController : MonoBehaviour
         //SpawnEnemies();
     }
 
+    private void Update()
+    {
+        transform.eulerAngles = Vector3.zero;
+    }
+
     public Vector3 GetRandomPostion()
     {
         return transform.position + new Vector3(Random.Range(-1f, 1f) * spawnAreaWeight, Random.Range(-1f, 1f) * spawnAreaHeight);

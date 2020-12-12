@@ -51,10 +51,10 @@ public class Missle : MonoBehaviour
 
     private void Update()
     {
-        if (target == null || !target.parent.gameObject.activeSelf)
+        if (target == null || (target.transform.parent != null && !target.parent.gameObject.activeSelf) || !target.gameObject.activeSelf)
         {
             FindTarget();
-            if (target == null || !target.parent.gameObject.activeSelf)
+            if (target == null || (target.transform.parent != null && !target.parent.gameObject.activeSelf) || !target.gameObject.activeSelf)
             {
                 aimSprite.gameObject.SetActive(false);
                 return;
@@ -134,7 +134,7 @@ public class Missle : MonoBehaviour
 
             if (target.TryGetComponent<EnemyLairAI>(out var lair))
                 lair.GetDamaged(bulletData.damage);
-            if (target.transform.parent.GetComponent<BossEgg>() != null)
+            if (target.transform.parent != null && target.transform.parent.GetComponent<BossEgg>() != null)
                 target.transform.parent.GetComponent<BossEgg>().GetDamaged(bulletData.damage);
         }
         basicBullet.ExplosionHandler(Position);
@@ -155,7 +155,7 @@ public class Missle : MonoBehaviour
             {
                 if (target.TryGetComponent<EnemyAI>(out var enemy))
                 {
-                    scale = enemy.enemyData.aiRadius / 1.45f;
+                    scale = enemy.isBoss ? 35f : enemy.enemyData.aiRadius / 1.45f;
                     aimSprite.transform.localScale = new Vector3(scale, scale, 1f);
                 }
                 if (target.TryGetComponent<EnemyLairAI>(out var lair))
@@ -163,7 +163,7 @@ public class Missle : MonoBehaviour
                     scale = 20f / 1.45f;
                     aimSprite.transform.localScale = new Vector3(scale, scale, 1f);
                 }
-                if (target.transform.parent.GetComponent<BossEgg>() != null && (target.gameObject.activeSelf && target.parent.gameObject.activeSelf))
+                if (target.transform.parent != null && target.transform.parent.GetComponent<BossEgg>() != null && (target.gameObject.activeSelf && target.parent.gameObject.activeSelf))
                 {
                     scale = 8f;
                     aimSprite.transform.localScale = new Vector3(scale, scale, 1f);

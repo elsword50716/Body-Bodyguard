@@ -106,8 +106,7 @@ public class ShipPartUpgradeController : MonoBehaviour
                 break;
             case PartType.booster:
                 shipController.boosterData = partPrefabs[level_temp].boosterData;
-                if(level_temp !=0)
-                    shipController.SetBoosterAngle();
+                shipController.Invoke("SetBoosterAngle", 0.1f);
                 break;
             case PartType.shield:
                 ship.sheildData = partPrefabs[level_temp].shieldData;

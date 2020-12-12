@@ -177,12 +177,18 @@ MonoBehaviour:
   - HealKit_Medium
   - Wrench_Medium
   - ShieldPack_Medium
+  - BoostModePack_3sec
   bulletPoolTag: 
   bulletPool: {fileID: 0}
   currentHealth: 0
   deadExplosionTag: Virus_DeadExplosion
   hitEffectMaterial: {fileID: 2100000, guid: 46d1ebf0dd1aed94c8ba4c9b7a507934, type: 2}
   Rbody2D: {fileID: 0}
+  spriteRenderer:
+  - {fileID: 8396738790509835735}
+  - {fileID: 8396738790022724478}
+  - {fileID: 8396738790077554748}
+  - {fileID: 8396738791158005116}
   enemyData:
     id: 7
     name: Pussy

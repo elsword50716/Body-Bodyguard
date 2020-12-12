@@ -78,7 +78,7 @@ public class ChangePlayerColor : MonoBehaviour
     }
 
 
-    private Point2[][] GetColorPosition(Color[] targetColor)
+    public Point2[][] GetColorPosition(Color[] targetColor)
     {
         Point2[][] point2s_temp = new Point2[targetColor.Length][];
         for (int i = 0; i < targetColor.Length; i++)
@@ -136,7 +136,7 @@ public class ChangePlayerColor : MonoBehaviour
 
     }
 
-    private Texture2D duplicateTexture(Texture2D source)
+    public Texture2D duplicateTexture(Texture2D source)
     {
         RenderTexture renderTex = RenderTexture.GetTemporary(
                     source.width,

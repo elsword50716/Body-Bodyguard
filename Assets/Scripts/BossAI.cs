@@ -66,6 +66,7 @@ public class BossAI : MonoBehaviour
     private int eggNumber;
     private int laserBallNumber;
     private GameObject laserBall_Temp;
+    private GameObject egg_Temp;
     private Rigidbody2D laserBallRbody_Temp;
     private float timer;
     private int randomIndex;
@@ -195,7 +196,14 @@ public class BossAI : MonoBehaviour
 
         if (timer > eggSpawnRate)
         {
-            BirthEgg();
+            randomIndex = Random.Range(0, eggTag.Length);
+            egg_Temp = ObjectPooler.Instance.SpawnFromPool(eggTag[randomIndex], shootPoint.position, null);
+            if (!egg_Temp.transform.GetChild(0).gameObject.activeSelf)
+            {
+                egg_Temp.SetActive(false);
+                egg_Temp.SetActive(true);
+            }
+            Invoke("BirthEgg", 1f);
             timer = 0f;
         }
         else
@@ -205,14 +213,7 @@ public class BossAI : MonoBehaviour
     private void BirthEgg()
     {
         //play sound here
-        var randomIndex = Random.Range(0, eggTag.Length);
-        GameObject egg = ObjectPooler.Instance.SpawnFromPool(eggTag[randomIndex], shootPoint.position, null);
-        if (egg.activeSelf)
-        {
-            egg.SetActive(false);
-            egg.SetActive(true);
-        }
-        var eggRbody = egg.GetComponent<Rigidbody2D>();
+        var eggRbody = egg_Temp.GetComponent<Rigidbody2D>();
         eggRbody.AddTorque(eggSpawnTorque);
         eggRbody.velocity = (ship.position - shootPoint.position).normalized * enemyData.BulletSpeed;
         eggNumber++;
@@ -261,7 +262,8 @@ public class BossAI : MonoBehaviour
             {
                 var addSize = laserChargeBallToMaxSpeed * Time.deltaTime;
                 laserChargeBallParticle.transform.localScale += new Vector3(addSize, addSize, 0f);
-            }else
+            }
+            else
                 laserChargeBallParticle.transform.localScale = new Vector3(laserChargeBallMaxSize, laserChargeBallMaxSize, 1f);
             timer += Time.deltaTime;
             return;
@@ -351,6 +353,7 @@ public class BossAI : MonoBehaviour
 
     public void Dead()
     {
+        cameraFollowPoint.position = transform.position;
 
     }
 

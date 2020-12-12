@@ -23,6 +23,7 @@ public class EnemyAI : MonoBehaviour
     public string deadExplosionTag;
     public Material hitEffectMaterial;
     public Rigidbody2D Rbody2D;
+    public SpriteRenderer[] spriteRenderer;
 
 
     [Header("敵人資料")]
@@ -51,7 +52,6 @@ public class EnemyAI : MonoBehaviour
     private bool alreadySetStartPosition = false;
     private bool isKillByBomb;
     private Material originalMaterial;
-    private SpriteRenderer[] spriteRenderer;
     private BossAI bossAI;
 
     private void OnValidate()
@@ -74,7 +74,6 @@ public class EnemyAI : MonoBehaviour
         targetPosition = ChasingPoint.transform;
         state = State.Roaming;
         enemySprite = transform.GetChild(0);
-        spriteRenderer = enemySprite.GetComponentsInChildren<SpriteRenderer>();
         originalMaterial = spriteRenderer[0].material;
     }
 
@@ -103,7 +102,11 @@ public class EnemyAI : MonoBehaviour
         {
             currentHealth = 0;
             if (isBoss)
-                bossAI.Dead();
+            {
+                bossAI.animator.SetBool("isDead", true);
+                this.enabled = false;
+                return;
+            }
             else
                 Dead();
         }

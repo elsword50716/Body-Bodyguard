@@ -82,6 +82,8 @@ public class ShieldController : MonoBehaviour
 
         if (other.transform.TryGetComponent<EnemyAI>(out var enemy))
         {
+            if (enemy.isBoss)
+                return;
             if (!isInvincible)
             {
                 var particle = ObjectPooler.Instance.SpawnFromPool(damageParticleTag, other.GetContact(0).point, null);
