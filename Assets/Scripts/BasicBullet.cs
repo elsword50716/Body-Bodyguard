@@ -33,6 +33,13 @@ public class BasicBullet : MonoBehaviour
         if (isMissle)
             return;
 
+        if (other.TryGetComponent<BossHand>(out var hand) && !gameObject.CompareTag("EnemyBullet"))
+        {
+            hand.GetDamaged(bulletData.damage);
+            ExplosionHandler(other.ClosestPoint(transform.position));
+            return;
+        }
+
         if (other.TryGetComponent<UnderwaterBomb>(out var bomb))
         {
             bomb.GetDamaged(bulletData.damage);
@@ -51,15 +58,17 @@ public class BasicBullet : MonoBehaviour
             if (other.CompareTag(gameObject.tag))
                 return;
 
-            if (other.TryGetComponent<Missle>(out var missle)){
+            if (other.TryGetComponent<Missle>(out var missle))
+            {
                 missle.GetDamaged(bulletData.damage);
-                ExplosionHandler(other.ClosestPoint(transform.position));
+                if (!isLaserBall)
+                    ExplosionHandler(other.ClosestPoint(transform.position));
                 return;
             }
 
             if (other.TryGetComponent<BasicBullet>(out var laserBall) && laserBall.isLaserBall)
             {
-                if(isLaserBall)
+                if (this.isLaserBall)
                     laserBall.ExplosionHandler(laserBall.transform.position);
                 else
                     ExplosionHandler(other.ClosestPoint(transform.position));
@@ -122,7 +131,7 @@ public class BasicBullet : MonoBehaviour
         {
             var particle = ObjectPooler.Instance.SpawnFromPool(explosionParicleTag, transform.position, null).GetComponent<ParticleSystem>();
             var particleMain = particle.main;
-            if(isLaserBall)
+            if (isLaserBall)
                 particle.transform.localScale = transform.localScale;
             if (GetComponentInChildren<SpriteRenderer>() != null)
                 particleMain.startColor = GetComponentInChildren<SpriteRenderer>().color;

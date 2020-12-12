@@ -67,7 +67,10 @@ public class Laser : MonoBehaviour
                 hitParticle.gameObject.SetActive(true);
                 if (hit.collider.TryGetComponent<EnemyAI>(out var enemyAI))
                 {
-                    enemyAI.GetDamaged(damagePerSec * Time.deltaTime);
+                    if (enemyAI.isBoss)
+                        enemyAI.GetDamaged(damagePerSec * Time.deltaTime / 10f);
+                    else
+                        enemyAI.GetDamaged(damagePerSec * Time.deltaTime);
                     return;
                 }
                 if (hit.collider.TryGetComponent<EnemyLairAI>(out var enemyLair))
@@ -77,6 +80,8 @@ public class Laser : MonoBehaviour
                 }
                 if (hit.collider.TryGetComponent<BasicBullet>(out var bullet))
                 {
+                    if (bullet.isLaserBall)
+                        return;
                     bullet.ExplosionHandler(hit.point);
                     bullet.gameObject.SetActive(false);
                     return;

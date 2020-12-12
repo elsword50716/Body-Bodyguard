@@ -76,7 +76,7 @@ MonoBehaviour:
     id: 0
     name: LaserBall_Lv1
     startSpeed: 0
-    damage: 75
+    damage: 100
     chasingDelay: 0
     chasingSpeed: 0
     targetTag: Ship

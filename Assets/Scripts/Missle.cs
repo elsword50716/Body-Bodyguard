@@ -136,6 +136,8 @@ public class Missle : MonoBehaviour
                 lair.GetDamaged(bulletData.damage);
             if (target.transform.parent != null && target.transform.parent.GetComponent<BossEgg>() != null)
                 target.transform.parent.GetComponent<BossEgg>().GetDamaged(bulletData.damage);
+            if (target.TryGetComponent<BossHand>(out var hand))
+                hand.GetDamaged(bulletData.damage);
         }
         basicBullet.ExplosionHandler(Position);
         gameObject.SetActive(false);
@@ -149,7 +151,19 @@ public class Missle : MonoBehaviour
 
             if (targets.Length == 0)
                 return;
-            target = targets[Random.Range(0, targets.Length)].transform;
+
+            int closestTargetIndex = 0;
+            float closestTargetDis = DetectRange * DetectRange;
+            for (int i = 0; i < targets.Length; i++)
+            {
+                if ((targets[i].transform.position - transform.position).sqrMagnitude < closestTargetDis)
+                {
+                    closestTargetDis = (targets[i].transform.position - transform.position).sqrMagnitude;
+                    closestTargetIndex = i;
+                }
+            }
+
+            target = targets[closestTargetIndex].transform;
 
             if (bulletData.targetTag != "Ship")
             {
@@ -166,6 +180,11 @@ public class Missle : MonoBehaviour
                 if (target.transform.parent != null && target.transform.parent.GetComponent<BossEgg>() != null && (target.gameObject.activeSelf && target.parent.gameObject.activeSelf))
                 {
                     scale = 8f;
+                    aimSprite.transform.localScale = new Vector3(scale, scale, 1f);
+                }
+                if (target.TryGetComponent<BossHand>(out var hand))
+                {
+                    scale = 5f;
                     aimSprite.transform.localScale = new Vector3(scale, scale, 1f);
                 }
             }

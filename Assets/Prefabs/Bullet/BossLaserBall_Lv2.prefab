@@ -61,7 +61,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  damagePerSec: 15
+  damagePerSec: 50
   maxLenth: 15
   lineRenderer: {fileID: 7654650533427498739}
   hitParticle: {fileID: 7016603849801004884}
@@ -14512,7 +14512,7 @@ MonoBehaviour:
     id: 0
     name: LaserBall_Lv1
     startSpeed: 0
-    damage: 75
+    damage: 150
     chasingDelay: 0
     chasingSpeed: 0
     targetTag: Ship
@@ -33613,7 +33613,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  damagePerSec: 15
+  damagePerSec: 50
   maxLenth: 15
   lineRenderer: {fileID: 3918197635745292022}
   hitParticle: {fileID: 807483849018762874}

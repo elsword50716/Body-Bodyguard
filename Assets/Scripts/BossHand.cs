@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class BossHand : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class BossHand : MonoBehaviour
     public Material hitMaterial;
     public Animator bossAnimator;
     public EnemyAI enemyAI;
+    public CinemachineVirtualCamera bossCamera;
 
     private SpriteRenderer spriteRenderer;
     private Material originalMaterial;
@@ -32,7 +34,7 @@ public class BossHand : MonoBehaviour
             currentHealth = 0;
             enemyAI.GetDamaged(maxHealth);
             ObjectPooler.Instance.SpawnFromPool(explodeParticleTag, transform.position, null);
-            CameraController.Instance.ShakeCamera(deadCameraShackIntensity, .2f, false);
+            CameraController.Instance.ShakeCamera(bossCamera, deadCameraShackIntensity, .2f, false);
             var randomIndex = Random.Range(0, dropPickUpTag.Length);
             ObjectPooler.Instance.SpawnFromPool(dropPickUpTag[randomIndex], transform.position, null);
             gameObject.SetActive(false);

@@ -4967,6 +4967,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba1e63712b411f4397688cc42b532c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLaserBall: 0
+  isLaserBallChargeUp: 0
   isMissle: 1
   explosionParicleTag: DutchBomb_Explosion
   bulletData:
@@ -4996,7 +4998,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   target: {fileID: 0}
-  missleHP: 100
+  missleHP: 75
   rotateSpeed: 300
   ExplosionRange: 8
   DetectRange: 45

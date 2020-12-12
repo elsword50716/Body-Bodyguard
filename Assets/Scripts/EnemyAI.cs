@@ -103,8 +103,7 @@ public class EnemyAI : MonoBehaviour
             currentHealth = 0;
             if (isBoss)
             {
-                bossAI.animator.SetBool("isDead", true);
-                this.enabled = false;
+                bossAI.CheckIsDead();
                 return;
             }
             else
@@ -385,9 +384,24 @@ public class EnemyAI : MonoBehaviour
         if (currentHealth <= 0f)
         {
             isKillByBomb = false;
-            Dead();
+            if (isBoss)
+            {
+                bossAI.CheckIsDead();
+                return;
+            }
+            else
+                Dead();
         }
 
+    }
+
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+    public void SetCurrentHealth(float health)
+    {
+        currentHealth = health;
     }
 
     private void ResetMaterial()

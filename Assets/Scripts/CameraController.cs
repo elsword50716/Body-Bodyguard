@@ -8,10 +8,15 @@ public class CameraController : MonoBehaviour
     public static CameraController Instance;
     private CinemachineVirtualCamera cinemachineVirtualCamera;
     private CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin;
+    private CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin_OtherCam;
     private float startShakeIntensity;
+    private float startShakeIntensity_OtherCam;
     private float shakeTimer;
+    private float shakeTimer_OtherCam;
     private float shakeTimerTotal;
+    private float shakeTimerTotal_OtherCam;
     private bool usingCurve = false;
+    private bool usingCurve_OtherCam = false;
     private Transform originalFollowTarget;
 
     private void Awake()
@@ -33,6 +38,15 @@ public class CameraController : MonoBehaviour
         shakeTimer = time;
         shakeTimerTotal = time;
         usingCurve = isCurved;
+    }
+    public void ShakeCamera(CinemachineVirtualCamera camera, float intensity, float time, bool isCurved)
+    {
+        cinemachineBasicMultiChannelPerlin_OtherCam = camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        cinemachineBasicMultiChannelPerlin_OtherCam.m_AmplitudeGain = intensity;
+        startShakeIntensity_OtherCam = intensity;
+        shakeTimer_OtherCam = time;
+        shakeTimerTotal_OtherCam = time;
+        usingCurve_OtherCam = isCurved;
     }
 
 
@@ -65,6 +79,20 @@ public class CameraController : MonoBehaviour
             {
                 cinemachineBasicMultiChannelPerlin.m_AmplitudeGain =
                     Mathf.Lerp(startShakeIntensity, 0f, (1 - (shakeTimer / shakeTimerTotal)));
+            }
+        }
+        if (shakeTimer_OtherCam > 0)
+        {
+            shakeTimer_OtherCam -= Time.deltaTime;
+            if (!usingCurve_OtherCam)
+            {
+                if (shakeTimer_OtherCam <= 0f)
+                    cinemachineBasicMultiChannelPerlin_OtherCam.m_AmplitudeGain = 0f;
+            }
+            else
+            {
+                cinemachineBasicMultiChannelPerlin_OtherCam.m_AmplitudeGain =
+                    Mathf.Lerp(startShakeIntensity_OtherCam, 0f, (1 - (shakeTimer_OtherCam / shakeTimerTotal_OtherCam)));
             }
         }
 

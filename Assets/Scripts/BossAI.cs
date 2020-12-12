@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
+using TMPro;
 
 [RequireComponent(typeof(EnemyAI))]
 public class BossAI : MonoBehaviour
 {
+    public bool isDead;
     public Transform ship;
     public Transform shootPoint;
     public Transform eggPool;
@@ -17,10 +19,17 @@ public class BossAI : MonoBehaviour
     public float eyeMoveLength;
     public CinemachineVirtualCamera bossCamera;
     public TentacleBlockController tentacle;
-    public Slider bossHealthBar;
     public Animator animator;
-    public string bulletTag;
     public string deadExplosionTag;
+    [Header("血量條")]
+    public Slider bossHealthBar;
+    public Image bossHealthBarFill;
+    public TextMeshProUGUI bossHealthBarText;
+    public Color[] levelHeathColor;
+    [Header("進化資料")]
+    public GameObject[] evolvePartSprites;
+    public float[] EvovleMaxHealth;
+    public int evolveIndex;
     [Header("衝撞攻擊資料")]
     public float rushDamper;
     public GameObject rushParticle;
@@ -28,7 +37,6 @@ public class BossAI : MonoBehaviour
     public string[] eggTag;
     public int eggSpawnNumberPerTime;
     public float eggSpawnRate;
-    public float eggSpawnTorque;
     [Header("雷射攻擊資料")]
     public GameObject[] laserPrefab;
     public ParticleSystem laserChargeParticle;
@@ -50,7 +58,6 @@ public class BossAI : MonoBehaviour
 
     private EnemyAI enemyAI;
     private BulletManager shipBulletManager;
-    private EnemyData enemyData;
     private float shipDistance;
     private int attackIndex;
     private bool isFinishAttck;
@@ -70,6 +77,8 @@ public class BossAI : MonoBehaviour
     private Rigidbody2D laserBallRbody_Temp;
     private float timer;
     private int randomIndex;
+    private bool cameraFocus;
+    private bool isEvolving;
 
     private void OnValidate()
     {
@@ -81,7 +90,6 @@ public class BossAI : MonoBehaviour
         ship = GameObject.FindGameObjectWithTag("Ship").transform;
         shipBulletManager = ship.GetComponentInChildren<BulletManager>();
         enemyAI = GetComponent<EnemyAI>();
-        enemyData = enemyAI.enemyData;
     }
 
     private void OnEnable()
@@ -90,21 +98,27 @@ public class BossAI : MonoBehaviour
         isFirst = true;
         eggNumber = 0;
         laserBallNumber = 0;
-
+        animator.SetBool("isDead", false);
+        isEvolving = false;
+        cameraFocus = false;
     }
 
     private void Update()
     {
         shipDistance = (ship.position - transform.position).sqrMagnitude;
-        if (shipDistance < enemyData.detectShipRange * enemyData.detectShipRange)
+        if (shipDistance < enemyAI.enemyData.detectShipRange * enemyAI.enemyData.detectShipRange)
         {
             animator.SetBool("isFindShip", true);
+            bossHealthBar.gameObject.SetActive(true);
+            RefreshHealthUI();
             EyeFollowShip();
             SetCameraPriority(true);
-            SetCameraFollowPoint();
+            if (!cameraFocus)
+                cameraFollowPoint.position = Vector2.Lerp(transform.position, ship.position, cameraLerpValue);
         }
         else
         {
+            bossHealthBar.gameObject.SetActive(false);
             animator.SetBool("isFindShip", false);
             SetCameraPriority(false);
         }
@@ -112,6 +126,12 @@ public class BossAI : MonoBehaviour
 
     private void EyeFollowShip()
     {
+        if (isDead)
+        {
+            var randomDir = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
+            eye.position = eyeMask.position + randomDir * eyeMoveLength;
+            return;
+        }
         var dir = (ship.position - eyeMask.position).normalized;
         eye.position = eyeMask.position + dir * eyeMoveLength;
     }
@@ -122,16 +142,16 @@ public class BossAI : MonoBehaviour
         shipBulletManager.poolMaxRadious = isOn ? 100f : 60f;
     }
 
-    private void SetCameraFollowPoint()
-    {
-        cameraFollowPoint.position = Vector2.Lerp(transform.position, ship.position, cameraLerpValue);
-    }
-
     public void Attack()
     {
+        if (isDead)
+            return;
+
+        if (isEvolving)
+            return;
         if (isFinishAttck)
         {
-            attackIndex = Random.Range(1, 2);
+            attackIndex = Random.Range(0, 4);
             isFinishAttck = false;
         }
         switch (attackIndex)
@@ -155,7 +175,8 @@ public class BossAI : MonoBehaviour
     {
         if (isFirst)
         {
-            targetPosion = ship.position;
+            var oneUnitLenght = (ship.position - transform.position).normalized;
+            targetPosion = ship.position - oneUnitLenght * 50f;
             isFirst = false;
         }
         if ((targetPosion - transform.position).sqrMagnitude > rushDamper * rushDamper)
@@ -214,8 +235,7 @@ public class BossAI : MonoBehaviour
     {
         //play sound here
         var eggRbody = egg_Temp.GetComponent<Rigidbody2D>();
-        eggRbody.AddTorque(eggSpawnTorque);
-        eggRbody.velocity = (ship.position - shootPoint.position).normalized * enemyData.BulletSpeed;
+        eggRbody.velocity = (ship.position - shootPoint.position).normalized * enemyAI.enemyData.BulletSpeed;
         eggNumber++;
     }
 
@@ -239,13 +259,13 @@ public class BossAI : MonoBehaviour
                 laserRotateLinePointC = laserRotateLinePointB;
                 laserRotateDir = laserRotateLinePointB - shootPoint.position;
             }
-            randomIndex = Random.Range(0, laserPrefab.Length);
-            laserPrefab[randomIndex].transform.right = laserRotateDir.normalized;
-            var startColor = laserPrefab[randomIndex].transform.GetChild(0).GetComponent<ParticleSystem>().main.startColor;
+
+            laserPrefab[evolveIndex].transform.right = laserRotateDir.normalized;
+            var startColor = laserPrefab[evolveIndex].transform.GetChild(0).GetComponent<ParticleSystem>().main.startColor;
             var main = laserChargeParticle.main;
             main.startColor = startColor;
             laserChargeParticle.gameObject.SetActive(true);
-            laserChargeBallParticle = laserPrefab[randomIndex].transform.GetChild(0).gameObject;
+            laserChargeBallParticle = laserPrefab[evolveIndex].transform.GetChild(0).gameObject;
             laserChargeBallParticle.transform.localScale = new Vector3(0f, 0f, 1f);
             laserChargeBallParticle.SetActive(true);
         }
@@ -254,7 +274,7 @@ public class BossAI : MonoBehaviour
         {
             laserChargeParticle.gameObject.SetActive(false);
             laserChargeBallParticle.transform.localScale = new Vector3(laserChargeBallMaxSize, laserChargeBallMaxSize, 1f);
-            laserPrefab[randomIndex].transform.GetChild(1).gameObject.SetActive(true);
+            laserPrefab[evolveIndex].transform.GetChild(1).gameObject.SetActive(true);
         }
         else
         {
@@ -273,7 +293,7 @@ public class BossAI : MonoBehaviour
         {
             timer = 0;
             laserChargeBallParticle.SetActive(false);
-            laserPrefab[randomIndex].transform.GetChild(1).gameObject.SetActive(false);
+            laserPrefab[evolveIndex].transform.GetChild(1).gameObject.SetActive(false);
             isFirst = true;
             isFinishAttck = true;
             enemyAI.SetState(EnemyAI.State.ChaseTarget);
@@ -281,7 +301,7 @@ public class BossAI : MonoBehaviour
         }
 
         laserRotateDir = laserRotateLinePointC - shootPoint.position;
-        laserPrefab[randomIndex].transform.right = laserRotateDir.normalized;
+        laserPrefab[evolveIndex].transform.right = laserRotateDir.normalized;
 
         if (islaserRotateFromPointA)
             laserRotateLinePointC += (laserRotateLinePointB - laserRotateLinePointA) * Time.deltaTime * laserRotateSpeed;
@@ -316,8 +336,7 @@ public class BossAI : MonoBehaviour
         if (isFirst)
         {
             isFirst = false;
-            randomIndex = Random.Range(0, laserBallTag.Length);
-            laserBall_Temp = ObjectPooler.Instance.SpawnFromPool(laserBallTag[randomIndex], shootPoint.position, null);
+            laserBall_Temp = ObjectPooler.Instance.SpawnFromPool(laserBallTag[evolveIndex], shootPoint.position, null);
             laserBall_Temp.GetComponent<BasicBullet>().isLaserBallChargeUp = true;
             laserBall_Temp.transform.localScale = new Vector3(0f, 0f, 1f);
             Debug.Log("<color=red>laserBall</color>", laserBall_Temp);
@@ -351,10 +370,58 @@ public class BossAI : MonoBehaviour
 
     }
 
+    public void ResetCameraFollowPosition()
+    {
+        cameraFocus = false;
+        isEvolving = false;
+        cameraFollowPoint.position = Vector2.Lerp(transform.position, ship.position, cameraLerpValue);
+    }
+
+    public void RefreshHealthUI()
+    {
+        bossHealthBarFill.color = levelHeathColor[evolveIndex];
+        bossHealthBar.value = enemyAI.GetCurrentHealth() / enemyAI.enemyData.maxHealth;
+        bossHealthBarText.SetText((int)enemyAI.GetCurrentHealth() + "/" + (int)enemyAI.enemyData.maxHealth);
+    }
+
     public void Dead()
     {
-        cameraFollowPoint.position = transform.position;
+        ObjectPooler.Instance.SpawnFromPool(deadExplosionTag, transform.position, null);
+        Destroy(gameObject);
+    }
 
+    public void CheckIsDead()
+    {
+        if (evolveIndex >= evolvePartSprites.Length)
+        {
+            evolveIndex = evolvePartSprites.Length;
+            cameraFocus = true;
+            cameraFollowPoint.position = transform.position;
+            isDead = true;
+            animator.SetBool("isDead", true);
+            return;
+        }
+        cameraFocus = true;
+        isEvolving = true;
+        cameraFollowPoint.position = transform.position;
+        Invoke("ResetCameraFollowPosition", 2f);
+        evolvePartSprites[evolveIndex].SetActive(true);
+        enemyAI.enemyData.maxHealth = EvovleMaxHealth[evolveIndex];
+        enemyAI.SetCurrentHealth(1);
+        StartCoroutine("HealthBarAnimation");
+        evolveIndex++;
+    }
+
+    public IEnumerator HealthBarAnimation()
+    {
+        var i = 1;
+        while (i < enemyAI.enemyData.maxHealth)
+        {
+            enemyAI.SetCurrentHealth(i);
+            i += 200;
+            yield return new WaitForEndOfFrame();
+        }
+        enemyAI.SetCurrentHealth(enemyAI.enemyData.maxHealth);
     }
 
 

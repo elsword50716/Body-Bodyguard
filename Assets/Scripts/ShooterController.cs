@@ -11,6 +11,7 @@ public class ShooterController : MonoBehaviour
     public bool isLaser = false;
     public Transform laserBatterySprite;
     public Animator laserBatteryThunderAnimator;
+    public float laserFirstConsume;
     public ShooterData shooterData;
     public LaserData laserData;
 
@@ -24,6 +25,7 @@ public class ShooterController : MonoBehaviour
     private InputAction m_GunMove;
     private InputAction m_Fire;
     private ObjectPooler objectPooler;
+    private bool isLaserFirstShoot;
 
     private void Start()
     {
@@ -32,6 +34,7 @@ public class ShooterController : MonoBehaviour
 
         laserCurrentAmount = 100f;
         objectPooler = ObjectPooler.Instance;
+        isLaserFirstShoot = true;
     }
 
 
@@ -65,8 +68,13 @@ public class ShooterController : MonoBehaviour
                 laserBatterySprite.localScale = new Vector3(laserCurrentAmount / 100f, 1f, 1f);
             if (isShootting)
             {
-                if (laserCurrentAmount > 0)
+                if (laserCurrentAmount > laserFirstConsume * 2)
                 {
+                    if (isLaserFirstShoot)
+                    {
+                        laserCurrentAmount -= laserFirstConsume;
+                        isLaserFirstShoot = false;
+                    }
                     SoundManager.Instance.PlaySound(SoundManager.SoundType.laserFire, false);
                     laserData.gunAnimator.SetBool("isShootting", true);
                     laserData.laserPrefab.SetActive(true);
@@ -84,6 +92,7 @@ public class ShooterController : MonoBehaviour
             }
             else
             {
+                isLaserFirstShoot = true;
                 SoundManager.Instance.StopPlaySound(SoundManager.SoundType.laserFire);
                 laserData.gunAnimator.SetBool("isShootting", false);
                 laserData.laserPrefab.SetActive(false);
