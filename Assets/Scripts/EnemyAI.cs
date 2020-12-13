@@ -247,6 +247,8 @@ public class EnemyAI : MonoBehaviour
 
     private void Roaming()
     {
+        aIPath.canSearch = true;
+        aIPath.canMove = true;
         var dir = roamPosotion - transform.position;
 
 

@@ -149,9 +149,10 @@ public class BossAI : MonoBehaviour
 
         if (isEvolving)
             return;
+
         if (isFinishAttck)
         {
-            attackIndex = Random.Range(0, 4);
+            attackIndex = Random.Range(1, 2);
             isFinishAttck = false;
         }
         switch (attackIndex)
@@ -206,6 +207,7 @@ public class BossAI : MonoBehaviour
     }
     private void ShootEgg()
     {
+        enemyAI.Rbody2D.velocity = Vector3.zero;
         if (eggNumber == eggSpawnNumberPerTime)
         {
             isFinishAttck = true;
@@ -241,6 +243,7 @@ public class BossAI : MonoBehaviour
 
     private void MouthLaser()
     {
+        enemyAI.Rbody2D.velocity = Vector3.zero;
         if (isFirst)
         {
             //play sound here
@@ -313,6 +316,7 @@ public class BossAI : MonoBehaviour
 
     private void MouthLaserBall()
     {
+        enemyAI.Rbody2D.velocity = Vector3.zero;
         if (laserBallNumber == laserBallNumberPerTime)
         {
             isFirst = true;

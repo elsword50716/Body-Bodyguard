@@ -78,6 +78,9 @@ TagManager:
   - name: Enemy
     uniqueID: 3418948859
     locked: 0
+  - name: BossEgg
+    uniqueID: 3236673231
+    locked: 0
   - name: PickUps
     uniqueID: 3105757285
     locked: 0
