@@ -11,6 +11,7 @@ public class TentacleBlockController : MonoBehaviour
     public Animator animator;
     public GameObject sprites;
     public CinemachineVirtualCamera virtualCamera;
+    public string[] DropingPoolTag;
 
     private Transform ship;
 
@@ -46,6 +47,14 @@ public class TentacleBlockController : MonoBehaviour
     public void DisableSprites()
     {
         sprites.SetActive(false);
+        for (int i = 0; i < DropingPoolTag.Length; i++)
+        {
+            if (!string.IsNullOrEmpty(DropingPoolTag[i]))
+            {
+                var randomPosiotion = transform.position + (new Vector3(Random.Range(-1f, 1), Random.Range(-1f, 1)) * 10f);
+                ObjectPooler.Instance.SpawnFromPool(DropingPoolTag[i], randomPosiotion, null);
+            }
+        }
     }
 
     public void DestroySelf()

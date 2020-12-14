@@ -12,7 +12,7 @@ public class EnemyLairAI : MonoBehaviour
     public EnemySpawnController enemySpawnController;
     public CinemachineVirtualCamera virtualCamera;
     public Animator CameraAnimator;
-    public string DropingPoolTag;
+    public string[] DropingPoolTag;
 
     [SerializeField] private float currentHealth;
     private List<GameObject> enemyList;
@@ -125,9 +125,13 @@ public class EnemyLairAI : MonoBehaviour
         }
         yield return new WaitForSeconds((202f - 110f) / 60f);
         GameDataManager.lairCurrentNumber++;
-        if (!string.IsNullOrEmpty(DropingPoolTag))
+        for (int i = 0; i < DropingPoolTag.Length; i++)
         {
-            ObjectPooler.Instance.SpawnFromPool(DropingPoolTag, transform.position, null);
+            if (!string.IsNullOrEmpty(DropingPoolTag[i]))
+            {
+                var randomPosiotion = transform.position + (new Vector3(Random.Range(-1f, 1), Random.Range(-1f, 1)) * 10f);
+                ObjectPooler.Instance.SpawnFromPool(DropingPoolTag[i], randomPosiotion, null);
+            }
         }
         GameSaveLoadManager.Instance.SaveData();
         yield return new WaitForSeconds(2f);

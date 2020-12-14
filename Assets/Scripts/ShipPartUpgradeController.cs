@@ -36,7 +36,7 @@ public class ShipPartUpgradeController : MonoBehaviour
             shooterController = GetComponent<ShooterController>();
     }
 
-    private void Awake()
+    private void Start()
     {
         ship = GameObject.FindGameObjectWithTag("Ship").GetComponent<Ship>();
         shipData = ship.shipData;

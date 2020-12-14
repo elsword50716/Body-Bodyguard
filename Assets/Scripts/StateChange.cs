@@ -73,6 +73,15 @@ public class StateChange : MonoBehaviour
 
         SceneManager.LoadScene("LoadingScene", LoadSceneMode.Single);//把loadingScene加進來
     }
+    public void CrossScene_Direct()
+    {
+        if (string.IsNullOrEmpty(nextSceneName))
+            return;
+
+        Time.timeScale = Time.timeScale == 0f ? 1f : Time.timeScale;
+
+        SceneManager.LoadScene(nextSceneName, LoadSceneMode.Single);
+    }
 
     public void ToPreviousState()
     {

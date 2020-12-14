@@ -138,21 +138,24 @@ public class BossAI : MonoBehaviour
 
     private void SetCameraPriority(bool isOn)
     {
-        bossCamera.Priority = isOn ? 25 : 0;
+        bossCamera.Priority = isOn ? 15 : 0;
         shipBulletManager.poolMaxRadious = isOn ? 100f : 60f;
     }
 
     public void Attack()
     {
         if (isDead)
+        {
+            enemyAI.Rbody2D.velocity = Vector2.zero;
             return;
+        }
 
         if (isEvolving)
             return;
 
         if (isFinishAttck)
         {
-            attackIndex = Random.Range(1, 2);
+            attackIndex = Random.Range(0, 4);
             isFinishAttck = false;
         }
         switch (attackIndex)
@@ -390,7 +393,14 @@ public class BossAI : MonoBehaviour
 
     public void Dead()
     {
+        transform.GetChild(0).gameObject.SetActive(false);
         ObjectPooler.Instance.SpawnFromPool(deadExplosionTag, transform.position, null);
+        Invoke("OpenTentacle", 2f);
+    }
+
+    public void OpenTentacle()
+    {
+        tentacle.isOpen = true;
         Destroy(gameObject);
     }
 
@@ -403,6 +413,7 @@ public class BossAI : MonoBehaviour
             cameraFollowPoint.position = transform.position;
             isDead = true;
             animator.SetBool("isDead", true);
+            Invoke("Dead", 1f);
             return;
         }
         cameraFocus = true;

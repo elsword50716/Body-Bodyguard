@@ -75,6 +75,7 @@ public class BasicBullet : MonoBehaviour
 
                 return;
             }
+            ExplosionHandler(other.ClosestPoint(transform.position));
 
         }
 

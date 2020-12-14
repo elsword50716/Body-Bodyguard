@@ -38,6 +38,7 @@ public class Ship : MonoBehaviour
     private float maxShieldHP_temp;
     private bool canPlayShieldBrokeParticle;
     private Material originalMaterial;
+    private bool isHaveData;
 
     private void Awake()
     {
@@ -161,10 +162,18 @@ public class Ship : MonoBehaviour
     {
         return currentHealth;
     }
+    public float GetCurrentShieldHP()
+    {
+        return currentShieldHP;
+    }
 
     public void SetCurrentHP(float HP)
     {
         currentHealth = HP;
+    }
+    public void SetCurrentShieldHP(float HP)
+    {
+        currentShieldHP = HP;
     }
 
     public void GetWrench(int number)

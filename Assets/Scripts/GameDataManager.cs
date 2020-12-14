@@ -180,6 +180,7 @@ public class GameSaveData
 {
     public string LevelName;
     public ShipData shipData;
+    public SheildData sheildData;
     public bool[] LairIsDead;
 
 }

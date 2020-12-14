@@ -68,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1224912509
-  m_SortingLayer: 9
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: dc8475b839480844b856186e2dc1da79, type: 3}
   m_Color: {r: 0.589, g: 0.4642615, b: 0.16947639, a: 1}
@@ -91,8 +91,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8747196761740034793}
   - component: {fileID: 4700560575163884325}
-  - component: {fileID: 5851619629963632943}
   - component: {fileID: 81207404044784615}
+  - component: {fileID: 1686870767094375082}
   m_Layer: 12
   m_Name: Agebra_Yellow 1
   m_TagString: EnemyBullet
@@ -136,22 +136,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!58 &5851619629963632943
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8982459522226206512}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.5}
-  serializedVersion: 2
-  m_Radius: 0.5
 --- !u!114 &81207404044784615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,6 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba1e63712b411f4397688cc42b532c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLaserBall: 0
+  isLaserBallChargeUp: 0
   isMissle: 0
   explosionParicleTag: Bullet_beam_Explosion
   bulletData:
@@ -177,3 +163,19 @@ MonoBehaviour:
     targetLayer:
       serializedVersion: 2
       m_Bits: 0
+--- !u!70 &1686870767094375082
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8982459522226206512}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -1.38}
+  m_Size: {x: 0.75, y: 2.8}
+  m_Direction: 0

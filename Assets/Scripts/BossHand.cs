@@ -32,9 +32,9 @@ public class BossHand : MonoBehaviour
         {
             bossAnimator.SetTrigger("isDamaged");
             currentHealth = 0;
-            enemyAI.GetDamaged(maxHealth / 2);
+            enemyAI.GetDamaged(maxHealth);
             ObjectPooler.Instance.SpawnFromPool(explodeParticleTag, transform.position, null);
-            CameraController.Instance.ShakeCamera(bossCamera, deadCameraShackIntensity, .2f, false);
+            CameraController.Instance.ShakeCamera(bossCamera, deadCameraShackIntensity, .5f, false);
             var randomIndex = Random.Range(0, dropPickUpTag.Length);
             ObjectPooler.Instance.SpawnFromPool(dropPickUpTag[randomIndex], transform.position, null);
             gameObject.SetActive(false);
@@ -46,7 +46,7 @@ public class BossHand : MonoBehaviour
         spriteRenderer.material = hitMaterial;
         Invoke("ResetMaterial", 0.1f);
         currentHealth -= damage;
-        enemyAI.SetCurrentHealth(enemyAI.GetCurrentHealth() - damage);
+        enemyAI.SetCurrentHealth(enemyAI.GetCurrentHealth() - damage / 2);
     }
 
     private void ResetMaterial()
