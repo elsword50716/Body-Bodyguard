@@ -80,6 +80,7 @@ public class ShieldController : MonoBehaviour
         if (damage == 0)
             return;
 
+        SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.shieldHit, false);
         if (other.transform.TryGetComponent<EnemyAI>(out var enemy))
         {
             if (enemy.isBoss)

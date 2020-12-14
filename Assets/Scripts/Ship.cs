@@ -27,6 +27,7 @@ public class Ship : MonoBehaviour
     public SpriteRenderer shipSprite;
     public MultiplayerEventSystem P1_EventSystem;
     public SpawnPlayers spawnPlayers;
+    public bool isFirstPlaySound;
     public ShipData shipData;
     public SheildData sheildData;
     public static Ship Instance;
@@ -37,8 +38,8 @@ public class Ship : MonoBehaviour
     private float maxHealth_temp;
     private float maxShieldHP_temp;
     private bool canPlayShieldBrokeParticle;
+    private bool isFirstDead;
     private Material originalMaterial;
-    private bool isHaveData;
 
     private void Awake()
     {
@@ -89,6 +90,9 @@ public class Ship : MonoBehaviour
                 canPlayShieldBrokeParticle = false;
             }
         }
+        else
+            isFirstDead = true;
+
         sheildData.shieldSprite.SetActive(currentShieldHP > 0 ? true : false);
         canPlayShieldBrokeParticle = currentShieldHP > 0 ? true : false;
 
@@ -102,6 +106,11 @@ public class Ship : MonoBehaviour
     public void GetDamaged(float damage)
     {
         //CameraController.Instance.ShakeCamera(damage, .1f);
+        if (damage > 100f)
+            SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.shipDamaged_Large, false);
+        else
+            SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.shipDamaged_Little, false);
+
         if (currentShieldHP > 0f)
         {
             shipShieldDamageEffectAnimator.SetTrigger("isShipHit");
@@ -127,7 +136,12 @@ public class Ship : MonoBehaviour
 
     public void Dead()
     {
-        //Debug.Log("Ship Dead!!!!!!!");
+        if (isFirstDead)
+        {
+            SoundManager.Instance.PlaySound(SoundManager.SoundType.shipExplode, true);
+            isFirstDead = false;
+        }
+
         if (!shipDeadParticle.isPlaying)
         {
             CameraController.Instance.GetMainCamera().Priority = 30;
@@ -188,6 +202,12 @@ public class Ship : MonoBehaviour
         if (shipData.wrenchNumber >= 15 + shipData.upgradeTimes * 5 && !shipUpgradeAnimator.GetBool("isOpen") && shipData.upgradeTimes < 21)
         {
             CameraController.Instance.GetMainCamera().Priority = 30;
+            if (isFirstPlaySound)
+            {
+                SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.UpgradeMenuOpen, false);
+                isFirstPlaySound = false;
+            }
+            SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.WrenchPickUp, false);
             shipUpgradeAnimator.SetBool("isOpen", true);
             //shipUpgradeAnimator.transform.position = transform.position;
         }

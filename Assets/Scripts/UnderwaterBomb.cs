@@ -20,12 +20,14 @@ public class UnderwaterBomb : MonoBehaviour
     private float currentHP;
     private bool isDead;
     private float timer;
+    private bool isFirstCountDown;
 
     private void OnEnable()
     {
         timer = explosionCountDown;
         isDead = false;
         currentHP = MaxHP;
+        isFirstCountDown = true;
     }
 
     private void Start()
@@ -38,6 +40,12 @@ public class UnderwaterBomb : MonoBehaviour
     {
         if (isDead)
         {
+            if (isFirstCountDown)
+            {
+                SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.underWaterBombCountDown, false);
+                isFirstCountDown = false;
+            }
+
             animator.SetBool("isDead", isDead);
             if (timer > 0)
             {
@@ -52,6 +60,7 @@ public class UnderwaterBomb : MonoBehaviour
 
     public void Explode()
     {
+        SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.underWaterBombExplosion, false);
         ObjectPooler.Instance.SpawnFromPool(explosionParticleTag, transform.position, null);
         CameraController.Instance.ShakeCamera(explosionShakeIntensity, explosionDuration, true);
 
@@ -89,9 +98,9 @@ public class UnderwaterBomb : MonoBehaviour
                 bomb.GetDamaged(damage);
                 Debug.Log("start coroutine", bomb);
             }
-            if (targets[i].transform.parent.GetComponent<BossEgg>() != null)
+            if (targets[i].transform.parent != null && targets[i].transform.parent.TryGetComponent<BossEgg>(out var egg))
             {
-                targets[i].transform.parent.GetComponent<BossEgg>().GetDamaged(damage);
+                egg.GetDamaged(damage);
             }
 
         }

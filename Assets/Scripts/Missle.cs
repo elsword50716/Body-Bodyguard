@@ -139,6 +139,7 @@ public class Missle : MonoBehaviour
             if (target.TryGetComponent<BossHand>(out var hand))
                 hand.GetDamaged(bulletData.damage);
         }
+        SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.explosion, false);
         basicBullet.ExplosionHandler(Position);
         gameObject.SetActive(false);
     }

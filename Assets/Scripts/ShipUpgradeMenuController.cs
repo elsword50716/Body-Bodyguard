@@ -73,6 +73,7 @@ public class ShipUpgradeMenuController : MonoBehaviour
         GameSaveLoadManager.Instance.SaveData();
         CameraController.Instance.GetMainCamera().Priority = 10;
         animator.SetBool("isOpen", false);
+        ship.isFirstPlaySound = true;
     }
 
     public void SetTimeScale(float scale)

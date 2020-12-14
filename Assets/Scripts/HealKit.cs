@@ -13,6 +13,7 @@ public class HealKit : MonoBehaviour
         if (other.GetComponentInParent<Ship>() != null && !other.CompareTag("Laser"))
         {
             var ship = other.GetComponentInParent<Ship>();
+            SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.shipHeal, false);
             ship.Heal(healPercent * ship.shipData.maxHealth);
             gameObject.SetActive(false);
         }

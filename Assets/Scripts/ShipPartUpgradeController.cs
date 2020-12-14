@@ -116,6 +116,7 @@ public class ShipPartUpgradeController : MonoBehaviour
 
     private void PlayUpgradeParticles()
     {
+        SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.shipUpgrade, false);
         switch (partType)
         {
             case PartType.booster:

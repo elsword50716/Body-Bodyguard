@@ -37,6 +37,7 @@ public class BossHand : MonoBehaviour
             CameraController.Instance.ShakeCamera(bossCamera, deadCameraShackIntensity, .5f, false);
             var randomIndex = Random.Range(0, dropPickUpTag.Length);
             ObjectPooler.Instance.SpawnFromPool(dropPickUpTag[randomIndex], transform.position, null);
+            SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.enemyDead, false);
             gameObject.SetActive(false);
         }
     }

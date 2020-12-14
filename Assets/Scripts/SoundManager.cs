@@ -11,17 +11,34 @@ public class SoundManager : MonoBehaviour
         TeleportPipelineSound,
         shoooterFire,
         laserFire,
-        enemyDamaged,
+        enemyDead,
+        enemyShoot,
         shipDamaged_Large,
         shipDamaged_Medium,
         shipDamaged_Little,
-        shipHeal_Large,
-        shipHeal_Medium,
-        shipHeal_Little,
+        shipHeal,
+        shieldHeal,
+        shieldHit,
         MapOpen,
         MapClose,
         booster,
-        laserFireLv2
+        missle,
+        explosion,
+        WrenchPickUp,
+        bossEggExplode,
+        bossLaserBallCharge,
+        bossLaserCharge,
+        bossEvolve,
+        underWaterBombCountDown,
+        underWaterBombExplosion,
+        shipExplode,
+        shipLaserReady,
+        UpgradeMenuOpen,
+        shipUpgrade,
+        boostMode,
+        phoenixMode
+
+
     }
 
     [System.Serializable]

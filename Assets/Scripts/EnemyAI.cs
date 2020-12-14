@@ -334,6 +334,7 @@ public class EnemyAI : MonoBehaviour
         //         return;
         // }
 
+        SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.enemyDead, false);
         var deadExplosion = objectPooler.SpawnFromPool(deadExplosionTag, transform.position, null).GetComponent<ParticleSystem>();
 
         if (isVirus || isTurret)
@@ -428,6 +429,7 @@ public class EnemyAI : MonoBehaviour
 
     private void FireBullet()
     {
+        SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.enemyShoot, false);
         var bullet = objectPooler.SpawnFromPool(bulletPoolTag, transform.position, null);
         var bulletRbody = bullet.GetComponent<Rigidbody2D>();
         bulletRbody.velocity = (Ship.position - transform.position).normalized * enemyData.BulletSpeed;

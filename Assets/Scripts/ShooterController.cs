@@ -26,6 +26,7 @@ public class ShooterController : MonoBehaviour
     private InputAction m_Fire;
     private ObjectPooler objectPooler;
     private bool isLaserFirstShoot;
+    private bool isFirstPlaySound;
 
     private void Start()
     {
@@ -73,6 +74,7 @@ public class ShooterController : MonoBehaviour
                     if (isLaserFirstShoot)
                     {
                         laserCurrentAmount -= laserFirstConsume;
+                        isFirstPlaySound = true;
                         isLaserFirstShoot = false;
                     }
                     SoundManager.Instance.PlaySound(SoundManager.SoundType.laserFire, false);
@@ -103,6 +105,11 @@ public class ShooterController : MonoBehaviour
                 }
                 else
                 {
+                    if (isFirstPlaySound)
+                    {
+                        SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.shipLaserReady, false);
+                        isFirstPlaySound = false;
+                    }
                     laserCurrentAmount = 100f;
                     laserBatteryThunderAnimator.SetBool("isCharging", false);
                 }
@@ -197,7 +204,10 @@ public class ShooterController : MonoBehaviour
         ParticleSystem.MinMaxGradient grad = new ParticleSystem.MinMaxGradient(color, Color.white);
         particleMain.startColor = grad;
         particle.Play();
-        SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.shoooterFire, false);
+        if (bullet.GetComponent<Missle>() != null)
+            SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.missle, false);
+        else
+            SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.shoooterFire, false);
         var basicBullet = bullet.GetComponent<BasicBullet>();
         basicBullet.bulletData.targetTag = "Enemy";
         basicBullet.bulletData.targetLayer = enemyLayer;

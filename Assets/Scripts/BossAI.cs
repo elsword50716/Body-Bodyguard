@@ -249,7 +249,7 @@ public class BossAI : MonoBehaviour
         enemyAI.Rbody2D.velocity = Vector3.zero;
         if (isFirst)
         {
-            //play sound here
+            SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.bossLaserCharge, false);//play sound here
             isFirst = false;
             laserRotateLineY = ship.position.y;
             islaserRotateFromPointA = (ship.position.x - shootPoint.position.x) > 0 ? true : false;
@@ -342,6 +342,7 @@ public class BossAI : MonoBehaviour
     {
         if (isFirst)
         {
+            SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.bossLaserBallCharge, false);
             isFirst = false;
             laserBall_Temp = ObjectPooler.Instance.SpawnFromPool(laserBallTag[evolveIndex], shootPoint.position, null);
             laserBall_Temp.GetComponent<BasicBullet>().isLaserBallChargeUp = true;
@@ -418,6 +419,7 @@ public class BossAI : MonoBehaviour
         }
         cameraFocus = true;
         isEvolving = true;
+        SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.bossEvolve, false);
         cameraFollowPoint.position = transform.position;
         Invoke("ResetCameraFollowPosition", 2f);
         evolvePartSprites[evolveIndex].SetActive(true);

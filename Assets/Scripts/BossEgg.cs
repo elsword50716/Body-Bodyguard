@@ -88,6 +88,7 @@ public class BossEgg : MonoBehaviour
 
     public void Explode()
     {
+        SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.bossEggExplode, false);
         explosionParticle.SetActive(true);
         for (int i = 0; i < enemyList.Count; i++)
         {
@@ -105,6 +106,7 @@ public class BossEgg : MonoBehaviour
 
     public void Dead()
     {
+        SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.bossEggExplode, false);
         var particle = ObjectPooler.Instance.SpawnFromPool(deadParticleTag, transform.position, null).GetComponent<ParticleSystem>().main;
         particle.startColor = deadParticleColor;
         if (dropPickupTag.Length != 0)

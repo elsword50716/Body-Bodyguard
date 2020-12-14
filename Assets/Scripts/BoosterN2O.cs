@@ -7,12 +7,16 @@ public class BoosterN2O : MonoBehaviour
     public ShipController shipController;
     public float duration;
 
-    private void Awake() {
+    private void Awake()
+    {
         shipController = GameObject.FindGameObjectWithTag("ShipMoveController").GetComponent<ShipController>();
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if(other.gameObject.layer == 8 && !other.gameObject.CompareTag("Laser")){
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.layer == 8 && !other.gameObject.CompareTag("Laser"))
+        {
+            SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.boostMode, false);
             shipController.boostModeParticle.Play();
             shipController.boosterData.shipBoostModeDuration = duration;
             shipController.isBoostMode = true;

@@ -13,9 +13,11 @@ public class ShieldPack : MonoBehaviour
         if (other.GetComponentInParent<Ship>() != null && !other.CompareTag("Laser"))
         {
             var ship = other.GetComponentInParent<Ship>();
+            SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.shieldHeal, false);
             ship.ShieldHeal(healPercent * ship.sheildData.maxShieldHP);
             if (isPhoenix)
             {
+                SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.phoenixMode, false);
                 if (ship.sheildData.shieldSprite.transform.parent.TryGetComponent<ShieldController>(out var shield))
                 {
                     shield.isInvincible = true;
