@@ -198,8 +198,8 @@ public class Ship : MonoBehaviour
 
     public void RefreshUI()
     {
-        wrenchText.SetText($"{shipData.wrenchNumber}/{15 + shipData.upgradeTimes * 5}");
-        if (shipData.wrenchNumber >= 15 + shipData.upgradeTimes * 5 && !shipUpgradeAnimator.GetBool("isOpen") && shipData.upgradeTimes < 21)
+        wrenchText.SetText($"{shipData.wrenchNumber}/{15 + shipData.upgradeTimes * 10}");
+        if (shipData.wrenchNumber >= 15 + shipData.upgradeTimes * 10 && !shipUpgradeAnimator.GetBool("isOpen") && shipData.upgradeTimes < 21)
         {
             CameraController.Instance.GetMainCamera().Priority = 30;
             if (isFirstPlaySound)

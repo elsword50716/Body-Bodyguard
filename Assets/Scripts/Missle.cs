@@ -183,11 +183,11 @@ public class Missle : MonoBehaviour
                     scale = 8f;
                     aimSprite.transform.localScale = new Vector3(scale, scale, 1f);
                 }
-                if (target.TryGetComponent<BossHand>(out var hand))
-                {
-                    scale = 5f;
-                    aimSprite.transform.localScale = new Vector3(scale, scale, 1f);
-                }
+                // if (target.TryGetComponent<BossHand>(out var hand))
+                // {
+                //     scale = 5f;
+                //     aimSprite.transform.localScale = new Vector3(scale, scale, 1f);
+                // }
             }
 
             aimLoop = new AnimationClip();

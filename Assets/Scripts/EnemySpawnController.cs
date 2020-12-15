@@ -22,13 +22,28 @@ public class EnemySpawnController : MonoBehaviour
 
     public Vector3 GetRandomPostion()
     {
-        return transform.position + new Vector3(Random.Range(-1f, 1f) * spawnAreaWeight, Random.Range(-1f, 1f) * spawnAreaHeight);
+        //return transform.position + new Vector3(Random.Range(-1f, 1f) * spawnAreaWeight, Random.Range(-1f, 1f) * spawnAreaHeight);
+        return transform.position + transform.right.normalized * spawnAreaWeight * Random.Range(-1f, 1f) 
+                + transform.up.normalized * spawnAreaHeight * Random.Range(-1f, 1f);
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.position, new Vector3(spawnAreaWeight * 2, spawnAreaHeight * 2, 0f));
+        var point1 = transform.position + transform.right.normalized * spawnAreaWeight + transform.up.normalized * spawnAreaHeight;
+        var point2 = transform.position + transform.right.normalized * -spawnAreaWeight + transform.up.normalized * spawnAreaHeight;
+        var point3 = transform.position + transform.right.normalized * -spawnAreaWeight + transform.up.normalized * -spawnAreaHeight;
+        var point4 = transform.position + transform.right.normalized * spawnAreaWeight + transform.up.normalized * -spawnAreaHeight;
+        Gizmos.DrawLine(point1, point2);
+        Gizmos.DrawLine(point2, point3);
+        Gizmos.DrawLine(point3, point4);
+        Gizmos.DrawLine(point4, point1);
+        //Gizmos.DrawWireCube(transform.position, (transform.right.normalized * spawnAreaWeight + transform.up.normalized * spawnAreaHeight) * 2);
+    }
+
+    private void OnValidate() {
+        if(isContainTurret)
+            rotateAngle = transform.eulerAngles.z;
     }
 
     public void SpawnEnemies()

@@ -7,6 +7,11 @@ public class GameObjectsActiveController : MonoBehaviour
     public Transform ship;
     public float activeDistance = 120f;
     public List<GameObject> gameObjects;
+
+    private void Awake() {
+        if (ship == null)
+            ship = GameObject.FindGameObjectWithTag("Ship").transform;
+    }
     private void Start()
     {
         SetGameObjectsList();

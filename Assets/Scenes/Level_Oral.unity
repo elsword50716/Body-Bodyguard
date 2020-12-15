@@ -942,7 +942,7 @@ MonoBehaviour:
       type: 3}
     data_cachedStartup: 
     cacheStartup: 1
-  showNavGraphs: 1
+  showNavGraphs: 0
   showUnwalkableNodes: 1
   debugMode: 0
   debugFloor: 0
@@ -1780,17 +1780,17 @@ PrefabInstance:
     - target: {fileID: 8423476918879870367, guid: b2fb4eb7d5a368440aab5a5014d00b29,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.999998
+      value: -9.999992
       objectReference: {fileID: 0}
     - target: {fileID: 8423476918879870367, guid: b2fb4eb7d5a368440aab5a5014d00b29,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.012512207
       objectReference: {fileID: 0}
     - target: {fileID: 8423476918879870367, guid: b2fb4eb7d5a368440aab5a5014d00b29,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.006286621
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8423476919449329904, guid: b2fb4eb7d5a368440aab5a5014d00b29,
         type: 3}
@@ -1800,7 +1800,7 @@ PrefabInstance:
     - target: {fileID: 8423476919449329904, guid: b2fb4eb7d5a368440aab5a5014d00b29,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.999998
+      value: -9.999992
       objectReference: {fileID: 0}
     - target: {fileID: 8423476919449329904, guid: b2fb4eb7d5a368440aab5a5014d00b29,
         type: 3}
