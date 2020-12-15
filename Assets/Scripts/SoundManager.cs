@@ -36,7 +36,8 @@ public class SoundManager : MonoBehaviour
         UpgradeMenuOpen,
         shipUpgrade,
         boostMode,
-        phoenixMode
+        phoenixMode,
+        ShieldBroken,
 
 
     }
@@ -80,6 +81,18 @@ public class SoundManager : MonoBehaviour
             clip.audioSource.volume = clip.volume;
         }
     }
+
+    // private void Update()
+    // {
+    //     if (Time.timeScale == 0f)
+    //     {
+    //         for (int i = 0; i < soundClips.Length; i++)
+    //         {
+    //             if (soundClips[i].audioSource.isPlaying)
+    //                 StopPlaySound(soundClips[i].soundType);
+    //         }
+    //     }
+    // }
 
     public void PlaySoundOneShot(SoundType sound, bool isIgnoreTime)
     {

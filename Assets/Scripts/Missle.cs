@@ -6,6 +6,7 @@ using UnityEngine;
 public class Missle : MonoBehaviour
 {
     public LayerMask layerMask;
+    public LayerMask BossEgg;
     public Transform target;
     public float missleHP;
     public float rotateSpeed = 200f;
@@ -25,6 +26,7 @@ public class Missle : MonoBehaviour
     private Transform ship;
     private BasicBullet basicBullet;
     private float currentHP;
+    private LayerMask combineLayerMask;
 
     private void Awake()
     {
@@ -62,7 +64,7 @@ public class Missle : MonoBehaviour
         }
 
         aimSprite.transform.position = target.position;
-        aimSprite.transform.localRotation = Quaternion.Inverse(transform.rotation);
+        aimSprite.transform.rotation = Quaternion.identity;
 
         if (!aimAnimation.IsPlaying(aimLoop.name))
         {
@@ -98,6 +100,7 @@ public class Missle : MonoBehaviour
         aimSprite.gameObject.SetActive(false);
         layerMask = basicBullet.bulletData.targetLayer;
         currentHP = missleHP;
+        combineLayerMask = layerMask | BossEgg;
 
         FindTarget();
     }
@@ -148,7 +151,7 @@ public class Missle : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(bulletData.targetTag))
         {
-            var targets = Physics2D.OverlapCircleAll(ship.position, DetectRange, layerMask);
+            var targets = Physics2D.OverlapCircleAll(ship.position, DetectRange, combineLayerMask);
 
             if (targets.Length == 0)
                 return;
@@ -183,11 +186,11 @@ public class Missle : MonoBehaviour
                     scale = 8f;
                     aimSprite.transform.localScale = new Vector3(scale, scale, 1f);
                 }
-                // if (target.TryGetComponent<BossHand>(out var hand))
-                // {
-                //     scale = 5f;
-                //     aimSprite.transform.localScale = new Vector3(scale, scale, 1f);
-                // }
+                if (target.TryGetComponent<BossHand>(out var hand))
+                {
+                    scale = 5f;
+                    aimSprite.transform.localScale = new Vector3(scale, scale, 1f);
+                }
             }
 
             aimLoop = new AnimationClip();

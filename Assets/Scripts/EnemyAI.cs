@@ -157,9 +157,11 @@ public class EnemyAI : MonoBehaviour
                 if (IsObstaclesBetween())
                     return;
 
-
-                transform.RotateAround(Ship.position, Vector3.forward, enemyData.inAttackRangeMoveSpeed * Time.deltaTime);
-                transform.rotation = Quaternion.identity;
+                if (!isBoss)
+                {
+                    transform.RotateAround(Ship.position, Vector3.forward, enemyData.inAttackRangeMoveSpeed * Time.deltaTime);
+                    transform.rotation = Quaternion.identity;
+                }
 
                 //attcak
                 if (isVirus)

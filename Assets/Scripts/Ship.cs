@@ -117,6 +117,7 @@ public class Ship : MonoBehaviour
             currentShieldHP -= damage;
             if (currentShieldHP < 0f)
             {
+                SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.ShieldBroken, false);
                 currentShieldHP = 0f;
                 var main = shipShieldBrokeParticle.main;
                 main.startColor = sheildData.shieldSprite.GetComponentInParent<ShieldController>().particleColor;

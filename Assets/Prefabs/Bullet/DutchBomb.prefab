@@ -68,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 418291785
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2d08e45c1ea715b43b6ad4911133157d, type: 3}
   m_Color: {r: 0, g: 1, b: 0.4827311, a: 1}
@@ -4810,7 +4810,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 418291785
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -4903,7 +4903,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1224912509
-  m_SortingLayer: 9
+  m_SortingLayer: 10
   m_SortingOrder: 1
   m_Sprite: {fileID: 1904754888013207335, guid: 9854df564b5b2c349bd62f163c15c569,
     type: 3}
@@ -4997,6 +4997,9 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 0
+  BossEgg:
+    serializedVersion: 2
+    m_Bits: 4194304
   target: {fileID: 0}
   missleHP: 75
   rotateSpeed: 300
