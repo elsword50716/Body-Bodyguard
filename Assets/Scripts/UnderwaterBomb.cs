@@ -123,6 +123,11 @@ public class UnderwaterBomb : MonoBehaviour
         }
     }
 
+    public void SetBombDead()
+    {
+        isDead = true;
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("ShipShield"))

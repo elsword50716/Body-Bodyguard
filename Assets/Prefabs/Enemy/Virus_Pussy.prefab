@@ -194,14 +194,14 @@ MonoBehaviour:
     name: Pussy
     dropProbability: 0.3
     maxHealth: 125
-    FireRate: 0.5
+    FireRate: 0.35
     BulletSpeed: 10
     attackDamage: 15
-    moveSpeed: 5
-    inAttackRangeMoveSpeed: 10
+    moveSpeed: 10
+    inAttackRangeMoveSpeed: 15
     aiRadius: 3
     roamRange: 15
-    detectShipRange: 30
+    detectShipRange: 60
     ClosestDistanceToShip: 30
 --- !u!66 &1285186385602182196
 CompositeCollider2D:

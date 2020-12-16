@@ -321,14 +321,14 @@ MonoBehaviour:
     name: BooleanAgbra
     dropProbability: 0.15
     maxHealth: 50
-    FireRate: 0.5
+    FireRate: 0.35
     BulletSpeed: 10
     attackDamage: 5
-    moveSpeed: 5
-    inAttackRangeMoveSpeed: 10
+    moveSpeed: 10
+    inAttackRangeMoveSpeed: 15
     aiRadius: 1.45
     roamRange: 15
-    detectShipRange: 30
+    detectShipRange: 60
     ClosestDistanceToShip: 22.5
 --- !u!1 &5695661351076540798
 GameObject:

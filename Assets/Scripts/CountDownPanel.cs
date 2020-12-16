@@ -26,7 +26,7 @@ public class CountDownPanel : MonoBehaviour
                 Debug.Log("Game Start!!!");
                 if (File.Exists(Application.persistentDataPath + "/Save.json"))
                 {
-                    var load = new LoadAndNewGameBT();
+                    var load = gameObject.AddComponent<LoadAndNewGameBT>();
                     load.LoadScene();
                 }
                 else

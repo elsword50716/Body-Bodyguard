@@ -212,6 +212,8 @@ public class Ship : MonoBehaviour
             shipUpgradeAnimator.SetBool("isOpen", true);
             //shipUpgradeAnimator.transform.position = transform.position;
         }
+        currentHealth = currentHealth <= 0 ? 0 : currentHealth; 
+        currentShieldHP = currentShieldHP <= 0 ? 0 : currentShieldHP; 
         healthBar.value = currentHealth;
         ShieldBar.value = currentShieldHP;
         healthText.SetText($"{(int)currentHealth}/{(int)shipData.maxHealth}");

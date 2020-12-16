@@ -417,8 +417,8 @@ MonoBehaviour:
     FireRate: 1
     BulletSpeed: 10
     attackDamage: 5
-    moveSpeed: 5
-    inAttackRangeMoveSpeed: 10
+    moveSpeed: 10
+    inAttackRangeMoveSpeed: 15
     aiRadius: 3
     roamRange: 15
     detectShipRange: 45

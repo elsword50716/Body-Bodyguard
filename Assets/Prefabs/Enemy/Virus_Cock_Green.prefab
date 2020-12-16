@@ -191,14 +191,14 @@ MonoBehaviour:
     name: Cock
     dropProbability: 0.3
     maxHealth: 150
-    FireRate: 0.5
+    FireRate: 0.35
     BulletSpeed: 10
     attackDamage: 20
-    moveSpeed: 5
-    inAttackRangeMoveSpeed: 10
+    moveSpeed: 10
+    inAttackRangeMoveSpeed: 15
     aiRadius: 5.5
     roamRange: 15
-    detectShipRange: 30
+    detectShipRange: 60
     ClosestDistanceToShip: 30
 --- !u!66 &650424561404963121
 CompositeCollider2D:
