@@ -70,6 +70,22 @@ public class GameSaveLoadManager : MonoBehaviour
         string jsonData = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(Application.persistentDataPath + "/Save.json", jsonData);
     }
+    public void SaveDataWithOutPosition()
+    {
+        savingIconAnimator.SetTrigger("isSaving");
+        var saveData = new GameSaveData();
+        saveData.LevelName = SceneManager.GetActiveScene().name;
+        saveData.shipData = shipScript.shipData;
+        saveData.sheildData = shipScript.sheildData;
+        saveData.LairIsDead = new bool[enemyLairAIs.Count];
+        for (int i = 0; i < enemyLairAIs.Count; i++)
+        {
+            saveData.LairIsDead[i] = enemyLairAIs[i].isDead;
+        }
+
+        string jsonData = JsonUtility.ToJson(saveData, true);
+        File.WriteAllText(Application.persistentDataPath + "/Save.json", jsonData);
+    }
 
     public void LoadData()
     {
@@ -119,6 +135,7 @@ public class GameSaveLoadManager : MonoBehaviour
         for (int i = 0; i < saveData.LairIsDead.Length; i++)
         {
             enemyLairAIs[i].isDead = saveData.LairIsDead[i];
+            enemyLairAIs[i].ResetHealth();
         }
 
     }

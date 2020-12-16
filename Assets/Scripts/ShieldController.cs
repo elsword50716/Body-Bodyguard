@@ -75,6 +75,13 @@ public class ShieldController : MonoBehaviour
 
     }
 
+    public void SetShieldInvincible()
+    {
+        isInvincible = true;
+        invincibleTimer = invincibleTime;
+        invincibleParicleUI.Play();
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (damage == 0)

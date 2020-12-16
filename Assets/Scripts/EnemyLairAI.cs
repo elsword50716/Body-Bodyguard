@@ -86,6 +86,11 @@ public class EnemyLairAI : MonoBehaviour
             Dead();
     }
 
+    public void ResetHealth()
+    {
+        currentHealth = enemyLairData.maxHealth;
+    }
+
     private void ReleaseVirus()
     {
         if (virusIndex > enemyList.Count - 1)

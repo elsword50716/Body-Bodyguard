@@ -145,7 +145,7 @@ public class Missle : MonoBehaviour
                 bomb.SetBombDead();
         }
         SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.explosion, false);
-        basicBullet.ExplosionHandler(Position);
+        basicBullet.ExplosionHandler();
         gameObject.SetActive(false);
     }
 

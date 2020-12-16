@@ -20,8 +20,7 @@ public class ShieldPack : MonoBehaviour
                 SoundManager.Instance.PlaySoundOneShot(SoundManager.SoundType.phoenixMode, false);
                 if (ship.sheildData.shieldSprite.transform.parent.TryGetComponent<ShieldController>(out var shield))
                 {
-                    shield.isInvincible = true;
-                    shield.invincibleParicleUI.Play();
+                    shield.SetShieldInvincible();
                 }
             }
             gameObject.SetActive(false);

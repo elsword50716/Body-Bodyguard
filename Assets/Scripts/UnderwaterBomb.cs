@@ -86,7 +86,7 @@ public class UnderwaterBomb : MonoBehaviour
             }
             if (targets[i].TryGetComponent<BasicBullet>(out var bullet))
             {
-                bullet.ExplosionHandler(bullet.transform.position);
+                bullet.ExplosionHandler();
             }
             if (targets[i].TryGetComponent<UnderwaterBomb>(out var bomb))
             {

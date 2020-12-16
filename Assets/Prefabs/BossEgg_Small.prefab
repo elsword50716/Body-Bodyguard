@@ -5221,7 +5221,7 @@ MonoBehaviour:
   gameObjectsActiveController: {fileID: 1374533902}
   rbody: {fileID: 6050586032628543293}
   explosionParticle: {fileID: 6050586032005289408}
-  maxHealth: 125
+  maxHealth: 200
   hitEffectMaterial: {fileID: 2100000, guid: 46d1ebf0dd1aed94c8ba4c9b7a507934, type: 2}
   deadParticleColor: {r: 1, g: 0.8302624, b: 0, a: 1}
   deadParticleTag: BossEggDeadParticle

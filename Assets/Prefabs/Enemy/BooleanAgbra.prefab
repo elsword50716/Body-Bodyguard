@@ -247,8 +247,8 @@ MonoBehaviour:
     id: 0
     name: BooleanAgbra
     dropProbability: 0.45
-    maxHealth: 200
-    FireRate: 1
+    maxHealth: 300
+    FireRate: 0.4
     BulletSpeed: 10
     attackDamage: 10
     moveSpeed: 10

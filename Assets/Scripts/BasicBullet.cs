@@ -8,6 +8,7 @@ public class BasicBullet : MonoBehaviour
     public bool isLaserBall;
     public bool isLaserBallChargeUp;
     public bool isMissle;
+    public Transform hitPoint;
     public string explosionParicleTag;
     public BulletData bulletData;
 
@@ -36,20 +37,20 @@ public class BasicBullet : MonoBehaviour
         if (other.TryGetComponent<BossHand>(out var hand) && !gameObject.CompareTag("EnemyBullet"))
         {
             hand.GetDamaged(bulletData.damage);
-            ExplosionHandler(other.ClosestPoint(transform.position));
+            ExplosionHandler();
             return;
         }
 
         if (other.TryGetComponent<UnderwaterBomb>(out var bomb))
         {
             bomb.GetDamaged(bulletData.damage);
-            ExplosionHandler(other.ClosestPoint(transform.position));
+            ExplosionHandler();
             return;
         }
 
         if (other.gameObject.layer == 13 || other.CompareTag("Laser"))
         {
-            ExplosionHandler(other.ClosestPoint(transform.position));
+            ExplosionHandler();
             return;
         }
 
@@ -62,20 +63,20 @@ public class BasicBullet : MonoBehaviour
             {
                 missle.GetDamaged(bulletData.damage);
                 if (!isLaserBall)
-                    ExplosionHandler(other.ClosestPoint(transform.position));
+                    ExplosionHandler();
                 return;
             }
 
             if (other.TryGetComponent<BasicBullet>(out var laserBall) && laserBall.isLaserBall)
             {
                 if (this.isLaserBall)
-                    laserBall.ExplosionHandler(laserBall.transform.position);
+                    laserBall.ExplosionHandler();
                 else
-                    ExplosionHandler(other.ClosestPoint(transform.position));
+                    ExplosionHandler();
 
                 return;
             }
-            ExplosionHandler(other.ClosestPoint(transform.position));
+            ExplosionHandler();
 
         }
 
@@ -93,7 +94,7 @@ public class BasicBullet : MonoBehaviour
             else
             {
                 other.GetComponentInParent<Ship>().GetDamaged(bulletData.damage);
-                ExplosionHandler(other.ClosestPoint(transform.position));
+                ExplosionHandler();
             }
             return;
         }
@@ -101,7 +102,7 @@ public class BasicBullet : MonoBehaviour
         if (other.transform.parent != null && other.transform.parent.TryGetComponent<BossEgg>(out var egg))
         {
             egg.GetDamaged(bulletData.damage);
-            ExplosionHandler(other.ClosestPoint(transform.position));
+            ExplosionHandler();
             return;
         }
 
@@ -123,14 +124,14 @@ public class BasicBullet : MonoBehaviour
             lair.GetDamaged(bulletData.damage);
         }
 
-        ExplosionHandler(other.ClosestPoint(transform.position));
+        ExplosionHandler();
     }
 
-    public void ExplosionHandler(Vector3 position)
+    public void ExplosionHandler()
     {
         if (!string.IsNullOrEmpty(explosionParicleTag))
         {
-            var particle = ObjectPooler.Instance.SpawnFromPool(explosionParicleTag, transform.position, null).GetComponent<ParticleSystem>();
+            var particle = ObjectPooler.Instance.SpawnFromPool(explosionParicleTag, hitPoint.position, null).GetComponent<ParticleSystem>();
             var particleMain = particle.main;
             if (isLaserBall)
                 particle.transform.localScale = transform.localScale;

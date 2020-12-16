@@ -70,7 +70,7 @@ public class ShipUpgradeMenuController : MonoBehaviour
         ship.shipData.ShipPartLevel[i]++;
         ship.shipData.wrenchNumber -= (15 + ship.shipData.upgradeTimes * 10);
         ship.shipData.upgradeTimes++;
-        GameSaveLoadManager.Instance.SaveData();
+        GameSaveLoadManager.Instance.SaveDataWithOutPosition();
         CameraController.Instance.GetMainCamera().Priority = 10;
         animator.SetBool("isOpen", false);
         ship.isFirstPlaySound = true;

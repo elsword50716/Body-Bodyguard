@@ -82,7 +82,7 @@ public class Laser : MonoBehaviour
                 {
                     if (bullet.isLaserBall)
                         return;
-                    bullet.ExplosionHandler(hit.point);
+                    bullet.ExplosionHandler();
                     bullet.gameObject.SetActive(false);
                     return;
                 }

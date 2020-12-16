@@ -431,6 +431,7 @@ MonoBehaviour:
   - HealKit_Medium
   - Wrench_Medium
   - ShieldPack_Medium
+  - BoostModePack_3sec
   bulletPoolTag: Virus_Spider_Bullet_Yellow
   bulletPool: {fileID: 8499459051173790922}
   currentHealth: 0
