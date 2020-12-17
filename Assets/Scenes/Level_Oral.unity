@@ -1667,6 +1667,10 @@ PrefabInstance:
       propertyPath: tentacleBlock
       value: 
       objectReference: {fileID: 2559661450918278542}
+    - target: {fileID: 995967217, guid: b2fb4eb7d5a368440aab5a5014d00b29, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1300393259, guid: b2fb4eb7d5a368440aab5a5014d00b29, type: 3}
       propertyPath: m_Positions.Array.data[1].x
       value: 46.666645
@@ -1718,12 +1722,12 @@ PrefabInstance:
     - target: {fileID: 6050753258094744445, guid: b2fb4eb7d5a368440aab5a5014d00b29,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -265
+      value: -267.3
       objectReference: {fileID: 0}
     - target: {fileID: 6050753258094744445, guid: b2fb4eb7d5a368440aab5a5014d00b29,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 583.6
+      value: 590.4
       objectReference: {fileID: 0}
     - target: {fileID: 6050753258094744445, guid: b2fb4eb7d5a368440aab5a5014d00b29,
         type: 3}
@@ -1803,7 +1807,7 @@ PrefabInstance:
     - target: {fileID: 8423476919449329904, guid: b2fb4eb7d5a368440aab5a5014d00b29,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.018737793
       objectReference: {fileID: 0}
     - target: {fileID: 8423476919449329904, guid: b2fb4eb7d5a368440aab5a5014d00b29,
         type: 3}
@@ -1813,7 +1817,7 @@ PrefabInstance:
     - target: {fileID: 8423476919449329904, guid: b2fb4eb7d5a368440aab5a5014d00b29,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.006225586
+      value: 0.006225586
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2fb4eb7d5a368440aab5a5014d00b29, type: 3}
