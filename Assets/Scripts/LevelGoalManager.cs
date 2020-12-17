@@ -13,7 +13,7 @@ public class LevelGoalManager : MonoBehaviour
     private void Update()
     {
         var lairCurrentNumber = GameDataManager.lairCurrentNumber;
-        var lairTotalNumber = GameDataManager.lairTotalNumber;
+        var lairTotalNumber = GameSaveLoadManager.Instance.GetLairNumber();
 
         goalText.SetText($"{lairCurrentNumber}/{lairTotalNumber}");
 

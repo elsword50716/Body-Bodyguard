@@ -16,9 +16,10 @@ public class SpawnPlayers : MonoBehaviour
     private void Awake()
     {
         ship = GameObject.FindGameObjectWithTag("Ship").GetComponent<Ship>();
+    }
+
+    private void OnEnable() {
         Spawn();
-
-
     }
 
     public void Spawn()
@@ -26,11 +27,10 @@ public class SpawnPlayers : MonoBehaviour
         if (GameDataManager.playerDatas.Count == 0)
             return;
 
+        Debug.Log("player number: " + GameDataManager.playerDatas.Count);
         players = new List<GameObject>();
 
-        Debug.Log(GameDataManager.playerDatas.Count);
-
-        for (int i = 0; i < GameDataManager.playerDatas.Count; i++)
+        for (int i = 0; i < 4; i++)
         {
             GameObject player = Instantiate(playerPrefab, transform);
             players.Add(player);
@@ -47,11 +47,14 @@ public class SpawnPlayers : MonoBehaviour
                 continue;
             }
             var playerDeviceId = players[i].GetComponent<PlayerInput>().devices[0].deviceId;
+            var playerDeviceName = players[i].GetComponent<PlayerInput>().devices[0].name;
+            Debug.Log("player " + i + " " + playerDeviceId + " " + playerDeviceName);
             isFound = false;
             for (int j = 0; j < GameDataManager.playerDatas.Count; j++)
             {
                 var id_temp = GameDataManager.playerDatas[j].deviceId;
-                if (playerDeviceId == id_temp)
+                var deviceName_temp = GameDataManager.playerDatas[j].deviceName;
+                if (playerDeviceId == id_temp && playerDeviceName == deviceName_temp)
                 {
                     if (j == 0)
                         ship.P1_EventSystem = players[i].GetComponentInChildren<MultiplayerEventSystem>();

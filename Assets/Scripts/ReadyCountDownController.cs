@@ -9,8 +9,6 @@ public class ReadyCountDownController : MonoBehaviour
     public TextMeshProUGUI countDownText;
     public bool[] isReady;
     public float countDownSec;
-
-    private bool isStartCountdown = false;
     private int playerCount_Temp;
     private int readyNumberConter = 0;
 
@@ -23,6 +21,11 @@ public class ReadyCountDownController : MonoBehaviour
         }
         countDownPanel.countDownSec = countDownSec;
         countDownPanel.gameObject.SetActive(false);
+        playerCount_Temp = GameDataManager.playerDatas.Count;
+    }
+
+    private void OnEnable() {
+        GameDataManager.playerDatas = new List<PlayerData>();
         playerCount_Temp = GameDataManager.playerDatas.Count;
     }
 

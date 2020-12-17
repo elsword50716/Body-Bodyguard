@@ -16,7 +16,7 @@ public class GameSaveLoadManager : MonoBehaviour
     private List<EnemySpawnController> enemySpawnControllers;
     private Ship shipScript;
 
-    private void Awake()
+    private void OnEnable()
     {
         Instance = this;
 
@@ -114,12 +114,16 @@ public class GameSaveLoadManager : MonoBehaviour
         saveData = JsonUtility.FromJson<GameSaveData>(File.ReadAllText(Application.persistentDataPath + "/Save.json"));
         shipScript.shipDeadParticle.gameObject.SetActive(false);
         shipScript.shipData = saveData.shipData;
+        GameDataManager.lairCurrentNumber = GameDataManager.lairTotalNumber = 0;
         if (SceneManager.GetActiveScene().name != saveData.LevelName)
         {
-            GameDataManager.lairCurrentNumber = GameDataManager.lairTotalNumber = 0;
             saveData.LevelName = SceneManager.GetActiveScene().name;
             saveData.shipData.shipPosition = ship.position;
             saveData.LairIsDead = new bool[enemyLairAIs.Count];
+
+            shipScript.SetCurrentHP(saveData.shipData.maxHealth);
+            shipScript.SetCurrentShieldHP(saveData.sheildData.maxShieldHP);
+
             for (int i = 0; i < enemyLairAIs.Count; i++)
             {
                 saveData.LairIsDead[i] = enemyLairAIs[i].isDead;
@@ -138,5 +142,9 @@ public class GameSaveLoadManager : MonoBehaviour
             enemyLairAIs[i].ResetHealth();
         }
 
+    }
+
+    public int GetLairNumber(){
+        return enemyLairAIs.Count;
     }
 }

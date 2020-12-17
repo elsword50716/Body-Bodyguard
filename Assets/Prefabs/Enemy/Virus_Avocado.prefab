@@ -444,7 +444,7 @@ MonoBehaviour:
     name: Avocado
     dropProbability: 0.3
     maxHealth: 125
-    FireRate: 0.35
+    FireRate: 0.2
     BulletSpeed: 10
     attackDamage: 15
     moveSpeed: 10

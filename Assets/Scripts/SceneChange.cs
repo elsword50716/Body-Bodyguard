@@ -50,7 +50,7 @@ public class SceneChange : MonoBehaviour
 
         }
 
-        toProgress = 100;
+        toProgress = 99;
         while (displayProgress < toProgress)
         {
             ++displayProgress;

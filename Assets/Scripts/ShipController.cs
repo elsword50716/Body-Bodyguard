@@ -110,6 +110,14 @@ public class ShipController : MonoBehaviour
 
     }
 
+    public void SetBoostMode(float duration)
+    {
+        boosterModeTimer = 0f;
+        boostModeParticle.Play();
+        boosterData.shipBoostModeDuration = duration;
+        isBoostMode = true;
+    }
+
     public void ShipMove(InputAction context)
     {
         moveInput = context.ReadValue<Vector2>();

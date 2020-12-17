@@ -44,7 +44,7 @@ public class ShipPartUpgradeController : MonoBehaviour
 
         if (partType == PartType.shipHealth)
         {
-            ship.shipData.maxHealth = shipBaseHP;
+            ship.shipData.maxHealth = shipBaseHP + level_temp * shipHealthIncreasePerLevel;
             return;
         }
 

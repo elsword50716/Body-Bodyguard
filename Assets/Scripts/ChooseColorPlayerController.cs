@@ -15,11 +15,15 @@ public class ChooseColorPlayerController : MonoBehaviour
     public float startPosition;
     public float positionMultiDelta;
     public int lastPartIndex;
+    public string[] controllers;
+    public SpriteRenderer controllerSpriteRenderer;
+    public Sprite[] controllersSprites;
 
     private int playerIndex;
     private bool isColorPickerPanelOpened_temp;
     private bool isActived;
     private bool pauseMenuOpenTemp;
+    [SerializeField]private string deviceName;
 
     private void Awake()
     {
@@ -39,6 +43,13 @@ public class ChooseColorPlayerController : MonoBehaviour
         partPickerPanels[playerIndex].SetActive(true);
         colorPickerPanels[playerIndex].SetActive(false);
         isColorPickerPanelOpened_temp = false;
+        deviceName = playerInput.devices[0].name;
+        for (int i = 0; i < controllers.Length; i++)
+        {
+            if(controllers[i].Contains(deviceName)){
+                controllerSpriteRenderer.sprite = controllersSprites[i];
+            }
+        }
     }
 
     private void Update()

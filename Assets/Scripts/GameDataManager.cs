@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public static class GameDataManager
 {
@@ -166,12 +165,14 @@ public struct PlayerData
 {
     public List<Color> colors;
     public int deviceId;
+    public string deviceName;
 
-    public PlayerData(List<Color> colors, int deviceId)
+    public PlayerData(List<Color> colors, int deviceId, string deviceName)
     {
         this.colors = new List<Color>();
         this.colors = colors;
         this.deviceId = deviceId;
+        this.deviceName = deviceName;
     }
 }
 

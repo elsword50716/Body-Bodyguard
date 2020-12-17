@@ -43,7 +43,7 @@ public class ChangePlayerColor : MonoBehaviour
             {
                 colorList.Add(color);
             }
-            GameDataManager.playerDatas.Add(new PlayerData(colorList, playerInput.devices[0].deviceId));
+            GameDataManager.playerDatas.Add(new PlayerData(colorList, playerInput.devices[0].deviceId, playerInput.devices[0].name));
             //Debug.Log(GameDataManager.playerDatas[GameDataManager.playerDatas.Count - 1].input.playerIndex, gameObject);
         }
         else

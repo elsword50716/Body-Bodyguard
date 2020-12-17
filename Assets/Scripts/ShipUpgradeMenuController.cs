@@ -11,7 +11,6 @@ public class ShipUpgradeMenuController : MonoBehaviour
     public Button[] buttons;//上左中右下
 
     private MultiplayerEventSystem P1_EventSystem;
-    private int[] partLevelUpTimes;
 
     private void Awake()
     {
@@ -34,7 +33,6 @@ public class ShipUpgradeMenuController : MonoBehaviour
             int i2 = i;
             buttons[i].onClick.AddListener(delegate { OnUpgradeButtonClick(i2); });
         }
-        partLevelUpTimes = new int[buttons.Length];
 
     }
 
@@ -45,9 +43,9 @@ public class ShipUpgradeMenuController : MonoBehaviour
 
     private void Update()
     {
-        for (int i = 0; i < partLevelUpTimes.Length; i++)
+        for (int i = 0; i < ship.shipData.ShipPartLevel.Length; i++)
         {
-            if (partLevelUpTimes[i] >= 2)
+            if (ship.shipData.ShipPartLevel[i] >= 2)
             {
                 buttons[i].interactable = false;
             }
@@ -66,7 +64,6 @@ public class ShipUpgradeMenuController : MonoBehaviour
     {
         Debug.Log(ship.shipData.ShipPartLevel.Length);
         Debug.Log("i = " + i);
-        partLevelUpTimes[i]++;
         ship.shipData.ShipPartLevel[i]++;
         ship.shipData.wrenchNumber -= (15 + ship.shipData.upgradeTimes * 10);
         ship.shipData.upgradeTimes++;

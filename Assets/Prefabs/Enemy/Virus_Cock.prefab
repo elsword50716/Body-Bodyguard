@@ -191,7 +191,7 @@ MonoBehaviour:
     name: Cock
     dropProbability: 0.3
     maxHealth: 150
-    FireRate: 0.35
+    FireRate: 0.2
     BulletSpeed: 10
     attackDamage: 20
     moveSpeed: 10
